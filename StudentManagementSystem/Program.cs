@@ -1,7 +1,20 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using StudentManagementSystem.DAO;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddRazorPages();
+var connectionString = builder.Configuration.GetConnectionString("SMS");
+builder.Services.AddDbContext<SMSDbContext>(o => o.UseSqlServer(connectionString));
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<SMSDbContext>()
+    .AddDefaultUI()
+    .AddDefaultTokenProviders();
 
 var app = builder.Build();
 
@@ -18,7 +31,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
+
+app.MapRazorPages();
 
 app.MapControllerRoute(
     name: "default",
