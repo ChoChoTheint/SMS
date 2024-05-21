@@ -65,19 +65,13 @@
     }
 }
 
-.box:hover {
-    //height: 145px;
-    //width: 200px;
-    //background-color: #FFFFFF;
-    //margin-bottom: 20px;
+.box {
+    
     transition: .3s ease-in-out;
 }
 
 .box:hover {
-    //height: 145px;
-    //width: 200px;
-    //background-color: #FFFFFF;
-    //margin-bottom: 20px;
+    
     transform: scale(1.1);
 }
 

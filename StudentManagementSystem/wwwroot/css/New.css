@@ -1,4 +1,7 @@
 ﻿
+.box-item_video {
+    background: linear-gradient(45deg, #3ec, #313 );
+}
 .box-item_new {
     background: linear-gradient(45deg, #18EB14, #3EB414 );
 }
