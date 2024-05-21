@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StudentManagementSystem.Models.DataModels
 {
@@ -13,5 +14,7 @@ namespace StudentManagementSystem.Models.DataModels
         public DateTime DOB { get; set; }
         public string FatherName { get; set; }
         public string Gender { get; set; }
+        [ForeignKey(nameof(UserId))]
+        public string UserId { get; set; }
     }
 }

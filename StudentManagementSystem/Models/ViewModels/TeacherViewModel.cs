@@ -13,6 +13,8 @@ namespace StudentManagementSystem.Models.ViewModels
         public DateTime DOB { get; set; }
         public string FatherName { get; set; }
         public string Gender { get; set; }
+        public string UserId { get; set; }
+
 
     }
 }

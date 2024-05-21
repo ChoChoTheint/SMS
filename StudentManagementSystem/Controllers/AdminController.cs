@@ -35,6 +35,7 @@ namespace StudentManagementSystem.Controllers
                     DOB = ui.DOB,
                     FatherName = ui.FatherName,
                     Gender = ui.Gender,
+                    UserId = ui.UserId,
                 };
                 _dbContext.Admins.Add(data);
                 _dbContext.SaveChanges();

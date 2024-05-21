@@ -1,0 +1,17 @@
+﻿
+.box-item_new {
+    background: linear-gradient(45deg, #18EB14, #3EB414 );
+}
+
+//brand form video
+.mate-sc {
+    font-family: "Mate SC", serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: .9rem;
+}
+
+.brand-space {
+    color: #0A46B5;
+    letter-spacing: 3px;
+}

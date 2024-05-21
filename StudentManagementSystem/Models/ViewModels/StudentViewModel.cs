@@ -16,5 +16,7 @@ namespace StudentManagementSystem.Models.ViewModels
         [ForeignKey(nameof(BatchId))]
         public string BatchId { get; set; }
         public string BatchInfo { get; set; }
+        public string UserId { get; set; }
+
     }
 }

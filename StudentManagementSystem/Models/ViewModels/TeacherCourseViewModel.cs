@@ -2,7 +2,7 @@
 
 namespace StudentManagementSystem.Models.ViewModels
 {
-    public class TeacherCourse
+    public class TeacherCourseViewModel
     {
         public string Id { get; set; }
         //[ForeignKey(nameof(TeacherId))]
