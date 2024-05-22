@@ -18,21 +18,30 @@
 
 
 .box-item_add {
-    background: linear-gradient(45deg, #93CE15, #6B980D );
+    background: linear-gradient(45deg, rgba(147,206,21,.3), rgba(107,152,13,1));
 }
 
 .box-item_attend {
-    background: linear-gradient(45deg, #B0558C, #F31170 );
+    background: linear-gradient(45deg, rgba(176,85,140,.3), rgba(243,17,112,1));
 }
 
 .box-item_class {
-    background: linear-gradient(45deg, #18EB14, #3EB414 );
+    background: linear-gradient(45deg,rgba(24,235,20,.3), rgba(62,180,20,1));
+}
+.box-item_timeable {
+    background: linear-gradient(45deg, rgba(235,123,20, .3), rgba(180,30,20,1));
+}
+.box-item_exam {
+    background: linear-gradient(45deg, rgba(23,44,236,.3), rgba(90,17,243,1));
+}
+.box-item_examresult {
+    background: linear-gradient(45deg, rgba(12,17,68,.3), rgba(1,14,34,1));
 }
 @media(min-width: 1200px){
     .box {
         height: 185px;
         width: 235px;
-        background-color: #FFFFFF;
+        background-color: #fafafa;
     }
 
     .box-item {
@@ -50,8 +59,7 @@
     .box {
         height: 185px;
         width: 235px;
-        background-color: #FFFFFF;
-
+        background-color: #fafafa;
     }
 
     .box-item {
@@ -79,7 +87,7 @@
     .box {
         height: 145px;
         width: 200px;
-        background-color: #FFFFFF;
+        background-color: #fafafa;
         margin-bottom: 20px;
     }
 
@@ -98,7 +106,7 @@
     .box {
         height: 145px;
         width: 200px;
-        background-color: #FFFFFF;
+        background-color: #fafafa;
         margin-bottom: 20px;
     }
 
