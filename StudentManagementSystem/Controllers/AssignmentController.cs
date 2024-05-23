@@ -5,10 +5,10 @@ using StudentManagementSystem.Models.ViewModels;
 
 namespace StudentManagementSystem.Controllers
 {
-    public class BookController : Controller
+    public class AssignmentController : Controller
     {
         private readonly SMSDbContext _dbContext;
-        public BookController(SMSDbContext dbContext)
+        public AssignmentController(SMSDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -28,26 +28,26 @@ namespace StudentManagementSystem.Controllers
             }).OrderBy(o => o.Name).ToList();
             ViewBag.Batch = batches;
 
-
             return View();
         }
 
         [HttpPost]
-        public IActionResult Entry(BookViewModel ui)
+        public IActionResult Entry(AssignmentViewModel ui)
         {
             try
             {
-                BookEntity data = new BookEntity()
+                AssignmentEntity assignmentData = new AssignmentEntity()
                 {
                     Id = Guid.NewGuid().ToString(),
                     CreatedAt = DateTime.UtcNow,
                     IsInActive = true,
                     Name = ui.Name,
                     Description = ui.Description,
-                    CourseId = ui.CourseId,
+                    URL = ui.URL,
+                    CourseId = ui.CourseInfo,
                     BatchId = ui.BatchId,
                 };
-                _dbContext.Books.Add(data);
+                _dbContext.Assignments.Add(assignmentData);
                 _dbContext.SaveChanges();
                 TempData["info"] = "save successfully the record";
             }
@@ -55,34 +55,37 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while saving the record";
             }
-            return View();
+            return RedirectToAction("List");
         }
 
         public IActionResult List()
         {
-            IList<BookViewModel> bookList = (from book in _dbContext.Books
-                                             join course in _dbContext.Courses
-                                             on book.CourseId equals course.Id
-                                             join batch in _dbContext.Batches
-                                             on book.BatchId equals batch.Id
-                                             select new BookViewModel
-                                             {
-                                                 Id = book.Id,
-                                                 Name = book.Name,
-                                                 Description = book.Description,
-                                                 CourseInfo = course.Name,
-                                                 BatchInfo = batch.Name
-                                             }).ToList();
-            return View(bookList);
+            IList<AssignmentViewModel> assignmentList = (from assignment in _dbContext.Assignments
+                                                         join course in _dbContext.Courses
+                                                         on assignment.CourseId equals course.Id
+                                                         join batch in _dbContext.Batches
+                                                         on assignment.BatchId equals batch.Id
+
+                                                         select new AssignmentViewModel
+                                                         {
+                                                             Id = assignment.Id,
+                                                             Name = assignment.Name,
+                                                             Description = assignment.Description,
+                                                             URL = assignment.URL,
+                                                             CourseInfo = course.Name,
+                                                             BatchInfo = batch.Name,
+                                                         }).ToList();
+            return View(assignmentList);
         }
+
         public IActionResult Delete(string Id)
         {
             try
             {
-                var deleteData = _dbContext.Books.Where(w => w.Id == Id).FirstOrDefault();
-                if(deleteData is not null)
+                var deleteAssignmentData = _dbContext.Assignments.Where(w => w.Id == Id).FirstOrDefault();
+                if(deleteAssignmentData is not null)
                 {
-                    _dbContext.Books.Remove(deleteData);
+                    _dbContext.Assignments.Remove(deleteAssignmentData);
                     _dbContext.SaveChanges();
                 }
                 TempData["info"] = "delete successfully the record";
@@ -91,18 +94,21 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while deleting the record";
             }
-            return View();
+            return RedirectToAction("List");
         }
-
 
         public IActionResult Edit(string Id)
         {
-                BookViewModel editBookData = _dbContext.Books.Where(w => w.Id == Id).Select(s => new BookViewModel
-                                      {
-                                          Id = s.Id,
-                                          Name = s.Name,
-                                          Description = s.Description,
-                                      }).FirstOrDefault();
+            AssignmentViewModel editAddignmentData = _dbContext.Assignments.Where(w => w.Id == Id).Select(s => new AssignmentViewModel
+            {
+                Id = s.Id,
+                Name = s.Name,
+                Description = s.Description,
+                URL = s.URL,
+                CourseId = s.CourseId,
+                BatchId = s.BatchId,
+            }).FirstOrDefault();
+
 
             var courses = _dbContext.Courses.Select(s => new CourseViewModel
             {
@@ -118,17 +124,15 @@ namespace StudentManagementSystem.Controllers
             }).OrderBy(o => o.Name).ToList();
             ViewBag.Batch = batches;
 
-
-
-            return View(editBookData);
+            return View(editAddignmentData);
         }
 
         [HttpPost]
-        public IActionResult Update(BookViewModel ui)
+        public IActionResult Update(AssignmentViewModel ui)
         {
             try
             {
-                BookEntity updateBookData = new BookEntity()
+                AssignmentEntity updateAssignmentData = new AssignmentEntity()
                 {
                     Id = ui.Id,
                     CreatedAt = DateTime.UtcNow,
@@ -136,10 +140,11 @@ namespace StudentManagementSystem.Controllers
                     IsInActive = true,
                     Name = ui.Name,
                     Description = ui.Description,
-                    CourseId = ui.CourseId,
+                    URL = ui.URL,
+                    CourseId = ui.CourseInfo,
                     BatchId = ui.BatchId,
                 };
-                _dbContext.Books.Update(updateBookData);
+                _dbContext.Assignments.Update(updateAssignmentData);
                 _dbContext.SaveChanges();
                 TempData["info"] = "update successfully the record";
             }

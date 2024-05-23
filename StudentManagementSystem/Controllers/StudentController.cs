@@ -14,6 +14,13 @@ namespace StudentManagementSystem.Controllers
         }
         public IActionResult Entry()
         {
+            var batches = _dbContext.Batches.Select(s => new BatchViewModel
+            {
+                Id = s.Id,
+                Name = s.Name,
+            }).OrderBy(o => o.Name).ToList();
+            ViewBag.Batch = batches;
+
             return View();
         }
 
@@ -22,7 +29,7 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                StudentEntity data = new StudentEntity()
+                StudentEntity studentData = new StudentEntity()
                 {
                     Id = Guid.NewGuid().ToString(),
                     CreatedAt = DateTime.UtcNow,
@@ -37,7 +44,7 @@ namespace StudentManagementSystem.Controllers
                     Gender = ui.Gender,
                     BatchId = ui.BatchId,
                 };
-                _dbContext.Students.Add(data);
+                _dbContext.Students.Add(studentData);
                 _dbContext.SaveChanges();
                 TempData["info"] = "save successfully data";
             }
@@ -48,14 +55,35 @@ namespace StudentManagementSystem.Controllers
             return View();
         }
 
+        public IActionResult List()
+        {
+            IList<StudentViewModel> studentList = (from student in _dbContext.Students
+                                                   join batch in _dbContext.Batches
+                                                   on student.BatchId equals batch.Id
+
+                                                   select new StudentViewModel
+                                                   {
+                                                       Id = student.Id,
+                                                       Name = student.Name,
+                                                       Email = student.Email,
+                                                       Phone = student.Phone,
+                                                       Address = student.Address,
+                                                       NRC = student.NRC,
+                                                       DOB = student.DOB,
+                                                       FatherName = student.FatherName,
+                                                       Gender = student.Gender,
+                                                       BatchInfo = batch.Name
+                                                   }).ToList();
+            return View(studentList);
+        }
         public IActionResult Delete(string Id)
         {
             try
             {
-                var deleteData = _dbContext.Students.Where(w => w.Id == Id).FirstOrDefault();
-                if(deleteData is not null)
+                var deleteStudentData = _dbContext.Students.Where(w => w.Id == Id).FirstOrDefault();
+                if(deleteStudentData is not null)
                 {
-                    _dbContext.Students.Remove(deleteData);
+                    _dbContext.Students.Remove(deleteStudentData);
                     _dbContext.SaveChanges();
                 }
                 TempData["info"] = "delete successfully data";
@@ -69,7 +97,7 @@ namespace StudentManagementSystem.Controllers
 
         public IActionResult Edit(string Id)
         {
-            IList<StudentViewModel> editData = _dbContext.Students.Where(w => w.Id == Id).Select(s => new StudentViewModel
+            IList<StudentViewModel> editStudentData = _dbContext.Students.Where(w => w.Id == Id).Select(s => new StudentViewModel
             {
                 Id = s.Id,
                 Name = s.Name,
@@ -80,9 +108,16 @@ namespace StudentManagementSystem.Controllers
                 DOB = s.DOB,
                 FatherName = s.FatherName,
                 Gender = s.Gender,
-                BatchId = s.BatchId,
             }).ToList();
-            return View(editData);
+
+            var batches = _dbContext.Batches.Select(s => new BatchViewModel
+            {
+                Id = s.Id,
+                Name = s.Name,
+            }).OrderBy(o => o.Name).ToList();
+            ViewBag.Batch = batches;
+
+            return View(editStudentData);
         }
 
         [HttpPost]
@@ -90,7 +125,7 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                StudentEntity updateData = new StudentEntity()
+                StudentEntity updateStudentData = new StudentEntity()
                 {
                     Id = ui.Id,
                     CreatedAt = DateTime.UtcNow,
@@ -106,7 +141,7 @@ namespace StudentManagementSystem.Controllers
                     BatchId = ui.BatchId,
                 };
 
-                _dbContext.Students.Update(updateData);
+                _dbContext.Students.Update(updateStudentData);
                 _dbContext.SaveChanges();
                 TempData["info"] = "update successfully data";
             }

@@ -5,10 +5,10 @@ using StudentManagementSystem.Models.ViewModels;
 
 namespace StudentManagementSystem.Controllers
 {
-    public class ExamController : Controller
+    public class CourseController : Controller
     {
         private readonly SMSDbContext _dbContext;
-        public ExamController(SMSDbContext dbContext)
+        public CourseController(SMSDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -18,19 +18,22 @@ namespace StudentManagementSystem.Controllers
         }
 
         [HttpPost]
-        public IActionResult Entry(ExamViewModel ui)
+        public IActionResult Entry(CourseViewModel ui)
         {
             try
             {
-                ExamEntity examData = new ExamEntity()
+                CourseEntity courseData = new CourseEntity()
                 {
                     Id = Guid.NewGuid().ToString(),
                     CreatedAt = DateTime.UtcNow,
                     IsInActive = true,
                     Name = ui.Name,
-                    ExamDate = ui.ExamDate,
+                    Description = ui.Description,
+                    OpeningDate = ui.OpeningDate,
+                    DurationInHour = ui.DurationInHour,
+                    DurationInMonth = ui.DurationInMonth,
                 };
-                _dbContext.Exams.Add(examData);
+                _dbContext.Courses.Add(courseData);
                 _dbContext.SaveChanges();
                 TempData["info"] = "save successfully the record";
             }
@@ -43,24 +46,27 @@ namespace StudentManagementSystem.Controllers
 
         public IActionResult List()
         {
-            IList<ExamViewModel> examList = _dbContext.Exams.Select(s => new ExamViewModel
+            IList<CourseViewModel> courseList = _dbContext.Courses.Select(s => new CourseViewModel
             {
                 Id = s.Id,
                 Name = s.Name,
-                ExamDate = s.ExamDate,
+                Description = s.Description,
+                OpeningDate = s.OpeningDate,
+                DurationInHour = s.DurationInHour,
+                DurationInMonth = s.DurationInMonth,
             }).ToList();
 
-            return View(examList);
+            return View(courseList);
         }
 
         public IActionResult Delete(string Id)
         {
             try
             {
-                var deleteExamData = _dbContext.Exams.Where(w => w.Id == Id).FirstOrDefault();
-                if(deleteExamData is not null)
+                var deleteCourseData = _dbContext.Courses.Where(w => w.Id == Id).FirstOrDefault();
+                if(deleteCourseData is not null)
                 {
-                    _dbContext.Exams.Remove(deleteExamData);
+                    _dbContext.Courses.Remove(deleteCourseData);
                     _dbContext.SaveChanges();
                 }
                 TempData["info"] = "delete successfully the record";
@@ -74,30 +80,39 @@ namespace StudentManagementSystem.Controllers
 
         public IActionResult Edit(string Id)
         {
-            ExamViewModel editExamData = _dbContext.Exams.Where(w => w.Id == Id).Select(s => new ExamViewModel
-            {
-                Id = s.Id,
-                Name = s.Name,
-                ExamDate = s.ExamDate,
-            }).FirstOrDefault();
-            return View(editExamData);
+            
+                CourseViewModel editCourseData = _dbContext.Courses.Where(w => w.Id == Id).Select(s => new CourseViewModel
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    Description = s.Description,
+                    OpeningDate = s.OpeningDate,
+                    DurationInHour = s.DurationInHour,
+                    DurationInMonth = s.DurationInMonth,
+                }).FirstOrDefault();
+
+               
+            return View(editCourseData);
         }
 
         [HttpPost]
-        public IActionResult Update(ExamViewModel ui)
+        public IActionResult Update(CourseEntity ui)
         {
             try
             {
-                ExamEntity updateExamData = new ExamEntity()
+                CourseEntity updateCourseData = new CourseEntity()
                 {
                     Id = ui.Id,
                     CreatedAt = DateTime.UtcNow,
-                    IsInActive = true,
                     ModifiedAt = DateTime.UtcNow,
-                    Name = ui.Name,
-                    ExamDate = ui.ExamDate,
+                    IsInActive = true,
+                    Description = ui.Description,
+                    OpeningDate = ui.OpeningDate,
+                    DurationInHour = ui.DurationInHour,
+                    DurationInMonth = ui.DurationInMonth,
                 };
-                _dbContext.Exams.Update(updateExamData);
+
+                _dbContext.Courses.Update(updateCourseData);
                 _dbContext.SaveChanges();
                 TempData["info"] = "update successfully the record";
             }

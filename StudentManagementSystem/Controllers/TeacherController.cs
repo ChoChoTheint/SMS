@@ -5,10 +5,10 @@ using StudentManagementSystem.Models.ViewModels;
 
 namespace StudentManagementSystem.Controllers
 {
-    public class ExamController : Controller
+    public class TeacherController : Controller
     {
         private readonly SMSDbContext _dbContext;
-        public ExamController(SMSDbContext dbContext)
+        public TeacherController(SMSDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -18,19 +18,27 @@ namespace StudentManagementSystem.Controllers
         }
 
         [HttpPost]
-        public IActionResult Entry(ExamViewModel ui)
+        public IActionResult Entry(TeacherViewModel ui)
         {
             try
             {
-                ExamEntity examData = new ExamEntity()
+                TeacherEntity teacherData = new TeacherEntity()
                 {
                     Id = Guid.NewGuid().ToString(),
                     CreatedAt = DateTime.UtcNow,
                     IsInActive = true,
                     Name = ui.Name,
-                    ExamDate = ui.ExamDate,
+                    Email = ui.Email,
+                    Phone = ui.Phone,
+                    Address = ui.Address,
+                    NRC = ui.NRC,
+                    DOB = ui.DOB,
+                    FatherName = ui.FatherName,
+                    Position = ui.Position,
+                    Gender = ui.Gender,
+                    UserId = ui.UserId,
                 };
-                _dbContext.Exams.Add(examData);
+                _dbContext.Teachers.Add(teacherData);
                 _dbContext.SaveChanges();
                 TempData["info"] = "save successfully the record";
             }
@@ -41,26 +49,14 @@ namespace StudentManagementSystem.Controllers
             return RedirectToAction("List");
         }
 
-        public IActionResult List()
-        {
-            IList<ExamViewModel> examList = _dbContext.Exams.Select(s => new ExamViewModel
-            {
-                Id = s.Id,
-                Name = s.Name,
-                ExamDate = s.ExamDate,
-            }).ToList();
-
-            return View(examList);
-        }
-
         public IActionResult Delete(string Id)
         {
             try
             {
-                var deleteExamData = _dbContext.Exams.Where(w => w.Id == Id).FirstOrDefault();
-                if(deleteExamData is not null)
+                var deleteTeacherData = _dbContext.Teachers.Where(w => w.Id == Id).FirstOrDefault();
+                if(deleteTeacherData is not null)
                 {
-                    _dbContext.Exams.Remove(deleteExamData);
+                    _dbContext.Teachers.Remove(deleteTeacherData);
                     _dbContext.SaveChanges();
                 }
                 TempData["info"] = "delete successfully the record";
@@ -74,30 +70,46 @@ namespace StudentManagementSystem.Controllers
 
         public IActionResult Edit(string Id)
         {
-            ExamViewModel editExamData = _dbContext.Exams.Where(w => w.Id == Id).Select(s => new ExamViewModel
+            TeacherViewModel editTeacherData = _dbContext.Teachers.Where(w => w.Id == Id).Select(s => new TeacherViewModel
             {
                 Id = s.Id,
                 Name = s.Name,
-                ExamDate = s.ExamDate,
+                Email = s.Email,
+                Phone = s.Phone,
+                Address = s.Address,
+                NRC = s.NRC,
+                DOB = s.DOB,
+                FatherName = s.FatherName,
+                Position = s.Position,
+                Gender = s.Gender,
+                UserId = s.UserId,
             }).FirstOrDefault();
-            return View(editExamData);
+            return View(editTeacherData);
         }
 
-        [HttpPost]
-        public IActionResult Update(ExamViewModel ui)
+        public IActionResult Update(TeacherViewModel ui)
         {
             try
             {
-                ExamEntity updateExamData = new ExamEntity()
+                TeacherEntity updateTeacherData = new TeacherEntity()
                 {
                     Id = ui.Id,
                     CreatedAt = DateTime.UtcNow,
-                    IsInActive = true,
                     ModifiedAt = DateTime.UtcNow,
+                    IsInActive = true,
                     Name = ui.Name,
-                    ExamDate = ui.ExamDate,
+                    Email = ui.Email,
+                    Phone = ui.Phone,
+                    Address = ui.Address,
+                    NRC = ui.NRC,
+                    DOB = ui.DOB,
+                    FatherName = ui.FatherName,
+                    Position = ui.Position,
+                    Gender = ui.Gender,
+                    UserId = ui.UserId,
                 };
-                _dbContext.Exams.Update(updateExamData);
+
+                _dbContext.Teachers.Update(updateTeacherData);
                 _dbContext.SaveChanges();
                 TempData["info"] = "update successfully the record";
             }

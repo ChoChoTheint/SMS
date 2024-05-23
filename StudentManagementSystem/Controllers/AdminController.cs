@@ -22,7 +22,7 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                AdminEntity data = new AdminEntity()
+                AdminEntity adminData = new AdminEntity()
                 {
                     Id = Guid.NewGuid().ToString(),
                     CreatedAt = DateTime.UtcNow,
@@ -37,7 +37,7 @@ namespace StudentManagementSystem.Controllers
                     Gender = ui.Gender,
                     UserId = ui.UserId,
                 };
-                _dbContext.Admins.Add(data);
+                _dbContext.Admins.Add(adminData);
                 _dbContext.SaveChanges();
                 TempData["info"] = "save successfully data";
             }
@@ -52,11 +52,11 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                var deleteData = _dbContext.Admins.Where(w => w.Id == Id).FirstOrDefault();
+                var deleteAdminData = _dbContext.Admins.Where(w => w.Id == Id).FirstOrDefault();
 
-                if(deleteData is not null)
+                if(deleteAdminData is not null)
                 {
-                    _dbContext.Admins.Remove(deleteData);
+                    _dbContext.Admins.Remove(deleteAdminData);
                     _dbContext.SaveChanges();
                 }
                 TempData["info"] = "delete successfully data";
@@ -70,7 +70,7 @@ namespace StudentManagementSystem.Controllers
 
         public IActionResult Edit(string Id)
         {
-            IList<AdminViewModel> editData = _dbContext.Admins.Where(w => w.Id == Id).Select(s => new AdminViewModel
+            IList<AdminViewModel> editAdminData = _dbContext.Admins.Where(w => w.Id == Id).Select(s => new AdminViewModel
             {
                 Id = s.Id,
                 Name = s.Name,
@@ -82,7 +82,7 @@ namespace StudentManagementSystem.Controllers
                 FatherName = s.FatherName,
                 Gender = s.Gender,
             }).ToList();
-            return View(editData);
+            return View(editAdminData);
         }
 
         [HttpPost]
@@ -90,7 +90,7 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                AdminEntity updateData = new AdminEntity()
+                AdminEntity updateAdminData = new AdminEntity()
                 {
                     Id = ui.Id,
                     CreatedAt = DateTime.UtcNow,
@@ -105,7 +105,7 @@ namespace StudentManagementSystem.Controllers
                     Gender = ui.Gender,
                 };
 
-                _dbContext.Admins.Update(updateData);
+                _dbContext.Admins.Update(updateAdminData);
                 _dbContext.SaveChanges();
                 TempData["info"] = "update successfully data";
             }
