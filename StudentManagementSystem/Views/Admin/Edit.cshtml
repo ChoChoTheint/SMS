@@ -1,2 +1,59 @@
 ﻿@model AdminViewModel
 
+<div class="border w-75 shadow-sm mx-auto" tabindex="-1" id="edit" aria-labelledby="offcanvasExampleLabel">
+        <h1 class="h1 text-center" id="offcanvasExampleLabel">To Edit Admin</h1>
+    <div class="">
+        <form action="/admin/update" method="post" enctype="multipart/form-data" class="modal-body">
+            <input type="text" name="Id" value="@Model.Id" hidden />
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" name="Name" id="name" class="form-control" value="@Model.Name" required />
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Email</label>
+                <input type="Email" name="Email" id="description" class="form-control" value="@Model.Email" required />
+            </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">Address</label>
+                <textarea name="Address" class="form-control" id="address" rows="6" cols="6" required>@Model.Address</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone</label>
+                <input type="number" name="Phone" id="phone" class="form-control" value="@Model.Phone" required />
+            </div>
+            <div class="mb-3">
+                <label for="dob" class="form-label">DOB</label>
+                <input type="date" name="DOB" id="dob" class="form-control" value="@Model.DOB.ToString("yyyy-MM-dd")" required />
+            </div>
+            <div class="mb-3">
+                <label for="fatherName" class="form-label">Father Name</label>
+                <input type="text" name="FatherName" id="fatherName" class="form-control" value="@Model.FatherName" required />
+            </div>
+            <label class="form-label">Gender</label>
+            <div class="mb-3 d-flex">
+                <div class="me-3">
+                    <input type="radio" name="Gender" id="male" value="Male" class="form-check-input" required @(Model.Gender == "Male" ? "Checked" : "") />
+                    <label for="male" class="form-check-label">Male</label>
+                </div>
+                <div class="">
+                    <input type="radio" name="Gender" id="female" value="Female" class="form-check-input" required @(Model.Gender == "Female" ? "Checked" : "") />
+                    <label for="female" class="form-check-label">Female</label>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="nrc" class="form-label">NRC</label>
+                <input type="text" name="NRC" id="nrc" class="form-control" value="@Model.NRC" required />
+            </div>
+            @*<div class="modal-footer d-flex gap-3 mb-3">
+                <button type="button" class="btn btn-warning btn-lg w-100"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
+                <button type="reset" class="btn btn-secondary btn-lg w-100"><span class="glyphicon glyphicon-ok-sign"></span>Cancle</button>
+            </div>*@
+            <div class="mb-3">
+                <button class="btn btn-primary text-white" style="border-radius: 10px 0 10px 0;">Update</button>
+                <button class="btn btn-secondary text-white" style="border-radius: 10px 0 10px 0;" type="reset">Cancel</button>
+            </div>
+            
+        </form>
+    </div>
+</div>

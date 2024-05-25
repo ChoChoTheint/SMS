@@ -88,9 +88,8 @@ namespace StudentManagementSystem.Controllers
             return RedirectToAction("List");
         }
 
-        public IActionResult List(string Id)
+        public IActionResult Edit(string Id)
         {
-            //for Edit
             AdminViewModel editAdminData = _dbContext.Admins.Where(w => w.Id == Id).Select(s => new AdminViewModel
             {
                 Id = s.Id,
@@ -137,7 +136,7 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while updating the data";
             }
-            return View();
+            return RedirectToAction("List");
         }
     }
 }
