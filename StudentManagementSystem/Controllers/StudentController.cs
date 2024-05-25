@@ -2,6 +2,7 @@
 using StudentManagementSystem.DAO;
 using StudentManagementSystem.Models.DataModels;
 using StudentManagementSystem.Models.ViewModels;
+using System.Security.Claims;
 
 namespace StudentManagementSystem.Controllers
 {
@@ -27,6 +28,8 @@ namespace StudentManagementSystem.Controllers
         [HttpPost]
         public IActionResult Entry(StudentViewModel ui)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             try
             {
                 StudentEntity studentData = new StudentEntity()
@@ -43,6 +46,7 @@ namespace StudentManagementSystem.Controllers
                     FatherName = ui.FatherName,
                     Gender = ui.Gender,
                     BatchId = ui.BatchId,
+                    AspNetUsersId = userId,
                 };
                 _dbContext.Students.Add(studentData);
                 _dbContext.SaveChanges();

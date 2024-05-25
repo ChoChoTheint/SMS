@@ -9,7 +9,7 @@
         </div>
     </div>
     
-    <form action="/video/entry" method="post" enctype="multipart/form-data">
+    <form action="/book/entry" method="post" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>
             <input type="text" name="Name" id="name" class="form-control" placeholder="enter name..." required />
@@ -20,9 +20,26 @@
             <input type="text" name="Description" id="description" class="form-control" placeholder="enter description..." required />
         </div>
         <div class="mb-3">
-            <label for="examDate" class="form-label">ExamDate</label>
-            <input type="date" name="ExamDate" id="examDate" class="form-control" placeholder="enter exam date..." required />
+            <label for="courseId" class="form-label">Course</label>
+            <select name="CourseId" id="courseId" class="form-select">
+                <option selected>---choose option---</option>
+                @foreach (var course in ViewBag.Course)
+                {
+                    <option value="@course.Id">@course.Name</option>
+                }
+            </select>
         </div>
+        <div class="mb-3">
+            <label for="batchId" class="form-label">Batch</label>
+            <select name="BatchId" id="batchId" class="form-select">
+                <option selected>---choose option---</option>
+                @foreach (var batch in ViewBag.Batch)
+                {
+                    <option value="@batch.Id">@batch.Name</option>
+                }
+            </select>
+        </div>
+        
         <div class="mb-3">
             <button class="btn btn-primary text-white" style="border-radius: 10px 0 10px 0;">Submit</button>
             <button class="btn btn-secondary text-white" style="border-radius: 10px 0 10px 0;" type="reset">Cancel</button>

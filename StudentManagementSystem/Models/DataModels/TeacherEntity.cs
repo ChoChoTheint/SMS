@@ -14,7 +14,7 @@ namespace StudentManagementSystem.Models.DataModels
         public string FatherName { get; set; }
         public string Position { get; set; }
         public string Gender { get; set; }
-        [ForeignKey(nameof(UserId))]
-        public string UserId { get; set; }
+        [ForeignKey(nameof(AspNetUsersId))]
+        public string AspNetUsersId { get; set; }
     }
 }

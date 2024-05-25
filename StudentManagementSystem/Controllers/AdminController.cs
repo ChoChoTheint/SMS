@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using StudentManagementSystem.DAO;
 using StudentManagementSystem.Models.DataModels;
 using StudentManagementSystem.Models.ViewModels;
+using System.Security.Claims;
 
 namespace StudentManagementSystem.Controllers
 {
@@ -20,6 +21,8 @@ namespace StudentManagementSystem.Controllers
         [HttpPost]
         public IActionResult Entry(AdminViewModel ui)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             try
             {
                 AdminEntity adminData = new AdminEntity()
@@ -35,17 +38,34 @@ namespace StudentManagementSystem.Controllers
                     DOB = ui.DOB,
                     FatherName = ui.FatherName,
                     Gender = ui.Gender,
-                    UserId = ui.UserId,
+                    AspNetUsersId = userId,
                 };
                 _dbContext.Admins.Add(adminData);
                 _dbContext.SaveChanges();
-                TempData["info"] = "save successfully data";
+                TempData["info"] = "save successfully the data";
             }
             catch(Exception e)
             {
-                TempData["info"] = "error while saving data";
+                TempData["info"] = "error while saving the data";
             }
-            return View();
+            return RedirectToAction("List");
+        }
+
+        public IActionResult List()
+        {
+            IList<AdminViewModel> adminList = _dbContext.Admins.Select(s => new AdminViewModel
+            {
+                Id = s.Id,
+                Name = s.Name,
+                Email = s.Email,
+                Phone = s.Phone,
+                Address = s.Address,
+                DOB = s.DOB,
+                NRC = s.NRC,
+                FatherName = s.FatherName,
+                Gender = s.Gender,
+            }).ToList();
+            return View(adminList);
         }
 
         public IActionResult Delete(string Id)
@@ -59,18 +79,19 @@ namespace StudentManagementSystem.Controllers
                     _dbContext.Admins.Remove(deleteAdminData);
                     _dbContext.SaveChanges();
                 }
-                TempData["info"] = "delete successfully data";
+                TempData["info"] = "delete successfully the data";
             }
             catch(Exception e)
             {
-                TempData["info"] = "error while deleting data";
+                TempData["info"] = "error while deleting the data";
             }
-            return View();
+            return RedirectToAction("List");
         }
 
-        public IActionResult Edit(string Id)
+        public IActionResult List(string Id)
         {
-            IList<AdminViewModel> editAdminData = _dbContext.Admins.Where(w => w.Id == Id).Select(s => new AdminViewModel
+            //for Edit
+            AdminViewModel editAdminData = _dbContext.Admins.Where(w => w.Id == Id).Select(s => new AdminViewModel
             {
                 Id = s.Id,
                 Name = s.Name,
@@ -81,13 +102,15 @@ namespace StudentManagementSystem.Controllers
                 DOB = s.DOB,
                 FatherName = s.FatherName,
                 Gender = s.Gender,
-            }).ToList();
+            }).FirstOrDefault();
             return View(editAdminData);
         }
 
         [HttpPost]
         public IActionResult Update(AdminViewModel ui)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             try
             {
                 AdminEntity updateAdminData = new AdminEntity()
@@ -103,15 +126,16 @@ namespace StudentManagementSystem.Controllers
                     DOB = ui.DOB,
                     FatherName = ui.FatherName,
                     Gender = ui.Gender,
+                    AspNetUsersId = userId,
                 };
 
                 _dbContext.Admins.Update(updateAdminData);
                 _dbContext.SaveChanges();
-                TempData["info"] = "update successfully data";
+                TempData["info"] = "update successfully the data";
             }
             catch(Exception e)
             {
-                TempData["info"] = "error while updating data";
+                TempData["info"] = "error while updating the data";
             }
             return View();
         }

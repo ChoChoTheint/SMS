@@ -6,7 +6,7 @@
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime OpeningDate { get; set; }
-        public int DurationInHour { get; set; }
-        public DateTime DurationInMonth { get; set; }
+        public string DurationInHour { get; set; }
+        public string DurationInMonth { get; set; }
     }
 }

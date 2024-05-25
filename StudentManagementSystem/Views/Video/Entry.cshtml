@@ -8,37 +8,42 @@
             <h1 class="h5 brand-space">Excellence</h1>
         </div>
     </div>
-    
+
     <form action="/video/entry" method="post" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>
             <input type="text" name="Name" id="name" class="form-control" placeholder="enter name..." required />
-        </div>    
-        
+        </div>
+
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
             <input type="text" name="Description" id="description" class="form-control" placeholder="enter description..." required />
         </div>
         <div class="mb-3">
-            <label for="url" class="form-label">URL</label>
-            <input type="file" name="URL" id="url" class="form-control" placeholder="enter url..." required />
+            <label class="form-label" for="url">Video</label>
+            <input type="file" name="URL" class="form-control" id="url" placeholder="enter video..." required />
         </div>
         <div class="mb-3">
-            <label for="courseinfo" class="form-label">Course</label>
-            <select name="CourseId" id="courseinfo" class="form-select">
-                <option selected>---choose course---</option>
-                <option>Course One</option>
-                <option>Course Two</option>
+            <label for="courseId" class="form-label">Course</label>
+            <select name="CourseId" id="courseId" class="form-select">
+                <option selected>---choose option---</option>
+                @foreach (var course in ViewBag.Course)
+                {
+                    <option value="@course.Id">@course.Name</option>
+                }
             </select>
         </div>
         <div class="mb-3">
-            <label for="batchinfo" class="form-label">Batch</label>
-            <select name="BatchId" id="batchinfo" class="form-select">
-                <option selected>---choose course---</option>
-                <option>Batch One</option>
-                <option>Batch Two</option>
+            <label for="batchId" class="form-label">Batch</label>
+            <select name="BatchId" id="batchId" class="form-select">
+                <option selected>---choose option---</option>
+                @foreach (var batch in ViewBag.Batch)
+                {
+                    <option value="@batch.Id">@batch.Name</option>
+                }
             </select>
         </div>
+
         <div class="mb-3">
             <button class="btn btn-primary text-white" style="border-radius: 10px 0 10px 0;">Submit</button>
             <button class="btn btn-secondary text-white" style="border-radius: 10px 0 10px 0;" type="reset">Cancel</button>

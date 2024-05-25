@@ -2,6 +2,7 @@
 using StudentManagementSystem.DAO;
 using StudentManagementSystem.Models.DataModels;
 using StudentManagementSystem.Models.ViewModels;
+using System.Security.Claims;
 
 namespace StudentManagementSystem.Controllers
 {
@@ -20,6 +21,8 @@ namespace StudentManagementSystem.Controllers
         [HttpPost]
         public IActionResult Entry(TeacherViewModel ui)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             try
             {
                 TeacherEntity teacherData = new TeacherEntity()
@@ -36,7 +39,7 @@ namespace StudentManagementSystem.Controllers
                     FatherName = ui.FatherName,
                     Position = ui.Position,
                     Gender = ui.Gender,
-                    UserId = ui.UserId,
+                    AspNetUsersId = userId,
                 };
                 _dbContext.Teachers.Add(teacherData);
                 _dbContext.SaveChanges();
@@ -70,6 +73,7 @@ namespace StudentManagementSystem.Controllers
 
         public IActionResult Edit(string Id)
         {
+
             TeacherViewModel editTeacherData = _dbContext.Teachers.Where(w => w.Id == Id).Select(s => new TeacherViewModel
             {
                 Id = s.Id,
@@ -82,13 +86,14 @@ namespace StudentManagementSystem.Controllers
                 FatherName = s.FatherName,
                 Position = s.Position,
                 Gender = s.Gender,
-                UserId = s.UserId,
             }).FirstOrDefault();
             return View(editTeacherData);
         }
 
         public IActionResult Update(TeacherViewModel ui)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             try
             {
                 TeacherEntity updateTeacherData = new TeacherEntity()
@@ -106,7 +111,7 @@ namespace StudentManagementSystem.Controllers
                     FatherName = ui.FatherName,
                     Position = ui.Position,
                     Gender = ui.Gender,
-                    UserId = ui.UserId,
+                    AspNetUsersId = userId,
                 };
 
                 _dbContext.Teachers.Update(updateTeacherData);

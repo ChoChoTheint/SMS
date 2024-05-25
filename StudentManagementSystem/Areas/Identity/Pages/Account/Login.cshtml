@@ -109,8 +109,12 @@
                     <div class="d-flex justify-content-around align-items-center mb-4">
                         <!-- Checkbox -->
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" asp-for="Input.RememberMe" />
-                            <label class="form-check-label" asp-for="Input.RememberMe"> Remember me </label>
+                            <label asp-for="Input.RememberMe" class="form-label">
+                                <input class="form-check-input" asp-for="Input.RememberMe" />
+                                @Html.DisplayNameFor(m => m.Input.RememberMe)
+                            </label>
+                            @*<input class="form-check-input" type="checkbox" value="" asp-for="Input.RememberMe" />
+                            <label class="form-check-label" asp-for="Input.RememberMe"> Remember me </label>*@
                         </div>
                         <a id="forgot-password" asp-page="./ForgotPassword">Forgot password?</a>
                     </div>

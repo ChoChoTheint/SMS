@@ -14,7 +14,7 @@ namespace StudentManagementSystem.Models.ViewModels
         public string FatherName { get; set; }
         public string Position { get; set; }
         public string Gender { get; set; }
-        public string UserId { get; set; }
+        public string AspNetUsersId { get; set; }
 
 
     }

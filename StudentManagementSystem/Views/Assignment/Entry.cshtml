@@ -1,0 +1,51 @@
+﻿<div class="container w-50 mx-auto my-3 p-5 border-start border-end border-bottom rounded-start rounded-end shadow-sm" style="border-top: 12px solid #699BF7">
+    <div class="d-flex justify-content-center align-items-center mb-4">
+        <div class="me-3">
+            <i class="fa-solid fa-book-open fa-2xl" style="color: #699BF7"></i>
+        </div>
+        <div class="text-center">
+            <span class="mate-sc text-uppercase fw-bold">Leadership</span>
+            <h1 class="h5 brand-space">Excellence</h1>
+        </div>
+    </div>
+
+    <form action="/assignment/entry" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" name="Name" id="name" class="form-control" placeholder="enter name..." required />
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <input type="text" name="Description" id="description" class="form-control" placeholder="enter description..." required />
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label">File</label>
+            <input type="file" name="URL" id="" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label for="courseId" class="form-label">Course</label>
+            <select name="CourseId" id="courseId" class="form-select">
+                <option selected>---select option---</option>
+                @foreach (var course in ViewBag.Course)
+                {
+                    <option value="@course.Id">@course.Name</option>
+                }
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="batchIn" class="form-label">Batch</label>
+            <select name="BatchId" id="batchIn" class="form-select">
+                <option selected>---choose option---</option>
+                @foreach (var batch in ViewBag.Batch)
+                {
+                    <option value="@batch.Id">@batch.Name</option>
+                }
+            </select>
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-primary text-white" style="border-radius: 10px 0 10px 0;">Submit</button>
+            <button class="btn btn-secondary text-white" style="border-radius: 10px 0 10px 0;" type="reset">Cancel</button>
+        </div>
+    </form>
+</div>

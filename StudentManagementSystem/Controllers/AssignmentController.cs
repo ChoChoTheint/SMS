@@ -2,15 +2,21 @@
 using StudentManagementSystem.DAO;
 using StudentManagementSystem.Models.DataModels;
 using StudentManagementSystem.Models.ViewModels;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
+
 
 namespace StudentManagementSystem.Controllers
 {
     public class AssignmentController : Controller
     {
         private readonly SMSDbContext _dbContext;
-        public AssignmentController(SMSDbContext dbContext)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public AssignmentController(SMSDbContext dbContext, IWebHostEnvironment webHostEnvironment)
         {
             _dbContext = dbContext;
+            _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Entry()
         {
@@ -31,25 +37,44 @@ namespace StudentManagementSystem.Controllers
             return View();
         }
 
+        private string UploadedFile(AssignmentViewModel model)
+        {
+            string uniqueFileName = null;
+
+            if (model.URL != null)
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.URL.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    model.URL.CopyTo(fileStream);
+                }
+            }
+            return uniqueFileName;
+        }
+
         [HttpPost]
         public IActionResult Entry(AssignmentViewModel ui)
         {
             try
             {
+
                 AssignmentEntity assignmentData = new AssignmentEntity()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    CreatedAt = DateTime.UtcNow,
-                    IsInActive = true,
-                    Name = ui.Name,
-                    Description = ui.Description,
-                    URL = ui.URL,
-                    CourseId = ui.CourseInfo,
-                    BatchId = ui.BatchId,
-                };
-                _dbContext.Assignments.Add(assignmentData);
-                _dbContext.SaveChanges();
-                TempData["info"] = "save successfully the record";
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        CreatedAt = DateTime.UtcNow,
+                        IsInActive = true,
+                        Name = ui.Name,
+                        Description = ui.Description,
+                        URL = UploadedFile(ui),
+                        CourseId = ui.CourseId,
+                        BatchId = ui.BatchId,
+                    };
+                    _dbContext.Assignments.Add(assignmentData);
+                    _dbContext.SaveChanges();
+                    TempData["info"] = "save successfully the record";
+                
             }
             catch (Exception e)
             {
@@ -71,7 +96,7 @@ namespace StudentManagementSystem.Controllers
                                                              Id = assignment.Id,
                                                              Name = assignment.Name,
                                                              Description = assignment.Description,
-                                                             URL = assignment.URL,
+                                                             File = assignment.URL,
                                                              CourseInfo = course.Name,
                                                              BatchInfo = batch.Name,
                                                          }).ToList();
@@ -104,7 +129,7 @@ namespace StudentManagementSystem.Controllers
                 Id = s.Id,
                 Name = s.Name,
                 Description = s.Description,
-                URL = s.URL,
+               // URL = s.URL,
                 CourseId = s.CourseId,
                 BatchId = s.BatchId,
             }).FirstOrDefault();
@@ -140,7 +165,7 @@ namespace StudentManagementSystem.Controllers
                     IsInActive = true,
                     Name = ui.Name,
                     Description = ui.Description,
-                    URL = ui.URL,
+                    URL = UploadedFile(ui),
                     CourseId = ui.CourseInfo,
                     BatchId = ui.BatchId,
                 };
