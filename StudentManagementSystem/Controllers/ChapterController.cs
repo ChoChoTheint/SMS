@@ -32,6 +32,7 @@ namespace StudentManagementSystem.Controllers
             {
                 Id = s.Id,
                 Name = s.Name,
+                //URL = s.URL,
             }).OrderBy(o => o.Name).ToList();
             ViewBag.Video = videos;
 
@@ -67,6 +68,27 @@ namespace StudentManagementSystem.Controllers
             return RedirectToAction("Lsit");
         }
 
+        public IActionResult List()
+        {
+            IList<ChapterViewModel> chapterList = (from chapter in _dbContext.Chapters
+                                                   join batch in _dbContext.Batches
+                                                   on chapter.BatchId equals batch.Id
+                                                   join book in _dbContext.Books
+                                                   on chapter.BookId equals book.Id
+                                                   join video in _dbContext.Videos
+                                                   on chapter.VideoId equals video.Id
+
+                                                   select new ChapterViewModel
+                                                   {
+                                                       Id = chapter.Id,
+                                                       Name = chapter.Name,
+                                                       Description = chapter.Description,
+                                                       BatchInfo = batch.Name,
+                                                       BookInfo = book.Name,
+                                                       VideoInfo = video.URL,
+                                                   }).ToList();
+            return View(chapterList);
+        }
         public IActionResult Delete(string Id)
         {
             try

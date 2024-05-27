@@ -15,9 +15,9 @@
         <a class="btn btn-secondary btn-lg" asp-area="Identity" asp-page="/Account/Register">Register</a>
     </div>
 }
-else
+else if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
 {
-    <div class="border">
+    <div class="row">
         <div class="col-lg-10 col-md-8 col-sm-auto mx-auto">
             @* <div class="ps-4 pt-2 d-flex align-items-center border-primary border-bottom" style="height: 70px;">
         <div>
@@ -41,58 +41,148 @@ else
         </div>
         </div>*@
 
-            <div class="py-2 ">
-                <div class="d-lg-flex d-md-inline g-3 justify-content-between">
-                    <a href="/home/new">
+            @*  <div class="py-2 ">
+        <div class="d-lg-flex d-md-inline g-3 justify-content-between mt-5">
+        <a href="/home/new">
+        <div class="box rounded pt-5 shadow border">
+        <div class="box-item box-item_add rounded  mx-auto">
+        <i class="fa-solid fa-plus fa-lg box-item_icon ms-1" style="color: #fafafa;"></i>
+        </div>
+        </div>
+        </a>
+        <a href="">
+        <div class="box rounded pt-5 shadow border">
+        <div class="box-item box-item_attend rounded  mx-auto">
+        <i class="fa-solid fa-users-line fa-lg box-item_icon" style="color: #fafafa;"></i>
+        </div>
+        </div>
+        </a>
+        <a href="">
+        <div class="box rounded pt-5 shadow border">
+        <div class="box-item box-item_class rounded  mx-auto">
+        <i class="fa-solid fa-list-ul fa-lg box-item_icon" style="color: #fafafa;"></i>
+        </div>
+        </div>
+        </a>
+        </div>
+        <div class="d-lg-flex mx-md-auto d-md-inline g-3 justify-content-between mt-md-5">
+        <a href="">
+        <div class="box rounded pt-5 shadow border">
+        <div class="box-item box-item_add rounded  mx-auto">
+        <i class="fa-solid fa-plus fa-lg box-item_icon ms-1" style="color: #fafafa;"></i>
+        </div>
+        </div>
+        </a>
+        <a href="">
+        <div class="box rounded pt-5 shadow border">
+        <div class="box-item box-item_attend rounded  mx-auto">
+        <i class="fa-solid fa-users-line fa-lg box-item_icon" style="color: #fafafa;"></i>
+        </div>
+        </div>
+        </a>
+        <a href="">
+        <div class="box rounded pt-5 shadow border">
+        <div class="box-item box-item_class rounded  mx-auto">
+        <i class="fa-solid fa-list-ul fa-lg box-item_icon" style="color: #fafafa;"></i>
+        </div>
+        </div>
+        </a>
+        </div>
+        </div>
+        *@
+
+            <div class="container">
+                <div class="d-lg-flex d-md-inline g-3 justify-content-evenly mt-5">
+                    <a href="/video/entry" class="link-dark link-underline link-underline-opacity-0">
                         <div class="box rounded pt-5 shadow border">
-                            <div class="box-item box-item_add rounded  mx-auto">
-                                <i class="fa-solid fa-plus fa-lg box-item_icon ms-1" style="color: #fafafa;"></i>
+                            <div class="box-item  box-item_video rounded  mx-auto">
+                                <i class="fa-solid fa-clapperboard fa-lg ms-1 box-item_icon" style="color: #fafafa;"></i>
                             </div>
                         </div>
+                        <h1 class="h5 text-center">Add Video</h1>
                     </a>
-                    <a href="">
+                    <a href="/book/entry" class="link-dark link-underline link-underline-opacity-0">
+                        <div class="box rounded pt-5 shadow border">
+                            <div class="box-item box-item_new rounded  mx-auto">
+                                <i class="fa-solid fa-book fa-lg box-item_icon ms-1" style="color: #fafafa;"></i>
+                            </div>
+                        </div>
+                        <h1 class="h5 text-center">Add Book</h1>
+                    </a>
+                    <a href="/exam/entry" class="link-dark link-underline link-underline-opacity-0">
+                        <div class="box rounded pt-5 shadow border">
+                            <div class="box-item box-item_class rounded  mx-auto">
+                                <i class="fa-solid fa-person-circle-question fa-lg box-item_icon" style="color: #fafafa;"></i>
+                            </div>
+                        </div>
+                        <h1 class="h5 text-center">Add Exam</h1>
+                    </a>
+                </div>
+
+                <div class="d-lg-flex d-md-inline g-3 justify-content-evenly mt-5">
+                    <a href="/attendance/entry" class="link-dark link-underline link-underline-opacity-0">
                         <div class="box rounded pt-5 shadow border">
                             <div class="box-item box-item_attend rounded  mx-auto">
                                 <i class="fa-solid fa-users-line fa-lg box-item_icon" style="color: #fafafa;"></i>
                             </div>
                         </div>
+                        <h1 class="h5 text-center">Add Attendance</h1>
                     </a>
-                    <a href="">
+                    <a href="/examresult/entry" class="link-dark link-underline link-underline-opacity-0">
                         <div class="box rounded pt-5 shadow border">
-                            <div class="box-item box-item_class rounded  mx-auto">
-                                <i class="fa-solid fa-list-ul fa-lg box-item_icon" style="color: #fafafa;"></i>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="d-lg-flex mx-md-auto d-md-inline g-3 justify-content-between mt-md-5">
-                    <a href="">
-                        <div class="box rounded pt-5 shadow border">
-                            <div class="box-item box-item_timeable rounded  mx-auto">
-                                <i class="fa-solid fa-calendar-days fa-lg box-item_icon ms-1" style="color: #fafafa;"></i>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="">
-                        <div class="box rounded pt-5 shadow border">
-                            <div class="box-item box-item_exam rounded  mx-auto">
-                                <i class="fa-solid fa-book fa-lg box-item_icon ms-1" style="color: #fafafa;"></i>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="">
-                        <div class="box rounded pt-5 shadow border">
-                            <div class="box-item box-item_examresult rounded  mx-auto">
+                            <div class="box-item box-item_new rounded  mx-auto">
                                 <i class="fa-solid fa-square-poll-horizontal fa-lg box-item_icon ms-1" style="color: #fafafa;"></i>
                             </div>
                         </div>
+                        <h1 class="h5 text-center">Add Exam Result</h1>
+                    </a>
+                    <a href="/batch/entry" class="link-dark link-underline link-underline-opacity-0">
+                        <div class="box rounded pt-5 shadow border">
+                            <div class="box-item box-item_new rounded  mx-auto ">
+                                <i class="fa-solid fa-calendar-days fa-lg ms-1 box-item_icon"></i>
+                            </div>
+                        </div>
+                        <h1 class="h5 text-center">Add Batch</h1>
+                    </a>
+                </div>
+                <div class="d-lg-flex d-md-inline g-3 justify-content-evenly mt-5">
+                    <a href="/assignment/entry" class="link-dark link-underline link-underline-opacity-0">
+                        <div class="box rounded pt-5 shadow border">
+                            <div class="box-item box-item_new rounded  mx-auto">
+                                <i class="fa-solid fa-square-poll-horizontal fa-lg box-item_icon ms-1" style="color: #fafafa;"></i>
+                            </div>
+                        </div>
+                        <h1 class="h5 text-center">Add Assignment</h1>
+                    </a>
+                    <a href="/course/entry" class="link-dark link-underline link-underline-opacity-0">
+                        <div class="box rounded pt-5 shadow border">
+                            <div class="box-item box-item_new rounded  mx-auto ">
+                                <i class="fa-solid fa-calendar-days fa-lg ms-1 box-item_icon"></i>
+                            </div>
+                        </div>
+                        <h1 class="h5 text-center">Add Course</h1>
+                    </a>
+                    <a href="/teachercourse/entry" class="link-dark link-underline link-underline-opacity-0">
+                        <div class="box rounded pt-5 shadow border">
+                            <div class="box-item box-item_new rounded  mx-auto ">
+                                <i class="fa-solid fa-calendar-days fa-lg ms-1 box-item_icon"></i>
+                            </div>
+                        </div>
+                        <h1 class="h5 text-center">Add Teacher Course</h1>
                     </a>
                 </div>
             </div>
-
         </div>
 
     </div>
 
+}
+else if (User.Identity.IsAuthenticated && User.IsInRole("Teacher"))
+{
+    Layout = "_LayoutTeacher";
+}
+else if (User.Identity.IsAuthenticated && User.IsInRole("Student"))
+{
+    Layout = "_LayoutStudent";
 }
 

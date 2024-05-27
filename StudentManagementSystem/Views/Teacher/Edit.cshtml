@@ -1,0 +1,69 @@
+﻿@using StudentManagementSystem.Models.ViewModels;
+@model TeacherViewModel;
+<div class="container w-50 mx-auto my-3 p-5 border-start border-end border-bottom rounded-start rounded-end shadow-sm" style="border-top: 12px solid #699BF7">
+    <div class="d-flex justify-content-center align-items-center mb-4">
+        <div class="me-3">
+            <i class="fa-solid fa-book-open fa-2xl" style="color: #699BF7"></i>
+        </div>
+        <div class="text-center">
+            <span class="mate-sc text-uppercase fw-bold">Leadership</span>
+            <h1 class="h5 brand-space">Excellence</h1>
+        </div>
+    </div>
+
+    <form action="/teacher/update" method="post" enctype="multipart/form-data">
+        <input type="text" value="@Model.Id" name="Id" id="name" class="form-control" hidden />
+        <input type="text" value="@Model.AspNetUsersId" name="AspNetUsersId" id="name" class="form-control" hidden />
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" name="Name" value="@Model.Name" id="name" class="form-control" placeholder="enter name..." required />
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Email</label>
+            <input type="Email" name="Email" value="@Model.Email" id="description" class="form-control" placeholder="enter description..." required />
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label">Address</label>
+            <textarea name="Address" class="form-control" id="address" rows="6" cols="6" required>@Model.Address</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label">Phone</label>
+            <input type="number" name="Phone" value="@Model.Phone" id="" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label">DOB</label>
+            <input type="date" name="DOB" value="@Model.DOB.ToString("yyyy-MM-dd")" id="" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label">Father Name</label>
+            <input type="text" name="FatherName" value="@Model.FatherName" id="" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <div class="form-check">
+                <input type="radio" class="form-check-input" name="Gender" value="Male" @(Model.Gender == "Male" ? "Checked" : "")>
+                <label for="" class="form-check-label">Male</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" name="Gender" value="Female" @(Model.Gender == "Female" ? "Checked" : "")>
+                <label for="" class="form-check-label">Female</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" name="Gender" value="Other" @(Model.Gender == "Other" ? "Checked" : "")>
+                <label for="" class="form-check-label">Other</label>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label">NRC</label>
+            <input type="text" name="NRC" value="@Model.NRC" id="" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label">Position</label>
+            <input type="text" name="Position" value="@Model.Position" id="" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-primary text-white" style="border-radius: 10px 0 10px 0;">Submit</button>
+            <button class="btn btn-secondary text-white" style="border-radius: 10px 0 10px 0;" type="reset">Cancel</button>
+        </div>
+    </form>
+</div>

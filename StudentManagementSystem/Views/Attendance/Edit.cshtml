@@ -1,0 +1,48 @@
+﻿@model AttendanceViewModel
+<div class="container w-50 mx-auto my-3 p-5 border-start border-end border-bottom rounded-start rounded-end shadow-sm" style="border-top: 12px solid #699BF7">
+    <div class="d-flex justify-content-center align-items-center mb-4">
+        <div class="me-3">
+            <i class="fa-solid fa-book-open fa-2xl" style="color: #699BF7"></i>
+        </div>
+        <div class="text-center">
+            <span class="mate-sc text-uppercase fw-bold">Leadership</span>
+            <h1 class="h5 brand-space">Excellence</h1>
+        </div>
+    </div>
+
+    <form action="/video/entry" method="post" enctype="multipart/form-data">
+        <input type="text" name="Id" value="@Model.Id" hidden/>
+        <div class="mb-3">
+            <label for="attendaceDate" class="form-label">AttendanceDate</label>
+            <input type="date" name="AttendanceDate" id="attendaceDate" class="form-control" value="@Model.AttendanceDate.ToString("yyyy-MM-dd")" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="inTime" class="form-label">InTime</label>
+            <input type="date" name="InTime" id="inTime" class="form-control" value="@Model.InTime" required />
+        </div>
+        <div class="mb-3">
+            <label for="outTime" class="form-label">OutTime</label>
+            <input type="date" name="OutTime" id="outTime" class="form-control" value="@Model.OutTime" required />
+        </div>
+        <label for="isLeave" class="form-label">IsLeave</label>
+        <div class="mb-3 d-flex">
+            <div class="me-3">
+                <input type="radio" name="IsLeave" value="Yes" id="yes" class="form-check-input"  required />
+                <label for="yes" class="form-label-input">Yes</label>
+            </div>
+            <div>
+                <input type="radio" name="IsLeave" value="No" id="no" class="form-check-input"  required />
+                <label for="no" class="form-label-input">No</label>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="studentId" class="form-label">Student</label>
+            <input type="text" name="StudentId" id="studentId" class="form-control" value="@Model.StudentId" required />
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-primary text-white" style="border-radius: 10px 0 10px 0;">Update</button>
+            <button class="btn btn-secondary text-white" style="border-radius: 10px 0 10px 0;" type="reset">Cancel</button>
+        </div>
+    </form>
+</div>

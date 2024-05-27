@@ -14,6 +14,11 @@ namespace StudentManagementSystem.Controllers
         }
         public IActionResult Entry()
         {
+            var teachers = _dbContext.Teachers.Select(s => new TeacherViewModel
+            {
+                Id = s.Id,
+                Name = s.Name,
+            }).OrderBy(o => o.Name).ToList();
             return View();
         }
 

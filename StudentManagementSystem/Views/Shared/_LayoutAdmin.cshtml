@@ -14,7 +14,7 @@
     <div class="col-lg-10 col-md-9 ms-auto">
         @RenderBody()
     </div>
-    
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
@@ -88,21 +88,20 @@
             overflow-y: hidden;
         }
 
-        .nav-scroller .nav {
-            display: flex;
-            flex-wrap: nowrap;
-            padding-bottom: 1rem;
-            margin-top: -1px;
-            overflow-x: auto;
-            text-align: center;
-            white-space: nowrap;
-            -webkit-overflow-scrolling: touch;
-        }
+            .nav-scroller .nav {
+                display: flex;
+                flex-wrap: nowrap;
+                padding-bottom: 1rem;
+                margin-top: -1px;
+                overflow-x: auto;
+                text-align: center;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+            }
 
         .btn-bd-primary {
             --bd-violet-bg: #712cf9;
             --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
-
             --bs-btn-font-weight: 600;
             --bs-btn-color: var(--bs-white);
             --bs-btn-bg: var(--bd-violet-bg);
@@ -120,14 +119,14 @@
             z-index: 1500;
         }
 
-        .bd-mode-toggle .dropdown-menu .active .bi {
-            display: block !important;
-        }
+            .bd-mode-toggle .dropdown-menu .active .bi {
+                display: block !important;
+            }
     </style>
 
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <!--DataTableNet-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css" />
+
 
     <!--Mate SC Font Link-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -139,13 +138,9 @@
     <!-- Custom styles for this template -->
     <link href="~/css/dashboard.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/e1dd7d5abe.js" crossorigin="anonymous"></script>
-
-    <!-- DataTable Net -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css" />
-
 </head>
 
-<body class="fluid-container">
+<body>
     <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
         <symbol id="check2" viewBox="0 0 16 16">
             <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
@@ -215,12 +210,12 @@
         </symbol>
     </svg>
 
-    @*<header class="navbar container-fluid sticky-top bg-white flex-md-nowrap p-0" data-bs-theme="white">
-        
+    <header class="navbar sticky-top bg-white flex-md-nowrap p-0 shadow" data-bs-theme="white">
+
         <a class="navbar-brand bg-white col-md-3 col-lg-2 text-white d-flex align-items-center justify-content-center" href="#">
             <i class="fa-solid fa-book-open fa-lg" style="color: #699BF7"></i>
             <div class=" text-center">
-                <span class="mate-sc text-uppercase">Leadership</span> 
+                <span class="mate-sc text-uppercase">Leadership</span>
                 <h1 class="h5 font-monospace ms-2" style="color: #699BF7">Excellence</h1>
             </div>
         </a>
@@ -249,11 +244,11 @@
         <div id="navbarSearch" class="navbar-search w-100 collapse">
             <input class="form-control w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">
         </div>
-    </header>*@
+    </header>
 
-    <div class="main-sidebar sidebar-dark-primary elevation-4 fluid-container">
+    <div class="fluid-container">
         <div class="row">
-            <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary" style="height: 160vh;">
+            <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary overflow-auto" style="height: 200vh;">
                 <div class="offcanvas-md offcanvas-end bg-body-tertiary" tabindex="-1" id="sidebarMenu"
                      aria-labelledby="sidebarMenuLabel">
                     <div class="offcanvas-header">
@@ -268,20 +263,20 @@
                     <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
                         <ul class="nav flex-column">
                             @* <li class="nav-item">
-                                <a class="col-md-3 col-lg-2 me-0 px-3 fs-4 text-decoration-none fw-bold" href="#"><span class="text-dark">Leadership</span> <span class="text-primary">Excellence</span></a>
+                            <a class="col-md-3 col-lg-2 me-0 px-3 fs-4 text-decoration-none fw-bold" href="#"><span class="text-dark">Leadership</span> <span class="text-primary">Excellence</span></a>
                             </li> *@
                             <li class="nav-item">
                                 <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="#">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
                                         <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
                                     </svg>
-                                    @if(SignInManager.IsSignedIn(User))
+                                    @if (SignInManager.IsSignedIn(User))
                                     {
                                         <span>@UserManager.GetUserName(User)!</span>
                                     }
                                 </a>
                             </li>
-                            <li class="nav-item dropdown">
+                            <li class="nav-item dropdown align-items-center gap-2 active">
                                 <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                     Admin
                                 </button>
@@ -296,12 +291,8 @@
                                     </a>
 
                                 </ul>
-                                @*<a class="nav-link d-flex align-items-center gap-2 active ms-4" aria-current="page" href="#">
-                                    <i class="fa-solid fa-plus fa-lg me-2" style="color: #6b980d;"></i>
-                                    New
-                                </a>*@
                             </li>
-                            <li class="nav-item dropdown">
+                            <li class="nav-item dropdown align-items-center gap-2 active">
                                 <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                     Attendance
                                 </button>
@@ -316,91 +307,6 @@
                                     </a>
 
                                 </ul>
-                                @*<a class="nav-link d-flex align-items-center gap-2 ms-4" href="#">
-                                    <i class="fa-solid fa-users-line fa-lg" style="color: #f31170;"></i>
-                                   Attendance
-                                </a>*@
-                            </li>
-                            <li class="nav-item dropdown">
-                                <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Course
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-white">
-                                    <a class="nav-link d-flex align-items-center gap-2 active ms-4" aria-current="page" href="/course/entry">
-                                        <i class="fa-solid fa-plus fa-lg"></i>
-                                        Entry
-                                    </a>
-                                    <a class="nav-link d-flex align-items-center gap-2 active ms-4" aria-current="page" href="/course/list">
-                                        <i class="fa-solid fa-list"></i>
-                                        List
-                                    </a>
-
-                                </ul>
-                                @*<a class="nav-link d-flex align-items-center gap-2 ms-4" href="#">
-                                    <i class="fa-solid fa-list-ul fa-lg me-1" style="color: #3eb414;"></i>
-                                    
-                                        Class
-                                </a>*@
-                            </li>
-                            <li class="nav-item dropdown">
-                                <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Exam
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-white">
-                                    <a class="nav-link d-flex align-items-center gap-2 active ms-4" aria-current="page" href="/exam/entry">
-                                        <i class="fa-solid fa-plus fa-lg"></i>
-                                        Entry
-                                    </a>
-                                    <a class="nav-link d-flex align-items-center gap-2 active ms-4" aria-current="page" href="/exam/list">
-                                        <i class="fa-solid fa-list"></i>
-                                        List
-                                    </a>
-
-                                </ul>
-                                @*<a class="nav-link d-flex align-items-center gap-2 ms-4" href="#">
-                                    <i class="fa-solid fa-calendar-days fa-lg me-1" style="color: #b41e14;"></i>
-                                    Timetable
-                                </a>*@
-                            </li>
-                            <li class="nav-item dropdown">
-                                <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Exam Result
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-white">
-                                    <a class="nav-link d-flex align-items-center gap-2 active ms-4" aria-current="page" href="/examresult/entry">
-                                        <i class="fa-solid fa-plus fa-lg"></i>
-                                        Entry
-                                    </a>
-                                    <a class="nav-link d-flex align-items-center gap-2 active ms-4" aria-current="page" href="/examresult/list">
-                                        <i class="fa-solid fa-list"></i>
-                                        List
-                                    </a>
-
-                                </ul>
-                                @*<a class="nav-link d-flex align-items-center gap-2 ms-4" href="#">
-                                    <i class="fa-solid fa-book fa-lg me-1" style="color: #5a11f3;"></i>
-                                    Exam
-                                </a>*@
-                            </li>
-                            <li class="nav-item">
-                                <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Chapter
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-white">
-                                    <a class="nav-link d-flex align-items-center gap-2 active ms-4" aria-current="page" href="/chapter/entry">
-                                        <i class="fa-solid fa-plus fa-lg"></i>
-                                        Entry
-                                    </a>
-                                    <a class="nav-link d-flex align-items-center gap-2 active ms-4" aria-current="page" href="/chapter/list">
-                                        <i class="fa-solid fa-list"></i>
-                                        List
-                                    </a>
-
-                                </ul>
-                                @*<a class="nav-link d-flex align-items-center gap-2 ms-4" href="#">
-                                    <i class="fa-solid fa-square-poll-horizontal fa-xl" style="color: #000031;"></i>
-                                    Exam Result
-                                </a>*@
                             </li>
                             <li class="nav-item dropdown align-items-center gap-2 active">
                                 <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -420,14 +326,63 @@
                             </li>
                             <li class="nav-item dropdown align-items-center gap-2 active">
                                 <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Book
+                                    Course
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-white">
-                                    <a class="nav-link d-flex align-items-center gap-2 active ms-4" aria-current="page" href="/book/entry">
+                                    <a class="nav-link d-flex align-items-center gap-2 active ms-4" aria-current="page" href="/course/entry">
                                         <i class="fa-solid fa-plus fa-lg"></i>
                                         Entry
                                     </a>
-                                    <a class="nav-link d-flex align-items-center gap-2 active ms-4" aria-current="page" href="/book/list">
+                                    <a class="nav-link d-flex align-items-center gap-2 active ms-4" aria-current="page" href="/course/list">
+                                        <i class="fa-solid fa-list"></i>
+                                        List
+                                    </a>
+
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown align-items-center gap-2 active">
+                                <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Chatper
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-white">
+                                    <a class="nav-link d-flex align-items-center gap-2 active ms-4" aria-current="page" href="/chapter/entry">
+                                        <i class="fa-solid fa-plus fa-lg"></i>
+                                        Entry
+                                    </a>
+                                    <a class="nav-link d-flex align-items-center gap-2 active ms-4" aria-current="page" href="/chapter/list">
+                                        <i class="fa-solid fa-list"></i>
+                                        List
+                                    </a>
+
+                                </ul>
+                            </li>
+
+                            <li class="nav-item dropdown align-items-center gap-2 active">
+                                <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Exam
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-white">
+                                    <a class="nav-link d-flex align-items-center gap-2 active ms-4" aria-current="page" href="/exam/entry">
+                                        <i class="fa-solid fa-plus fa-lg"></i>
+                                        Entry
+                                    </a>
+                                    <a class="nav-link d-flex align-items-center gap-2 active ms-4" aria-current="page" href="/exam/list">
+                                        <i class="fa-solid fa-list"></i>
+                                        List
+                                    </a>
+
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown align-items-center gap-2 active">
+                                <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Exam Result
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-white">
+                                    <a class="nav-link d-flex align-items-center gap-2 active ms-4" aria-current="page" href="/examresult/entry">
+                                        <i class="fa-solid fa-plus fa-lg"></i>
+                                        Entry
+                                    </a>
+                                    <a class="nav-link d-flex align-items-center gap-2 active ms-4" aria-current="page" href="/examresult/list">
                                         <i class="fa-solid fa-list"></i>
                                         List
                                     </a>
@@ -439,11 +394,27 @@
                                     Video
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-white">
-                                    <a class="nav-link d-flex align-items-center gap-2 active ms-4" aria-current="page" asp-controller="Video" asp-action="Entry">
+                                    <a class="nav-link d-flex align-items-center gap-2 active ms-4" aria-current="page" href="/video/entry">
                                         <i class="fa-solid fa-plus fa-lg"></i>
                                         Entry
                                     </a>
                                     <a class="nav-link d-flex align-items-center gap-2 active ms-4" aria-current="page" href="/video/list">
+                                        <i class="fa-solid fa-list"></i>
+                                        List
+                                    </a>
+
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown align-items-center gap-2 active">
+                                <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Book
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-white">
+                                    <a class="nav-link d-flex align-items-center gap-2 active ms-4" aria-current="page" href="/book/entry">
+                                        <i class="fa-solid fa-plus fa-lg"></i>
+                                        Entry
+                                    </a>
+                                    <a class="nav-link d-flex align-items-center gap-2 active ms-4" aria-current="page" href="/book/list">
                                         <i class="fa-solid fa-list"></i>
                                         List
                                     </a>
@@ -482,6 +453,20 @@
 
                                 </ul>
                             </li>
+                            @* <ul>
+                            <li class="nav-item">
+                            <a class="nav-link d-flex align-items-center gap-2 ms-4" href="/teachercourse/entry">
+                            <i class="fa-solid fa-square-poll-horizontal fa-xl" style="color: #000031;"></i>
+                            Teacher Course
+                            </a>
+                            </li>
+                            <li class="nav-item">
+                            <a class="nav-link d-flex align-items-center gap-2 ms-4" href="/teachercourse/entry">
+                            <i class="fa-solid fa-square-poll-horizontal fa-xl" style="color: #000031;"></i>
+                            list
+                            </a>
+                            </li>
+                            </ul> *@
                         </ul>
 
 
@@ -504,7 +489,7 @@
             </div>
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div class="container">
+                <div class="">
                     @RenderBody()
                 </div>
             </main>
@@ -514,7 +499,6 @@
 
     <!--DataTableNet-->
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
-
 </body>
 
 </html>

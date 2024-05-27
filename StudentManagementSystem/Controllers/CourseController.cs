@@ -106,6 +106,7 @@ namespace StudentManagementSystem.Controllers
                     CreatedAt = DateTime.UtcNow,
                     ModifiedAt = DateTime.UtcNow,
                     IsInActive = true,
+                    Name = ui.Name,
                     Description = ui.Description,
                     OpeningDate = ui.OpeningDate,
                     DurationInHour = ui.DurationInHour,

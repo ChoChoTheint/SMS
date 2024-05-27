@@ -93,6 +93,7 @@ namespace StudentManagementSystem.Controllers
             BatchViewModel editBatchData = _dbContext.Batches.Where(w => w.Id == Id).Select(s => new BatchViewModel
             {
                 Id = s.Id,
+                Name = s.Name,
                 Description = s.Description,
                 CourseId = s.CourseId,
             }).FirstOrDefault();

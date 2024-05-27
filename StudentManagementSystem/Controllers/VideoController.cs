@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using StudentManagementSystem.DAO;
 using StudentManagementSystem.Models.DataModels;
 using StudentManagementSystem.Models.ViewModels;
@@ -38,38 +36,42 @@ namespace StudentManagementSystem.Controllers
             return View();
         }
 
-        private string UploadedFile(VideoViewModel model)
-        {
-            string uniqueFileName = null;
-
-            if (model.URL != null)
-            {
-                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "videos");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.URL.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-               using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    model.URL.CopyTo(fileStream);
-                }
-            }
-            return uniqueFileName;
-        }
-
+       
         [HttpPost]
-        public IActionResult Entry(VideoViewModel ui) 
+        public async Task<IActionResult> Entry(VideoViewModel ui) 
         {
             try
             {
-               
+                // Define the path to the uploads folder
+                var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "videos");
 
-                    VideoEntity videoData = new VideoEntity()
+                // Ensure the directory exists
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                // Generate a unique file name
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + ui.VideoFile.FileName;
+
+                // Define the full path to the file
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                // Save the uploaded file to the specified location
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await ui.VideoFile.CopyToAsync(fileStream);
+                }
+
+
+                VideoEntity videoData = new VideoEntity()
                     {
                         Id = Guid.NewGuid().ToString(),
                         CreatedAt = DateTime.UtcNow,
                         IsInActive = true,
                         Name = ui.Name,
                         Description = ui.Description,
-                        URL = UploadedFile(ui),
+                        URL = "/videos" + uniqueFileName,
                         CourseId = ui.CourseId,
                         BatchId = ui.BatchId,
                     };
@@ -97,7 +99,7 @@ namespace StudentManagementSystem.Controllers
                                                    Id = video.Id,
                                                    Name = video.Name,
                                                    Description = video.Description,
-                                                   Video = video.URL,
+                                                   URL = video.URL,
                                                    CourseInfo = course.Name,
                                                    BatchInfo = batch.Name,
                                                }).ToList();

@@ -55,7 +55,7 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while saving the record";
             }
-            return View();
+            return RedirectToAction("List");
         }
 
         public IActionResult List()
@@ -91,7 +91,7 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while deleting the record";
             }
-            return View();
+            return RedirectToAction("List");
         }
 
 

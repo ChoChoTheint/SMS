@@ -52,6 +52,23 @@ namespace StudentManagementSystem.Controllers
             return RedirectToAction("List");
         }
 
+        public IActionResult List()
+        {
+            IList<TeacherViewModel> teacherList = _dbContext.Teachers.Select(s => new TeacherViewModel
+            {
+                Id = s.Id,
+                Name = s.Name,
+                Email = s.Email,
+                Phone = s.Phone,
+                Address = s.Address,
+                NRC = s.NRC,
+                DOB = s.DOB,
+                FatherName = s.FatherName,
+                Position = s.Position,
+                Gender = s.Gender,
+            }).ToList();
+            return View(teacherList);
+        }
         public IActionResult Delete(string Id)
         {
             try
