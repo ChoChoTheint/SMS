@@ -105,5 +105,80 @@ namespace StudentManagementSystem.Controllers
                                                }).ToList();
             return View(videoList);
         }
+
+        public IActionResult Delete(string Id)
+        {
+            try
+            {
+                var deleteVideoData = _dbContext.Videos.Where(w => w.Id == Id).FirstOrDefault();
+                if(deleteVideoData is not null)
+                {
+                    _dbContext.Videos.Remove(deleteVideoData);
+                    _dbContext.SaveChanges();
+                }
+                TempData["inof"] = "delete successfully the record";
+            }
+            catch (Exception e)
+            {
+                TempData["inof"] = "error while deleting the record";
+            }
+            return RedirectToAction("List");
+        }
+
+        public IActionResult Edit(string Id)
+        {
+            VideoViewModel editVideoData = _dbContext.Videos.Where(w => w.Id == Id).Select(s => new VideoViewModel
+            {
+                Id = s.Id,
+                Name = s.Name,
+                Description = s.Description,
+                URL = s.URL,
+                
+            }).FirstOrDefault();
+
+            var courses = _dbContext.Courses.Select(s => new CourseViewModel
+            {
+                Id = s.Id,
+                Name = s.Name,
+            }).OrderBy(o => o.Name).ToList();
+            ViewBag.Course = courses;
+
+            var batches = _dbContext.Batches.Select(s => new BatchViewModel
+            {
+                Id = s.Id,
+                Name = s.Name,
+            }).OrderBy(o => o.Name).ToList();
+            ViewBag.Batch = batches;
+
+
+            return View();
+        }
+
+        public IActionResult Update(VideoViewModel ui)
+        {
+            try
+            {
+                VideoEntity updateVideoData = new VideoEntity()
+                {
+                    Id = ui.Id,
+                    CreatedAt = DateTime.UtcNow,
+                    ModifiedAt = DateTime.UtcNow,
+                    IsInActive = true,
+                    Name = ui.Name,
+                    Description = ui.Description,
+                    URL = ui.URL,
+                    CourseId = ui.CourseId,
+                    BatchId = ui.BatchId,
+                };
+                _dbContext.Videos.Update(updateVideoData);
+                _dbContext.SaveChanges();
+                TempData["info"] = "update successfully the record";
+            }
+            catch (Exception e)
+            {
+                TempData["info"] = "error while updating the record";
+            }
+            return RedirectToAction("List");
+        }
     }
 }
