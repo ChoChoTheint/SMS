@@ -9,7 +9,7 @@
         </div>
     </div>
 
-    <form action="/video/entry" method="post" enctype="multipart/form-data">
+    <form action="/chapter/entry" method="post" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>
             <input type="text" name="Name" id="name" class="form-control" placeholder="enter name..." required />
@@ -20,16 +20,34 @@
             <input type="text" name="Description" id="description" class="form-control" placeholder="enter description..." required />
         </div>
         <div class="mb-3">
-            <label for="" class="form-label">Batch</label>
-            <input type="" name="" id="examDate" class="form-control" required />
+                <label for="batchId" class="form-label">Batch</label>
+                <select name="BatchId" id="batchId" class="form-select">
+                    <option selected>---choose option---</option>
+                    @foreach (var batch in ViewBag.Batch)
+                    {
+                        <option value="@batch.Id">@batch.Name</option>
+                    }
+                </select>
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Book</label>
-            <input type="" name="" id="examDate" class="form-control" required />
+                <select name="BookId" id="bookId" class="form-select">
+                    <option selected>---choose option---</option>
+                    @foreach (var batch in ViewBag.Book)
+                    {
+                        <option value="@batch.Id">@batch.Name</option>
+                    }
+                </select>
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Video</label>
-            <input type="" name="" id="examDate" class="form-control" required />
+                <select name="VideoId" id="videoId" class="form-select">
+                    <option selected>---choose option---</option>
+                    @foreach (var batch in ViewBag.Video)
+                    {
+                        <option value="@batch.Id">@batch.Name</option>
+                    }
+                </select>
         </div>
         <div class="mb-3">
             <button class="btn btn-primary text-white" style="border-radius: 10px 0 10px 0;">Submit</button>

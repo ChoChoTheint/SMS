@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StudentManagementSystem.DAO;
 using StudentManagementSystem.Models.DataModels;
 using StudentManagementSystem.Models.ViewModels;
@@ -12,12 +13,15 @@ namespace StudentManagementSystem.Controllers
         {
             _dbContext = dbContext;
         }
+
+        [Authorize]
         public IActionResult Entry()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Entry(CourseViewModel ui)
         {
             try
@@ -44,6 +48,7 @@ namespace StudentManagementSystem.Controllers
             return RedirectToAction("List");
         }
 
+        [Authorize]
         public IActionResult List()
         {
             IList<CourseViewModel> courseList = _dbContext.Courses.Select(s => new CourseViewModel
@@ -59,6 +64,7 @@ namespace StudentManagementSystem.Controllers
             return View(courseList);
         }
 
+        [Authorize]
         public IActionResult Delete(string Id)
         {
             try
@@ -78,6 +84,7 @@ namespace StudentManagementSystem.Controllers
             return RedirectToAction("List");
         }
 
+        [Authorize]
         public IActionResult Edit(string Id)
         {
             
@@ -96,6 +103,7 @@ namespace StudentManagementSystem.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Update(CourseEntity ui)
         {
             try

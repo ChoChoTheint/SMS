@@ -1,4 +1,12 @@
 ﻿
-@{
+@if(User.IsInRole("Admin")){
+    Layout = "/Views/Shared/_LayoutAdmin.cshtml";
+}
+else if(User.IsInRole("Teacher"))
+{
+    Layout = "/Views/Shared/_LayoutTeacher.cshtml";
+}
+else
+{
     Layout = "/Views/Shared/_Layout.cshtml";
 }

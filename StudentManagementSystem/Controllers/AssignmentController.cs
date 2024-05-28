@@ -4,6 +4,7 @@ using StudentManagementSystem.Models.DataModels;
 using StudentManagementSystem.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace StudentManagementSystem.Controllers
@@ -18,6 +19,8 @@ namespace StudentManagementSystem.Controllers
             _dbContext = dbContext;
             _webHostEnvironment = webHostEnvironment;
         }
+
+        [Authorize]
         public IActionResult Entry()
         {
             var courses = _dbContext.Courses.Select(s => new CourseViewModel
@@ -55,6 +58,7 @@ namespace StudentManagementSystem.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Entry(AssignmentViewModel ui)
         {
             try
@@ -83,6 +87,7 @@ namespace StudentManagementSystem.Controllers
             return RedirectToAction("List");
         }
 
+        [Authorize]
         public IActionResult List()
         {
             IList<AssignmentViewModel> assignmentList = (from assignment in _dbContext.Assignments
@@ -103,6 +108,7 @@ namespace StudentManagementSystem.Controllers
             return View(assignmentList);
         }
 
+        [Authorize]
         public IActionResult Delete(string Id)
         {
             try
@@ -122,6 +128,7 @@ namespace StudentManagementSystem.Controllers
             return RedirectToAction("List");
         }
 
+        [Authorize]
         public IActionResult Edit(string Id)
         {
             AssignmentViewModel editAddignmentData = _dbContext.Assignments.Where(w => w.Id == Id).Select(s => new AssignmentViewModel
@@ -153,6 +160,7 @@ namespace StudentManagementSystem.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Update(AssignmentViewModel ui)
         {
             try

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StudentManagementSystem.DAO;
 using StudentManagementSystem.Models.DataModels;
 using StudentManagementSystem.Models.ViewModels;
@@ -13,12 +14,15 @@ namespace StudentManagementSystem.Controllers
         {
             _dbContext = dbContext;
         }
+
+        [Authorize]
         public IActionResult Entry()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Entry(TeacherViewModel ui)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -52,6 +56,7 @@ namespace StudentManagementSystem.Controllers
             return RedirectToAction("List");
         }
 
+        [Authorize]
         public IActionResult List()
         {
             IList<TeacherViewModel> teacherList = _dbContext.Teachers.Select(s => new TeacherViewModel
@@ -69,6 +74,8 @@ namespace StudentManagementSystem.Controllers
             }).ToList();
             return View(teacherList);
         }
+
+        [Authorize]
         public IActionResult Delete(string Id)
         {
             try
@@ -88,6 +95,7 @@ namespace StudentManagementSystem.Controllers
             return RedirectToAction("List");
         }
 
+        [Authorize]
         public IActionResult Edit(string Id)
         {
 
@@ -107,6 +115,7 @@ namespace StudentManagementSystem.Controllers
             return View(editTeacherData);
         }
 
+        [Authorize]
         public IActionResult Update(TeacherViewModel ui)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
