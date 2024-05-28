@@ -13,6 +13,7 @@ namespace StudentManagementSystem.Models.ViewModels
         public DateTime DOB { get; set; }
         public string FatherName { get; set; }
         public string Gender { get; set; }
+
         [ForeignKey(nameof(BatchId))]
         public string BatchId { get; set; }
         public string BatchInfo { get; set; }

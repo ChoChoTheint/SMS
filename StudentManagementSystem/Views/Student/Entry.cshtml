@@ -1,0 +1,68 @@
+﻿<div class="container w-50 mx-auto my-3 p-5 border-start border-end border-bottom rounded-start rounded-end shadow-sm" style="border-top: 12px solid #699BF7">
+    <div class="d-flex justify-content-center align-items-center mb-4">
+        <div class="me-3">
+            <i class="fa-solid fa-book-open fa-2xl" style="color: #699BF7"></i>
+        </div>
+        <div class="text-center">
+            <span class="mate-sc text-uppercase fw-bold">Leadership</span>
+            <h1 class="h5 brand-space">Excellence</h1>
+        </div>
+    </div>
+
+    <form action="/student/entry" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" name="Name" id="name" class="form-control" placeholder="enter name..." required />
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Email</label>
+            <input type="Email" name="Email" id="description" class="form-control" placeholder="enter emale..." required />
+        </div>
+        <div class="mb-3">
+            <label for="address" class="form-label">Address</label>
+            <textarea name="Address" class="form-control" id="address" rows="6" cols="6" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="phone" class="form-label">Phone</label>
+            <input type="number" name="Phone" id="phone" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label for="dob" class="form-label">DOB</label>
+            <input type="date" name="DOB" id="dob" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label for="fatherName" class="form-label">Father Name</label>
+            <input type="text" name="FatherName" id="fatherName" class="form-control" required />
+        </div>
+        <label class="form-label">Gender</label>
+        <div class="mb-3 d-flex">
+            <div class="me-3">
+                <input type="radio" name="Gender" id="male" value="Male" class="form-check-input" required />
+                <label for="male" class="form-check-label">Male</label>
+            </div>
+            <div class="">
+                <input type="radio" name="Gender" id="female" value="Female" class="form-check-input" required />
+                <label for="female" class="form-check-label">Female</label>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="nrc" class="form-label">NRC</label>
+            <input type="text" name="NRC" id="nrc" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label for="batchId" class="form-label">Batch</label>
+            <select name="BatchId" id="batchId" class="form-select">
+                <option selected>---choose option---</option>
+                @foreach (var batch in ViewBag.Batch)
+                {
+                    <option value="@batch.Id">@batch.Name</option>
+                }
+            </select>
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-primary text-white" style="border-radius: 10px 0 10px 0;">Submit</button>
+            <button class="btn btn-secondary text-white" style="border-radius: 10px 0 10px 0;" type="reset">Cancel</button>
+        </div>
+    </form>
+</div>
