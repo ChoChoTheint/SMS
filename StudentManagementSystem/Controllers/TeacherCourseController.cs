@@ -58,10 +58,6 @@ namespace StudentManagementSystem.Controllers
             }
             return RedirectToAction("List");
         }
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 
         [Authorize]
         public IActionResult List()

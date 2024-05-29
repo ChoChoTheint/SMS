@@ -140,11 +140,8 @@ namespace StudentManagementSystem.Controllers
                 Name = s.Name,
                 Description = s.Description,
                 URL = s.URL,
-<<<<<<< Updated upstream
-=======
                 CourseId = s.CourseId,
                 BatchId = s.BatchId,
->>>>>>> Stashed changes
 
             }).FirstOrDefault();
 
