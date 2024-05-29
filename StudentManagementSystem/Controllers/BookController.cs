@@ -109,6 +109,8 @@ namespace StudentManagementSystem.Controllers
                                           Id = s.Id,
                                           Name = s.Name,
                                           Description = s.Description,
+                                          CourseId = s.CourseId,
+                                          BatchId = s.BatchId,
                                       }).FirstOrDefault();
 
             var courses = _dbContext.Courses.Select(s => new CourseViewModel

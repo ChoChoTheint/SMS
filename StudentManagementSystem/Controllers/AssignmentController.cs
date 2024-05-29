@@ -5,6 +5,7 @@ using StudentManagementSystem.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authorization;
+using System;
 
 
 namespace StudentManagementSystem.Controllers
@@ -87,9 +88,31 @@ namespace StudentManagementSystem.Controllers
             return RedirectToAction("List");
         }
 
+        public IActionResult DownloadFile()
+        {
+            var memory = FilePath("0e78a6cc-8382-4013-b1ee-8e8b08dcc349_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf", "wwwroot//files");
+            return File(memory.ToArray(), "application/pdf", "0e78a6cc-8382-4013-b1ee-8e8b08dcc349_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf");
+        }
+        private MemoryStream FilePath(string fileName, string uploadPath)
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), uploadPath, fileName);
+            var memeory = new MemoryStream();
+
+            if (System.IO.File.Exists(path))
+            {
+                var net = new System.Net.WebClient();
+                var data = net.DownloadData(path);
+                var content = new System.IO.MemoryStream(data);
+                memeory = content;
+            }
+            memeory.Position = 0;
+            return memeory;
+        }
         [Authorize]
         public IActionResult List()
         {
+            
+
             IList<AssignmentViewModel> assignmentList = (from assignment in _dbContext.Assignments
                                                          join course in _dbContext.Courses
                                                          on assignment.CourseId equals course.Id
