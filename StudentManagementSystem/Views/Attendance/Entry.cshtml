@@ -9,7 +9,7 @@
         </div>
     </div>
 
-    <form action="/video/entry" method="post" enctype="multipart/form-data">
+    <form action="/attendance/entry" method="post" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="attendaceDate" class="form-label">AttendanceDate</label>
             <input type="date" name="AttendanceDate" id="attendaceDate" class="form-control" placeholder="entr attendance date..." required />
@@ -17,11 +17,11 @@
 
         <div class="mb-3">
             <label for="inTime" class="form-label">InTime</label>
-            <input type="date" name="InTime" id="inTime" class="form-control" placeholder="enter in time..." required />
+            <input type="time" name="InTime" id="inTime" class="form-control" placeholder="enter in time..." required />
         </div>
         <div class="mb-3">
             <label for="outTime" class="form-label">OutTime</label>
-            <input type="date" name="OutTime" id="outTime" class="form-control" placeholder="enter out time..." required />
+            <input type="time" name="OutTime" id="outTime" class="form-control" placeholder="enter out time..." required />
         </div>
         <label for="isLeave" class="form-label">IsLeave</label>
         <div class="mb-3 d-flex">
