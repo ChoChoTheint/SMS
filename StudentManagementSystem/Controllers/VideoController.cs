@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using StudentManagementSystem.DAO;
 using StudentManagementSystem.Models.DataModels;
@@ -17,6 +18,8 @@ namespace StudentManagementSystem.Controllers
             _dbContext = dbContext;
             _webHostEnvironment = webHostEnvironment;
         }
+
+        [Authorize]
         public IActionResult Entry()
         {
             var courses = _dbContext.Courses.Select(s => new CourseViewModel
@@ -38,6 +41,7 @@ namespace StudentManagementSystem.Controllers
 
        
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Entry(VideoViewModel ui) 
         {
             try
@@ -87,6 +91,7 @@ namespace StudentManagementSystem.Controllers
             return RedirectToAction("List");
         }
 
+        [Authorize]
         public IActionResult List()
         {
             IList<VideoViewModel> videoList = (from video in _dbContext.Videos
@@ -106,6 +111,7 @@ namespace StudentManagementSystem.Controllers
             return View(videoList);
         }
 
+        [Authorize]
         public IActionResult Delete(string Id)
         {
             try
@@ -125,6 +131,7 @@ namespace StudentManagementSystem.Controllers
             return RedirectToAction("List");
         }
 
+        [Authorize]
         public IActionResult Edit(string Id)
         {
             VideoViewModel editVideoData = _dbContext.Videos.Where(w => w.Id == Id).Select(s => new VideoViewModel
@@ -156,6 +163,8 @@ namespace StudentManagementSystem.Controllers
             return View(editVideoData);
         }
 
+        [HttpPost]
+        [Authorize]
         public IActionResult Update(VideoViewModel ui)
         {
             try

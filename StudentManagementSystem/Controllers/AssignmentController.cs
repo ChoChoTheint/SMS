@@ -41,6 +41,7 @@ namespace StudentManagementSystem.Controllers
             return View();
         }
 
+        [Authorize]
         private string UploadedFile(AssignmentViewModel model)
         {
             string uniqueFileName = null;
@@ -88,6 +89,7 @@ namespace StudentManagementSystem.Controllers
             return RedirectToAction("List");
         }
 
+        [Authorize]
         public IActionResult DownloadFile()
         {
             var memory = FilePath("0e78a6cc-8382-4013-b1ee-8e8b08dcc349_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf", "wwwroot//files");

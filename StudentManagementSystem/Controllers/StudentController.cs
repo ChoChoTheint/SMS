@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StudentManagementSystem.DAO;
 using StudentManagementSystem.Models.DataModels;
 using StudentManagementSystem.Models.ViewModels;
@@ -13,6 +14,8 @@ namespace StudentManagementSystem.Controllers
         {
             _dbContext = dbContext;
         }
+
+        [Authorize]
         public IActionResult Entry()
         {
             var batches = _dbContext.Batches.Select(s => new BatchViewModel
@@ -26,6 +29,7 @@ namespace StudentManagementSystem.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Entry(StudentViewModel ui)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -59,6 +63,7 @@ namespace StudentManagementSystem.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult List()
         {
             IList<StudentViewModel> studentList = (from student in _dbContext.Students
@@ -80,6 +85,8 @@ namespace StudentManagementSystem.Controllers
                                                    }).ToList();
             return View(studentList);
         }
+
+        [Authorize]
         public IActionResult Delete(string Id)
         {
             try
@@ -99,6 +106,7 @@ namespace StudentManagementSystem.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult Edit(string Id)
         {
             IList<StudentViewModel> editStudentData = _dbContext.Students.Where(w => w.Id == Id).Select(s => new StudentViewModel
@@ -125,6 +133,7 @@ namespace StudentManagementSystem.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Update(StudentViewModel ui)
         {
             try
