@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StudentManagementSystem.DAO;
+using StudentManagementSystem.Reports;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,9 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<SMSDbContext>()
     .AddDefaultUI()
     .AddDefaultTokenProviders();
+
+//injection the IAttendanceReport with AttendanceDetailReport
+builder.Services.AddScoped<IAttendanceReport, AttendanceDetailReport>();
 
 var app = builder.Build();
 

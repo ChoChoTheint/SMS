@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StudentManagementSystem.DAO;
 using StudentManagementSystem.Models.DataModels;
 using StudentManagementSystem.Models.ViewModels;
@@ -12,6 +13,8 @@ namespace StudentManagementSystem.Controllers
         {
             _dbContext = dbContext;
         }
+
+        [Authorize]
         public IActionResult Entry()
         {
             var teachers = _dbContext.Teachers.Select(s => new TeacherViewModel
@@ -19,10 +22,20 @@ namespace StudentManagementSystem.Controllers
                 Id = s.Id,
                 Name = s.Name,
             }).OrderBy(o => o.Name).ToList();
+            ViewBag.Teacher = teachers;
+
+            var courses = _dbContext.Courses.Select(s => new CourseViewModel
+            {
+                Id = s.Id,
+                Name = s.Name,
+            }).OrderBy(o => o.Name).ToList();
+            ViewBag.Course = courses;
+
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Entry(TeacherCourseViewModel ui)
         {
             try
@@ -45,8 +58,6 @@ namespace StudentManagementSystem.Controllers
             }
             return RedirectToAction("List");
         }
-<<<<<<< Updated upstream
-=======
 
         [Authorize]
         public IActionResult List()
@@ -94,6 +105,7 @@ namespace StudentManagementSystem.Controllers
                 Id = s.Id,
                 TeacherId = s.TeacherId,
                 CourseId = s.CourseId,
+                
             }).FirstOrDefault();
 
             var teachers = _dbContext.Teachers.Select(s => new TeacherViewModel
@@ -138,6 +150,6 @@ namespace StudentManagementSystem.Controllers
             }
             return RedirectToAction("List");
         }
->>>>>>> Stashed changes
+
     }
 }

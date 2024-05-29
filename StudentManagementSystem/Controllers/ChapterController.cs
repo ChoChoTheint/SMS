@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StudentManagementSystem.DAO;
 using StudentManagementSystem.Models.DataModels;
 using StudentManagementSystem.Models.ViewModels;
@@ -12,6 +13,8 @@ namespace StudentManagementSystem.Controllers
         {
             _dbContext = dbContext;
         }
+
+        [Authorize]
         public IActionResult Entry()
         {
             var batches = _dbContext.Batches.Select(s => new BatchViewModel
@@ -41,6 +44,7 @@ namespace StudentManagementSystem.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Entry(ChapterViewModel ui)
         {
             try
@@ -65,9 +69,10 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while saving the record";
             }
-            return RedirectToAction("Lsit");
+            return RedirectToAction("List");
         }
 
+        [Authorize]
         public IActionResult List()
         {
             IList<ChapterViewModel> chapterList = (from chapter in _dbContext.Chapters
@@ -89,6 +94,8 @@ namespace StudentManagementSystem.Controllers
                                                    }).ToList();
             return View(chapterList);
         }
+
+        [Authorize]
         public IActionResult Delete(string Id)
         {
             try
@@ -107,6 +114,7 @@ namespace StudentManagementSystem.Controllers
             return RedirectToAction("List");
         }
 
+        [Authorize]
         public IActionResult Edit(string Id)
         {
             ChapterViewModel editChapterData = _dbContext.Chapters.Where(w => w.Id == Id).Select(s => new ChapterViewModel
@@ -145,6 +153,7 @@ namespace StudentManagementSystem.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Update(ChapterViewModel ui)
         {
             try

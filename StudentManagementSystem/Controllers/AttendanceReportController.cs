@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StudentManagementSystem.Models.ViewModels;
 using StudentManagementSystem.Reports;
 using StudentManagementSystem.Utilities;
@@ -12,12 +13,15 @@ namespace StudentManagementSystem.Controllers
         {
             _attendanceReport = attendanceReport;
         }
+
+        [Authorize]
         public IActionResult AttendanceDetailReport()
         {
             return View();
         }
 
-        public IActionResult AttendanceDetailReport(string fromCode, string toCode)
+        [Authorize]
+        public IActionResult ReportByAttendanceFromCodeToCode(string fromCode, string toCode)
         {
             string reportName = $"AttendanceDetails_{Guid.NewGuid():N}.xlsx";
 
@@ -27,7 +31,7 @@ namespace StudentManagementSystem.Controllers
             {
                 var exportData = FilesIOHelper.ExporttoExcel<AttendanceReportViewModel>(attendances, "attendanceDetailsReport");
 
-                return File(exportData, "application/vnd.poenxmlformats-officedocument.spreadsheetml.sheet", reportName);
+                return File(exportData, "application/vnd.poenxmlformats-officedocument.spreedsheetml.sheet", reportName);
             }
             else
             {

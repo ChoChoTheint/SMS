@@ -12,11 +12,23 @@
     <form action="/teachercourse/entry" method="post" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="description" class="form-label">Teacher</label>
-            <input type="text" name="TeacherId" id="" class="form-control" required />
+            <select name="TeacherId" id="courseId" class="form-select">
+                <option selected>---choose option---</option>
+                @foreach (var teacher in ViewBag.Teacher)
+                {
+                    <option value="@teacher.Id">@teacher.Name</option>
+                }
+            </select>
         </div>
         <div class="mb-3">
             <label for="examDate" class="form-label">Course</label>
-            <input type="text" name="CourseId" id="examDate" class="form-control" required />
+            <select name="CourseId" id="courseId" class="form-select">
+                <option selected>---choose option---</option>
+                @foreach (var course in ViewBag.Course)
+                {
+                    <option value="@course.Id">@course.Name</option>
+                }
+            </select>
         </div>
         <div class="mb-3">
             <button class="btn btn-primary text-white" style="border-radius: 10px 0 10px 0;">Submit</button>

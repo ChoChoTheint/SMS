@@ -1,0 +1,18 @@
+﻿<div class="w-75 mx-auto p-5 border shadow">
+    <h1 class="text-center">Attendance Detail Report</h1>
+
+    <form action="/AttendanceReport/ReportByAttendanceFromCodeToCode" method="get">
+        <div class="mb-3">
+            <label class="form-label" for="fromCode">FromCode</label>
+            <input type="text" name="fromCode" id="fromCode" class="form-control" required placeholder="enter form code..." />
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="fromCode">ToCode</label>
+            <input type="text" name="toCode" id="fromCode" class="form-control" required placeholder="enter to code..." />
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-primary">Query</button>
+            <button class="btn btn-secondary" type="reset">Cancel</button>
+        </div>
+    </form>
+</div>

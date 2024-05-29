@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StudentManagementSystem.DAO;
 using StudentManagementSystem.Models.DataModels;
 using StudentManagementSystem.Models.ViewModels;
@@ -12,6 +13,8 @@ namespace StudentManagementSystem.Controllers
         {
             _dbContext = dbContext;
         }
+
+        [Authorize]
         public IActionResult Entry()
         {
             var courses = _dbContext.Courses.Select(s => new CourseViewModel
@@ -33,6 +36,7 @@ namespace StudentManagementSystem.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Entry(BookViewModel ui)
         {
             try
@@ -58,6 +62,7 @@ namespace StudentManagementSystem.Controllers
             return RedirectToAction("List");
         }
 
+        [Authorize]
         public IActionResult List()
         {
             IList<BookViewModel> bookList = (from book in _dbContext.Books
@@ -75,6 +80,8 @@ namespace StudentManagementSystem.Controllers
                                              }).ToList();
             return View(bookList);
         }
+
+        [Authorize]
         public IActionResult Delete(string Id)
         {
             try
@@ -94,7 +101,7 @@ namespace StudentManagementSystem.Controllers
             return RedirectToAction("List");
         }
 
-
+        [Authorize]
         public IActionResult Edit(string Id)
         {
                 BookViewModel editBookData = _dbContext.Books.Where(w => w.Id == Id).Select(s => new BookViewModel
@@ -124,6 +131,7 @@ namespace StudentManagementSystem.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Update(BookViewModel ui)
         {
             try

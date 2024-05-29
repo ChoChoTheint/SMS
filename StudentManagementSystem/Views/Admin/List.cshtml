@@ -29,7 +29,7 @@
 
         
            
-                <table id="adminTable" class="table table-bordred table-striped">
+                <table id="adminTable" class="table table-bordred table-striped table-dark">
 
                     <thead>
             <th scope="col">Sr.</th>
@@ -49,34 +49,33 @@
                             int index = 1;
                         }
 
-                        @foreach (var item in Model)
+                        @foreach (var list in Model)
                         {
                             <tr>
                                 <td>@index</td>
-                                <td>@item.Name</td>
-                                <td>@item.Email</td>
-                                <td>@item.Address</td>
-                                <td>@item.Phone</td>
-                                <td>@item.DOB.ToString("dd-MM-yyyy")</td>
-                                <td>@item.NRC</td>
-                                <td>@item.Gender</td>
-                                <td>@item.FatherName</td>
+                                <td>@list.Name</td>
+                                <td>@list.Email</td>
+                                <td>@list.Address</td>
+                                <td>@list.Phone</td>
+                                <td>@list.DOB.ToString("dd-MM-yyyy")</td>
+                                <td>@list.NRC</td>
+                                <td>@list.Gender</td>
+                                <td>@list.FatherName</td>
                                 <td>
-                                    <a href="/admin/edit?Id=@item.Id" role="button" class="btn btn-primary btn-xs" data-title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>
-
-                                    
+                                    <a href="/admin/edit?Id=@list.Id" role="button" class="btn btn-primary btn-xs" data-title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>
                                 </td>
                             <td>
                                 <p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-bs-toggle="offcanvas" data-bs-target="#delete"><span class="glyphicon glyphicon-trash"></span></button></p>
 
-                                <div class="offcanvas offcanvas-top mx-auto" tabindex="-1" id="delete" aria-labelledby="offcanvasExampleLabel" style="width: 500px;">
+                                <div class="offcanvas offcanvas-top mx-auto h-50" tabindex="-1" id="delete" aria-labelledby="offcanvasExampleLabel" style="width: 500px;">
                                     <div class="offcanvas-header">
                                         <h5 class="h3 text-warning offcanvas-title" id="offcanvasExampleLabel">Attention</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                                     </div>
-                                    <div class="offcanvas-body">
-                                        <p class="alert alert-danger text-center">Are You Sure Want To Delete The Data?</p>
-                                        <a href="/admin/delete?Id=@item.Id" class="btn btn-danger w-100">Delete</a>
+                                    <p class="alert text-danger">Are You Sure Want To Delete The Data?</p>
+                                    <div class="offcanvasbottom ">
+                                        <a href="/admin/delete?Id=@list.Id" class="btn btn-danger w-100">Yes</a>
+                                        <button type="button" class="btn btn-secondary w-100 my-3" data-bs-dismiss="offcanvas" aria-label="Close">No</button>
                                     </div>
                                 </div>
 

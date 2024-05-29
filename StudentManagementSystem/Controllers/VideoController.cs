@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using StudentManagementSystem.DAO;
 using StudentManagementSystem.Models.DataModels;
@@ -17,6 +18,8 @@ namespace StudentManagementSystem.Controllers
             _dbContext = dbContext;
             _webHostEnvironment = webHostEnvironment;
         }
+
+        [Authorize]
         public IActionResult Entry()
         {
             var courses = _dbContext.Courses.Select(s => new CourseViewModel
@@ -38,6 +41,7 @@ namespace StudentManagementSystem.Controllers
 
        
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Entry(VideoViewModel ui) 
         {
             try
@@ -87,6 +91,7 @@ namespace StudentManagementSystem.Controllers
             return RedirectToAction("List");
         }
 
+        [Authorize]
         public IActionResult List()
         {
             IList<VideoViewModel> videoList = (from video in _dbContext.Videos
@@ -106,6 +111,10 @@ namespace StudentManagementSystem.Controllers
             return View(videoList);
         }
 
+
+
+        [Authorize]
+
         public IActionResult Delete(string Id)
         {
             try
@@ -116,14 +125,19 @@ namespace StudentManagementSystem.Controllers
                     _dbContext.Videos.Remove(deleteVideoData);
                     _dbContext.SaveChanges();
                 }
+
                 TempData["inof"] = "delete successfully the record";
             }
             catch (Exception e)
             {
                 TempData["inof"] = "error while deleting the record";
             }
+           
             return RedirectToAction("List");
         }
+
+
+        [Authorize]
 
         public IActionResult Edit(string Id)
         {
@@ -133,12 +147,9 @@ namespace StudentManagementSystem.Controllers
                 Name = s.Name,
                 Description = s.Description,
                 URL = s.URL,
-<<<<<<< Updated upstream
-                
-=======
                 CourseId = s.CourseId,
                 BatchId = s.BatchId,
->>>>>>> Stashed changes
+
             }).FirstOrDefault();
 
             var courses = _dbContext.Courses.Select(s => new CourseViewModel
@@ -155,15 +166,17 @@ namespace StudentManagementSystem.Controllers
             }).OrderBy(o => o.Name).ToList();
             ViewBag.Batch = batches;
 
-
-            return View();
+            return View(editVideoData);
         }
+        
 
+        [HttpPost]
+        [Authorize]
         public IActionResult Update(VideoViewModel ui)
         {
             try
             {
-                VideoEntity updateVideoData = new VideoEntity()
+                VideoEntity updateVideData = new VideoEntity()
                 {
                     Id = ui.Id,
                     CreatedAt = DateTime.UtcNow,
@@ -175,7 +188,7 @@ namespace StudentManagementSystem.Controllers
                     CourseId = ui.CourseId,
                     BatchId = ui.BatchId,
                 };
-                _dbContext.Videos.Update(updateVideoData);
+                _dbContext.Videos.Update(updateVideData);
                 _dbContext.SaveChanges();
                 TempData["info"] = "update successfully the record";
             }

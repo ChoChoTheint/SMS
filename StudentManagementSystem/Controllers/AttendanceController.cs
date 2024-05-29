@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudentManagementSystem.DAO;
 using StudentManagementSystem.Models.DataModels;
@@ -13,6 +14,8 @@ namespace StudentManagementSystem.Controllers
         {
             _dbContext = dbContext;
         }
+
+        [Authorize]
         public IActionResult Entry()
         {
             var students = _dbContext.Students.Select(s => new StudentViewModel
@@ -28,6 +31,7 @@ namespace StudentManagementSystem.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Entry(AttendanceViewModel ui)
         {
             try
@@ -54,6 +58,7 @@ namespace StudentManagementSystem.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult List()
         {
             IList<AttendanceViewModel> attendanceList = (from attendance in _dbContext.Attendances
@@ -73,6 +78,7 @@ namespace StudentManagementSystem.Controllers
             return View(attendanceList);
         }
 
+        [Authorize]
         public IActionResult Delete(string Id)
         {
             try
@@ -92,6 +98,7 @@ namespace StudentManagementSystem.Controllers
             return RedirectToAction("List");
         }
 
+        [Authorize]
         public IActionResult Edit(string Id)
         {
             AttendanceViewModel editAttendanceData = _dbContext.Attendances.Where(w => w.Id == Id).Select(s => new AttendanceViewModel
@@ -117,6 +124,7 @@ namespace StudentManagementSystem.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Update(AttendanceViewModel ui)
         {
             try
