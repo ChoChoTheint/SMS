@@ -133,7 +133,12 @@ namespace StudentManagementSystem.Controllers
                 Name = s.Name,
                 Description = s.Description,
                 URL = s.URL,
+<<<<<<< Updated upstream
                 
+=======
+                CourseId = s.CourseId,
+                BatchId = s.BatchId,
+>>>>>>> Stashed changes
             }).FirstOrDefault();
 
             var courses = _dbContext.Courses.Select(s => new CourseViewModel

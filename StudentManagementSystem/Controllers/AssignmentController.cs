@@ -44,11 +44,11 @@ namespace StudentManagementSystem.Controllers
             if (model.URL != null)
             {
                 string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.URL.FileName;
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.File.FileName;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    model.URL.CopyTo(fileStream);
+                    model.File.CopyTo(fileStream);
                 }
             }
             return uniqueFileName;
@@ -96,7 +96,7 @@ namespace StudentManagementSystem.Controllers
                                                              Id = assignment.Id,
                                                              Name = assignment.Name,
                                                              Description = assignment.Description,
-                                                             File = assignment.URL,
+                                                             URL = assignment.URL,
                                                              CourseInfo = course.Name,
                                                              BatchInfo = batch.Name,
                                                          }).ToList();
@@ -129,7 +129,7 @@ namespace StudentManagementSystem.Controllers
                 Id = s.Id,
                 Name = s.Name,
                 Description = s.Description,
-               // URL = s.URL,
+                URL = s.URL,
                 CourseId = s.CourseId,
                 BatchId = s.BatchId,
             }).FirstOrDefault();

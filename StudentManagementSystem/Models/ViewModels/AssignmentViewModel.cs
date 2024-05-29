@@ -7,8 +7,8 @@ namespace StudentManagementSystem.Models.ViewModels
         public string Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public IFormFile URL { get; set; }
-        public string File { get; set; }
+        public string URL { get; set; }
+        public IFormFile File { get; set; }
         //[ForeignKey(nameof(CourseId))]
         public string CourseId { get; set; }
         public string CourseInfo { get; set; }

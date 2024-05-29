@@ -27,9 +27,8 @@
                 <option>---choose option---</option>
                 @foreach (var course in ViewBag.Course)
                 {
-                    if (@course.Id == Model.CourseId)
+                    if(@course.Id == Model.CourseId)
                     {
-
                         <option value="@course.Id" selected>
                             @course.Name
                         </option>
@@ -49,9 +48,8 @@
                 <option>---choose option---</option>
                 @foreach (var batch in ViewBag.Batch)
                 {
-                    if (batch.Id == Model.BatchId)
+                    if(@batch.Id == Model.BatchId)
                     {
-
                         <option value="@batch.Id" selected>
                             @batch.Name
                         </option>
