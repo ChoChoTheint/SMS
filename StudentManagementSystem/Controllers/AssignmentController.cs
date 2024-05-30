@@ -95,12 +95,12 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult DownloadFile()
         {
-            var memory = FilePath("0e78a6cc-8382-4013-b1ee-8e8b08dcc349_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf", "wwwroot//files");
-            return File(memory.ToArray(), "application/pdf", "0e78a6cc-8382-4013-b1ee-8e8b08dcc349_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf");
+            var memory = FilePath("3fb194b2 - 06a1 - 40f0 - 84fb - eac8576f0667_Andrew_Troelsen, _Phil_Japikse_Pro_C#_10_with_NET_6_Foundational", "wwwroot\\files");
+            return File(memory.ToArray(), "application/pdf", "3fb194b2 - 06a1 - 40f0 - 84fb - eac8576f0667_Andrew_Troelsen, _Phil_Japikse_Pro_C#_10_with_NET_6_Foundational");
         }
-        private MemoryStream FilePath(string fileName, string uploadPath)
+        private MemoryStream FilePath(string fileName, string filePath)
         {
-            var path = Path.Combine(Directory.GetCurrentDirectory(), uploadPath, fileName);
+            var path = Path.Combine(Directory.GetCurrentDirectory(), filePath, fileName);
             var memeory = new MemoryStream();
 
             if (System.IO.File.Exists(path))
