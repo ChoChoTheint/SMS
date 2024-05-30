@@ -79,6 +79,7 @@ namespace StudentManagementSystem.Controllers
             try
             {
                 var deleteBatchData = _dbContext.Batches.Where(w => w.Id == Id).FirstOrDefault();
+
                 if(deleteBatchData is not null)
                 {
                     _dbContext.Batches.Remove(deleteBatchData);
