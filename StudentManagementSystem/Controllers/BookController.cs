@@ -24,11 +24,14 @@ namespace StudentManagementSystem.Controllers
             }).OrderBy(o => o.Name).ToList();
             ViewBag.Course = courses;
 
-            var batches = _dbContext.Batches.Select(s => new BatchViewModel
-            {
-                Id = s.Id,
-                Name = s.Name,
-            }).OrderBy(o => o.Name).ToList();
+            var batches = (from batch in _dbContext.Batches
+                           join course in _dbContext.Courses
+                           on batch.CourseId equals course.Id
+                           select new BatchViewModel
+                           {
+                               Id = batch.Id,
+                               Name = batch.Name + "/ " + course.Name
+                           }).OrderBy(o => o.Name).ToList();
             ViewBag.Batch = batches;
 
 
@@ -76,7 +79,7 @@ namespace StudentManagementSystem.Controllers
                                                  Name = book.Name,
                                                  Description = book.Description,
                                                  CourseInfo = course.Name,
-                                                 BatchInfo = batch.Name
+                                                 BatchInfo = batch.Name+"/ "+course.Name
                                              }).ToList();
             return View(bookList);
         }
