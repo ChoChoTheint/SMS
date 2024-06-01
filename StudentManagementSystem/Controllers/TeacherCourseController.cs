@@ -17,6 +17,9 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult Entry()
         {
+
+            ViewBag.Id = Guid.NewGuid().ToString();
+
             var teachers = _dbContext.Teachers.Select(s => new TeacherViewModel
             {
                 Id = s.Id,
@@ -40,17 +43,43 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                TeacherCourseEntity teacherCourseData = new TeacherCourseEntity()
+                if (ModelState.IsValid)
                 {
-                    Id = Guid.NewGuid().ToString(),
-                    CreatedAt = DateTime.UtcNow,
-                    IsInActive = true,
-                    TeacherId = ui.TeacherId,
-                    CourseId = ui.CourseId,
-                };
-                _dbContext.TeacherCourses.Add(teacherCourseData);
-                _dbContext.SaveChanges();
-                TempData["info"] = "save successfully the record";
+
+                    TeacherCourseEntity teacherCourseData = new TeacherCourseEntity()
+                    {
+                        Id = ui.Id,
+                        CreatedAt = DateTime.UtcNow,
+                        IsInActive = true,
+                        TeacherId = ui.TeacherId,
+                        CourseId = ui.CourseId,
+                    };
+                    _dbContext.TeacherCourses.Add(teacherCourseData);
+                    _dbContext.SaveChanges();
+                    TempData["info"] = "save successfully the record";
+                }
+                else
+                {
+                    //Reload Id, TeacherId and CourseId to populate dropdown again
+
+                    ViewBag.Id = Guid.NewGuid().ToString();
+
+                    var teachers = _dbContext.Teachers.Select(s => new TeacherViewModel
+                    {
+                        Id = s.Id,
+                        Name = s.Name,
+                    }).OrderBy(o => o.Name).ToList();
+                    ViewBag.Teacher = teachers;
+
+                    var courses = _dbContext.Courses.Select(s => new CourseViewModel
+                    {
+                        Id = s.Id,
+                        Name = s.Name,
+                    }).OrderBy(o => o.Name).ToList();
+                    ViewBag.Course = courses;
+
+                    return View(ui);
+                }
             }
             catch (Exception e)
             {
@@ -70,9 +99,14 @@ namespace StudentManagementSystem.Controllers
 
                                                          select new TeacherCourseViewModel
                                                          {
+<<<<<<< HEAD
                                                              Id = tc.Id,
                                                              TeacherInfo = teacher.Name,
                                                              CourseInfo = course.Name
+=======
+                                                             TeacherId = teacher.Name,
+                                                             CourseId = course.Name
+>>>>>>> yairyint
                                                          }).ToList();
             return View(teacherCourseList);
         }

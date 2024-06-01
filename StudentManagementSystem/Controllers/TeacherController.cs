@@ -18,6 +18,12 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult Entry()
         {
+
+            ViewBag.AspUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            ViewBag.Id = Guid.NewGuid().ToString();
+
+
             return View();
         }
 
@@ -25,29 +31,43 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult Entry(TeacherViewModel ui)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+           
 
             try
             {
-                TeacherEntity teacherData = new TeacherEntity()
+                if (ModelState.IsValid)
                 {
-                    Id = Guid.NewGuid().ToString(),
-                    CreatedAt = DateTime.UtcNow,
-                    IsInActive = true,
-                    Name = ui.Name,
-                    Email = ui.Email,
-                    Phone = ui.Phone,
-                    Address = ui.Address,
-                    NRC = ui.NRC,
-                    DOB = ui.DOB,
-                    FatherName = ui.FatherName,
-                    Position = ui.Position,
-                    Gender = ui.Gender,
-                    AspNetUsersId = userId,
-                };
-                _dbContext.Teachers.Add(teacherData);
-                _dbContext.SaveChanges();
-                TempData["info"] = "save successfully the record";
+
+                    TeacherEntity teacherData = new TeacherEntity()
+                    {
+                        Id = ui.Id,
+                        CreatedAt = DateTime.UtcNow,
+                        IsInActive = true,
+                        Name = ui.Name,
+                        Email = ui.Email,
+                        Phone = ui.Phone,
+                        Address = ui.Address,
+                        NRC = ui.NRC,
+                        DOB = ui.DOB,
+                        FatherName = ui.FatherName,
+                        Position = ui.Position,
+                        Gender = ui.Gender,
+                        AspNetUsersId = ui.AspNetUsersId,
+                    };
+                    _dbContext.Teachers.Add(teacherData);
+                    _dbContext.SaveChanges();
+                    TempData["info"] = "save successfully the record";
+                }
+                else
+                {
+                    //Reload id and AspUserId to populate dropdown again
+
+                    ViewBag.AspUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                    ViewBag.Id = Guid.NewGuid().ToString();
+
+                    return View(ui);
+                }
             }
             catch (Exception e)
             {

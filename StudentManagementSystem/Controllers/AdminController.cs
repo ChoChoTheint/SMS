@@ -59,6 +59,12 @@ namespace StudentManagementSystem.Controllers
                 }
                 if (!ModelState.IsValid)
                 {
+                    var aspUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    ViewBag.AspUserId = aspUserId;
+
+                    var id = Guid.NewGuid().ToString();
+                    ViewBag.Id = id;
+
                     return View(ui);
                 }
 

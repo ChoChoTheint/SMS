@@ -26,7 +26,7 @@
         <div class="mb-3">
             <label asp-for="CourseId" class="form-label">Course</label>
             <select asp-for="CourseId" class="form-select">
-                <option selected>---choose option---</option>
+                <option value="" selected>---choose option---</option>
                 @foreach (var course in ViewBag.Course)
                 {
                     <option value="@course.Id">@course.Name</option>

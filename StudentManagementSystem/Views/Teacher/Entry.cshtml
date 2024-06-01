@@ -1,4 +1,5 @@
-﻿<div class="container w-50 mx-auto my-3 p-5 border-start border-end border-bottom rounded-start rounded-end shadow-sm" style="border-top: 12px solid #699BF7">
+﻿@model StudentManagementSystem.Models.ViewModels.TeacherViewModel
+<div class="container w-50 mx-auto my-3 p-5 border-start border-end border-bottom rounded-start rounded-end shadow-sm" style="border-top: 12px solid #699BF7">
     <div class="d-flex justify-content-center align-items-center mb-4">
         <div class="me-3">
             <i class="fa-solid fa-book-open fa-2xl" style="color: #699BF7"></i>
@@ -9,54 +10,68 @@
         </div>
     </div>
 
-    <form action="/teacher/entry" method="post" enctype="multipart/form-data">
+    <form asp-controller="Teacher" asp-action="Entry" method="post" enctype="multipart/form-data">
+        <input asp-for="Id" value="@ViewBag.Id" hidden />
+        <input asp-for="AspNetUsersId" value="@ViewBag.AspUserId" hidden />
         <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
-            <input type="text" name="Name" id="name" class="form-control" placeholder="enter name..." required />
+            <label asp-for="Name" class="form-label">Name</label>
+            <input asp-for="Name" class="form-control" placeholder="enter name..." />
+            <span asp-validation-for="Name" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
-            <label for="description" class="form-label">Email</label>
-            <input type="Email" name="Email" id="description" class="form-control" placeholder="enter email..." required />
+            <label asp-for="Email" class="form-label">Email</label>
+            <input asp-for="Email" class="form-control" placeholder="enter email..." />
+            <span asp-validation-for="Email" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label for="address" class="form-label">Address</label>
-            <textarea name="Address" class="form-control" id="address" rows="6" cols="6" required></textarea>
+            <label asp-for="Address" class="form-label">Address</label>
+            <textarea asp-for="Address" class="form-control" rows="6" cols="6"></textarea>
+            <span asp-validation-for="Address" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label for="phone" class="form-label">Phone</label>
-            <input type="number" name="Phone" id="phone" class="form-control" required />
+            <label asp-for="Phone" class="form-label">Phone</label>
+            <input asp-for="Phone" class="form-control" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
         </div>
         <label for="" class="form-label">Gender</label>
-        <div class="mb-3 d-flex gap-3">
-            <div class="form-check">
-                <input type="radio" class="form-check-input" name="Gender" id="male" value="Male">
-                <label for="male" class="form-check-label">Male</label>
+        <div class="mb-3">
+            <div class="d-flex">
+
+                <div class="form-check me-3">
+                    <input type="radio" class="form-check-input" asp-for="Gender" id="male" value="Male">
+                    <label for="male" class="form-check-label">Male</label>
+                </div>
+                <div class="form-check me-3">
+                    <input type="radio" class="form-check-input" asp-for="Gender" id="female" value="Female">
+                    <label for="female" class="form-check-label">Female</label>
+                </div>
+                <div class="form-check me-3">
+                    <input type="radio" class="form-check-input" asp-for="Gender" id="other" value="Other">
+                    <label for="other" class="form-check-label">Other</label>
+                </div>
             </div>
-            <div class="form-check">
-                <input type="radio" class="form-check-input" name="Gender" id="female" value="Female">
-                <label for="female" class="form-check-label">Female</label>
-            </div>
-            <div class="form-check">
-                <input type="radio" class="form-check-input" name="Gender" id="other" value="Other">
-                <label for="other" class="form-check-label">Other</label>
-            </div>
+            <span asp-validation-for="Gender" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label for="dob" class="form-label">DOB</label>
-            <input type="date" name="DOB" id="dob" class="form-control" required />
+            <label asp-for="DOB" class="form-label">DOB</label>
+            <input asp-for="DOB" class="form-control" />
+            <span asp-validation-for="DOB" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label for="nrc" class="form-label">NRC</label>
-            <input type="text" name="NRC" id="nrc" class="form-control" required />
+            <label asp-for="NRC" class="form-label">NRC</label>
+            <input asp-for="NRC" class="form-control" />
+            <span asp-validation-for="NRC" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label for="position" class="form-label">Position</label>
-            <input type="text" name="Position" id="position" class="form-control" required />
+            <label asp-for="Position" class="form-label">Position</label>
+            <input asp-for="Position" class="form-control" />
+            <span asp-validation-for="Position" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label for="fatherName" class="form-label">Father Name</label>
-            <input type="text" name="FatherName" id="fatherName" class="form-control" required />
+            <label asp-for="FatherName" class="form-label">Father Name</label>
+            <input asp-for="FatherName" class="form-control"  />
+            <span asp-validation-for="FatherName" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <button class="btn btn-primary text-white" style="border-radius: 10px 0 10px 0;">Submit</button>
@@ -64,3 +79,8 @@
         </div>
     </form>
 </div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
