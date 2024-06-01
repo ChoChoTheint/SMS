@@ -99,14 +99,9 @@ namespace StudentManagementSystem.Controllers
 
                                                          select new TeacherCourseViewModel
                                                          {
-<<<<<<< HEAD
                                                              Id = tc.Id,
-                                                             TeacherInfo = teacher.Name,
-                                                             CourseInfo = course.Name
-=======
                                                              TeacherId = teacher.Name,
                                                              CourseId = course.Name
->>>>>>> yairyint
                                                          }).ToList();
             return View(teacherCourseList);
         }

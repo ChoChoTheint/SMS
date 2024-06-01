@@ -29,18 +29,11 @@ namespace StudentManagementSystem.Controllers
             var batches = (from batch in _dbContext.Batches
                            join course in _dbContext.Courses
                            on batch.CourseId equals course.Id
-<<<<<<< HEAD
-                           select new BatchViewModel
-                           {
-                               Id = batch.Id,
-                               Name = batch.Name + "/ " + course.Name
-=======
-
+                           
                            select new BatchViewModel
                            {
                                Id = batch.Id,
                                Name = batch.Name+"/ "+course.Name
->>>>>>> yairyint
                            }).OrderBy(o => o.Name).ToList();
             ViewBag.Batch = batches;
 

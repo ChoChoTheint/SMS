@@ -17,18 +17,11 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult Entry()
         {
-<<<<<<< HEAD
-=======
             ViewBag.Id = Guid.NewGuid().ToString();
->>>>>>> yairyint
 
             var batches = (from batch in _dbContext.Batches
                            join course in _dbContext.Courses
                            on batch.CourseId equals course.Id
-<<<<<<< HEAD
-=======
-
->>>>>>> yairyint
                            select new BatchViewModel
                            {
                                Id = batch.Id,
