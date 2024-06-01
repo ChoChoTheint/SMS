@@ -45,7 +45,6 @@ namespace StudentManagementSystem.Controllers
             return View();
         }
 
-<<<<<<< HEAD
         [Authorize]
         private string UploadedFile(AssignmentViewModel model)
         {
@@ -63,7 +62,6 @@ namespace StudentManagementSystem.Controllers
             }
             return uniqueFileName;
         }
-=======
        // private string UploadedFile(AssignmentViewModel model)
         //{
           //  string uniqueFileName = null;
@@ -80,7 +78,6 @@ namespace StudentManagementSystem.Controllers
           //  }
           //  return uniqueFileName;
       //  }
->>>>>>> yairyint
 
         [HttpPost]
         [Authorize]
@@ -140,17 +137,13 @@ namespace StudentManagementSystem.Controllers
             return RedirectToAction("List");
         }
 
-<<<<<<< HEAD
         [Authorize]
         public IActionResult DownloadFile()
         {
-            var memory = FilePath("3fb194b2 - 06a1 - 40f0 - 84fb - eac8576f0667_Andrew_Troelsen, _Phil_Japikse_Pro_C#_10_with_NET_6_Foundational", "wwwroot\\files");
+            var memory = FilePath("3fb194b2 - 06a1 - 40f0 - 84fb - eac8576f0667_Andrew_Troelsen, _Phil_Japikse_Pro_C#_10_with_NET_6_Foundational");
             return File(memory.ToArray(), "application/pdf", "3fb194b2 - 06a1 - 40f0 - 84fb - eac8576f0667_Andrew_Troelsen, _Phil_Japikse_Pro_C#_10_with_NET_6_Foundational");
         }
-        private MemoryStream FilePath(string fileName, string filePath)
-        {
-            var path = Path.Combine(Directory.GetCurrentDirectory(), filePath, fileName);
-=======
+       
         public IActionResult DownloadFile(string filePath)
         {
             var memory = FilePath(filePath);
@@ -158,6 +151,7 @@ namespace StudentManagementSystem.Controllers
         }
         private MemoryStream FilePath(string fileName)
         {
+
             var name = "1b52bf3c - 0ae3 - 4642 - 8938 - f79348270830_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf";
                 var folder = "1b52bf3c-0ae3-4642-8938-f79348270830_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf";
 
@@ -167,7 +161,6 @@ namespace StudentManagementSystem.Controllers
             }
             string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
             var path = Path.Combine(Directory.GetCurrentDirectory(), uploadFolder, fileName);
->>>>>>> yairyint
             var memeory = new MemoryStream();
 
             if (System.IO.File.Exists(path))
