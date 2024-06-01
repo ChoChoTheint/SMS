@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authorization;
 using System;
+using Microsoft.Extensions.Hosting;
 
 
 namespace StudentManagementSystem.Controllers
@@ -41,44 +42,72 @@ namespace StudentManagementSystem.Controllers
             return View();
         }
 
-        private string UploadedFile(AssignmentViewModel model)
-        {
-            string uniqueFileName = null;
+       // private string UploadedFile(AssignmentViewModel model)
+        //{
+          //  string uniqueFileName = null;
 
-            if (model.URL != null)
-            {
-                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.URL.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    model.URL.CopyTo(fileStream);
-                }
-            }
-            return uniqueFileName;
-        }
+           // if (model.File != null)
+            //{
+              //  string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
+              //  uniqueFileName = Guid.NewGuid().ToString() + "_" + model.File.FileName;
+              //  string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+              //  using (var fileStream = new FileStream(filePath, FileMode.Create))
+              //  {
+                //    model.File.CopyTo(fileStream);
+              //  }
+          //  }
+          //  return uniqueFileName;
+      //  }
 
         [HttpPost]
         [Authorize]
-        public IActionResult Entry(AssignmentViewModel ui)
+        public async Task<IActionResult> Entry(AssignmentViewModel ui)
         {
             try
             {
+                // Define the path to the uploads folder
+                var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
 
-                AssignmentEntity assignmentData = new AssignmentEntity()
-                    {
-                        Id = Guid.NewGuid().ToString(),
-                        CreatedAt = DateTime.UtcNow,
-                        IsInActive = true,
-                        Name = ui.Name,
-                        Description = ui.Description,
-                        URL = UploadedFile(ui),
-                        CourseId = ui.CourseId,
-                        BatchId = ui.BatchId,
-                    };
-                    _dbContext.Assignments.Add(assignmentData);
-                    _dbContext.SaveChanges();
-                    TempData["info"] = "save successfully the record";
+                // Ensure the directory exists
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                // Generate a unique file name
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + ui.File.FileName;
+
+                // Define the full path to the file
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                // Save the uploaded file to the specified location
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await ui.File.CopyToAsync(fileStream);
+                }
+
+                if (ModelState.IsValid)
+                {
+
+                    AssignmentEntity assignmentData = new AssignmentEntity()
+                        {
+                            Id = Guid.NewGuid().ToString(),
+                            CreatedAt = DateTime.UtcNow,
+                            IsInActive = true,
+                            Name = ui.Name,
+                            Description = ui.Description,
+                            URL = uniqueFileName,
+                            CourseId = ui.CourseId,
+                            BatchId = ui.BatchId,
+                        };
+                        _dbContext.Assignments.Add(assignmentData);
+                        _dbContext.SaveChanges();
+                        TempData["info"] = "save successfully the record";
+                }
+                if (!ModelState.IsValid)
+                {
+                    return View(ui);
+                }
                 
             }
             catch (Exception e)
@@ -88,14 +117,22 @@ namespace StudentManagementSystem.Controllers
             return RedirectToAction("List");
         }
 
-        public IActionResult DownloadFile()
+        public IActionResult DownloadFile(string filePath)
         {
-            var memory = FilePath("0e78a6cc-8382-4013-b1ee-8e8b08dcc349_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf", "wwwroot//files");
-            return File(memory.ToArray(), "application/pdf", "0e78a6cc-8382-4013-b1ee-8e8b08dcc349_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf");
+            var memory = FilePath(filePath);
+            return File(memory.ToArray(), "application/pdf", filePath);
         }
-        private MemoryStream FilePath(string fileName, string uploadPath)
+        private MemoryStream FilePath(string fileName)
         {
-            var path = Path.Combine(Directory.GetCurrentDirectory(), uploadPath, fileName);
+            var name = "1b52bf3c - 0ae3 - 4642 - 8938 - f79348270830_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf";
+                var folder = "1b52bf3c-0ae3-4642-8938-f79348270830_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf";
+
+            if(fileName == folder)
+            {
+                fileName = folder;
+            }
+            string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
+            var path = Path.Combine(Directory.GetCurrentDirectory(), uploadFolder, fileName);
             var memeory = new MemoryStream();
 
             if (System.IO.File.Exists(path))
@@ -124,7 +161,7 @@ namespace StudentManagementSystem.Controllers
                                                              Id = assignment.Id,
                                                              Name = assignment.Name,
                                                              Description = assignment.Description,
-                                                             File = assignment.URL,
+                                                             URL = assignment.URL,
                                                              CourseInfo = course.Name,
                                                              BatchInfo = batch.Name,
                                                          }).ToList();
@@ -184,10 +221,31 @@ namespace StudentManagementSystem.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Update(AssignmentViewModel ui)
+        public async Task<IActionResult> Update(AssignmentViewModel ui)
         {
             try
             {
+                // Define the path to the uploads folder
+                var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
+
+                // Ensure the directory exists
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                // Generate a unique file name
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + ui.File.FileName;
+
+                // Define the full path to the file
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                // Save the uploaded file to the specified location
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await ui.File.CopyToAsync(fileStream);
+                }
+
                 AssignmentEntity updateAssignmentData = new AssignmentEntity()
                 {
                     Id = ui.Id,
@@ -196,7 +254,7 @@ namespace StudentManagementSystem.Controllers
                     IsInActive = true,
                     Name = ui.Name,
                     Description = ui.Description,
-                    URL = UploadedFile(ui),
+                    URL = uniqueFileName,
                     CourseId = ui.CourseInfo,
                     BatchId = ui.BatchId,
                 };
