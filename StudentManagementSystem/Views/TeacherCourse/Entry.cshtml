@@ -1,4 +1,5 @@
-﻿<div class="container w-50 mx-auto my-3 p-5 border-start border-end border-bottom rounded-start rounded-end shadow-sm" style="border-top: 12px solid #699BF7">
+﻿@model StudentManagementSystem.Models.ViewModels.TeacherCourseViewModel
+<div class="container w-50 mx-auto my-3 p-5 border-start border-end border-bottom rounded-start rounded-end shadow-sm" style="border-top: 12px solid #699BF7">
     <div class="d-flex justify-content-center align-items-center mb-4">
         <div class="me-3">
             <i class="fa-solid fa-book-open fa-2xl" style="color: #699BF7"></i>
@@ -9,26 +10,29 @@
         </div>
     </div>
 
-    <form action="/teachercourse/entry" method="post" enctype="multipart/form-data">
+    <form asp-controller="TeacherCourse" asp-action="Entry" method="post" enctype="multipart/form-data">
+        <input asp-for="Id" value="@ViewBag.Id" hidden />
         <div class="mb-3">
-            <label for="description" class="form-label">Teacher</label>
-            <select name="TeacherId" id="courseId" class="form-select">
-                <option selected>---choose option---</option>
+            <label asp-for="TeacherId" class="form-label">Teacher</label>
+            <select asp-for="TeacherId" class="form-select">
+                <option value="" selected>---choose option---</option>
                 @foreach (var teacher in ViewBag.Teacher)
                 {
                     <option value="@teacher.Id">@teacher.Name</option>
                 }
             </select>
+            <span asp-validation-for="TeacherId" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label for="examDate" class="form-label">Course</label>
-            <select name="CourseId" id="courseId" class="form-select">
-                <option selected>---choose option---</option>
+            <label asp-for="CourseId" class="form-label">Course</label>
+            <select asp-for="CourseId" class="form-select">
+                <option value="" selected>---choose option---</option>
                 @foreach (var course in ViewBag.Course)
                 {
                     <option value="@course.Id">@course.Name</option>
                 }
             </select>
+            <span asp-validation-for="CourseId" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <button class="btn btn-primary text-white" style="border-radius: 10px 0 10px 0;">Submit</button>

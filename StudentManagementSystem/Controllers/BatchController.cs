@@ -54,7 +54,9 @@ namespace StudentManagementSystem.Controllers
                 }
                 if (!ModelState.IsValid)
                 {
-                    // Reload courses to populate the dropdown again
+                    // Reload course and id to populate the dropdown again
+                    var id = Guid.NewGuid().ToString();
+                    ViewBag.Id = id;
                     var courses = _dbContext.Courses.Select(s => new CourseViewModel
                     {
                         Id = s.Id,

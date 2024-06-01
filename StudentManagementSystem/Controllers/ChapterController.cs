@@ -17,11 +17,17 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult Entry()
         {
-            var batches = _dbContext.Batches.Select(s => new BatchViewModel
-            {
-                Id = s.Id,
-                Name = s.Name,
-            }).OrderBy(o => o.Name).ToList();
+            ViewBag.Id = Guid.NewGuid().ToString();
+
+            var batches = (from batch in _dbContext.Batches
+                           join course in _dbContext.Courses
+                           on batch.CourseId equals course.Id
+
+                           select new BatchViewModel
+                           {
+                               Id = batch.Id,
+                               Name = batch.Name + "/ " + course.Name
+                           }).OrderBy(o => o.Name).ToList();
             ViewBag.Batch = batches;
 
             var books = _dbContext.Books.Select(s => new BookViewModel
@@ -49,21 +55,60 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                ChapterEntity chapterData = new ChapterEntity()
+                if (ModelState.IsValid)
                 {
-                    Id = Guid.NewGuid().ToString(),
-                    CreatedAt = DateTime.UtcNow,
-                    IsInActive = true,
-                    Name = ui.Name,
-                    Description = ui.Description,
-                    BatchId = ui.BatchId,
-                    BookId = ui.BookId,
-                    VideoId = ui.VideoId,
-                };
 
-                _dbContext.Chapters.Add(chapterData);
-                _dbContext.SaveChanges();
-                TempData["info"] = "save successfully the record";
+                    ChapterEntity chapterData = new ChapterEntity()
+                    {
+                        Id = ui.Id,
+                        CreatedAt = DateTime.UtcNow,
+                        IsInActive = true,
+                        Name = ui.Name,
+                        Description = ui.Description,
+                        BatchId = ui.BatchId,
+                        BookId = ui.BookId,
+                        VideoId = ui.VideoId,
+                    };
+
+                    _dbContext.Chapters.Add(chapterData);
+                    _dbContext.SaveChanges();
+                    TempData["info"] = "save successfully the record";
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    //Relode id, batch, book and video to populate dropdown again!
+
+                    ViewBag.Id = Guid.NewGuid().ToString();
+
+                    var batches = (from batch in _dbContext.Batches
+                                   join course in _dbContext.Courses
+                                   on batch.CourseId equals course.Id
+
+                                   select new BatchViewModel
+                                   {
+                                       Id = batch.Id,
+                                       Name = batch.Name + "/ " + course.Name
+                                   }).OrderBy(o => o.Name).ToList();
+                    ViewBag.Batch = batches;
+
+                    var books = _dbContext.Books.Select(s => new BookViewModel
+                    {
+                        Id = s.Id,
+                        Name = s.Name,
+                    }).OrderBy(o => o.Name).ToList();
+                    ViewBag.Book = books;
+
+                    var videos = _dbContext.Videos.Select(s => new VideoViewModel
+                    {
+                        Id = s.Id,
+                        Name = s.Name,
+                        //URL = s.URL,
+                    }).OrderBy(o => o.Name).ToList();
+                    ViewBag.Video = videos;
+
+                    return View(ui);
+                }
             }
             catch (Exception e)
             {
@@ -82,15 +127,17 @@ namespace StudentManagementSystem.Controllers
                                                    on chapter.BookId equals book.Id
                                                    join video in _dbContext.Videos
                                                    on chapter.VideoId equals video.Id
+                                                   join course in _dbContext.Courses
+                                                   on batch.CourseId equals course.Id
 
                                                    select new ChapterViewModel
                                                    {
                                                        Id = chapter.Id,
                                                        Name = chapter.Name,
                                                        Description = chapter.Description,
-                                                       BatchInfo = batch.Name,
-                                                       BookInfo = book.Name,
-                                                       VideoInfo = video.URL,
+                                                       BatchId = batch.Name + "/ " + course.Name,
+                                                       BookId = book.Name,
+                                                       VideoId = video.URL,
                                                    }).ToList();
             return View(chapterList);
         }
@@ -166,7 +213,7 @@ namespace StudentManagementSystem.Controllers
                     IsInActive = true,
                     Name = ui.Name,
                     Description = ui.Description,
-                    BatchId = ui.BatchInfo,
+                    BatchId = ui.BatchId,
                     BookId = ui.BookId,
                     VideoId = ui.VideoId,
                 };

@@ -1,20 +1,20 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StudentManagementSystem.Models.ViewModels
 {
     public class ChapterViewModel
     {
         public string Id { get; set; }
+        [Required(ErrorMessage ="name is required")]
         public string Name { get; set; }
+        [Required(ErrorMessage = "description is required")]
         public string Description { get; set; }
-        //[ForeignKey(nameof(BatchId))]
+        [Required(ErrorMessage = "batch is required")]
         public string BatchId { get; set; }
-        public string BatchInfo { get; set; }
-        //[ForeignKey(nameof(BookId))]
+        [Required(ErrorMessage = "book is required")]
         public string BookId { get; set; }
-        public string BookInfo { get; set; }
-        //[ForeignKey(nameof(VideoId))]
+        [Required(ErrorMessage = "video is required")]
         public string VideoId { get; set; }
-        public string VideoInfo { get; set; }
     }
 }

@@ -76,7 +76,7 @@ namespace StudentManagementSystem.Controllers
                                                        DOB = student.DOB,
                                                        FatherName = student.FatherName,
                                                        Gender = student.Gender,
-                                                       BatchInfo = batch.Name
+                                                       BatchId = batch.Name
                                                    }).ToList();
             return View(studentList);
         }

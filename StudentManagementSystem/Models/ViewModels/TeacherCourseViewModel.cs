@@ -1,17 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StudentManagementSystem.Models.ViewModels
 {
     public class TeacherCourseViewModel
     {
         public string Id { get; set; }
-        //[ForeignKey(nameof(TeacherId))]
+        [Required(ErrorMessage ="teacher is required")]
         public string TeacherId { get; set; }
-        public string TeacherInfo { get; set; }
-
-        //[ForeignKey(nameof(CourseId))]
+        [Required(ErrorMessage = "course is required")]
         public string CourseId { get; set; }
-        public string CourseInfo { get; set; }
 
     }
 }

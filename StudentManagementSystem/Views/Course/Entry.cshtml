@@ -1,4 +1,5 @@
-﻿<div class="container w-50 mx-auto my-3 p-5 border-start border-end border-bottom rounded-start rounded-end shadow-sm" style="border-top: 12px solid #699BF7">
+﻿@model StudentManagementSystem.Models.ViewModels.CourseViewModel
+<div class="container w-50 mx-auto my-3 p-5 border-start border-end border-bottom rounded-start rounded-end shadow-sm" style="border-top: 12px solid #699BF7">
     <div class="d-flex justify-content-center align-items-center mb-4">
         <div class="me-3">
             <i class="fa-solid fa-book-open fa-2xl" style="color: #699BF7"></i>
@@ -10,26 +11,32 @@
     </div>
 
     <form action="/course/entry" method="post" enctype="multipart/form-data">
+        <input asp-for="Id" value="@ViewBag.Id" hidden />
         <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
-            <input type="text" name="Name" id="name" class="form-control" placeholder="enter name..." required />
+            <label asp-for="Name" class="form-label">Name</label>
+            <input asp-for="Name" class="form-control" placeholder="enter name..." />
+            <span asp-validation-for="Name" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            <input type="text" name="Description" id="description" class="form-control" placeholder="enter description..." required />
+            <label asp-for="Description" class="form-label">Description</label>
+            <input asp-for="Description" class="form-control" placeholder="enter description..." />
+            <span asp-validation-for="Description" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label for="openingDate" class="form-label">Opening Date</label>
-            <input type="date" name="OpeningDate" id="openingDate" class="form-control" required />
+            <label asp-for="OpeningDate" class="form-label">Opening Date</label>
+            <input asp-for="OpeningDate" class="form-control"/>
+            <span asp-validation-for="OpeningDate" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label for="inHour" class="form-label">Duration In Hour</label>
-            <input type="text" name="DurationInHour" id="inHour" class="form-control" required />
+            <label asp-for="DurationInHour" class="form-label">Duration In Hour</label>
+            <input asp-for="DurationInHour" class="form-control" />
+            <span asp-validation-for="DurationInHour" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label for="inMonth" class="form-label">Duration In Month</label>
-            <input type="text" name="DurationInMonth" id="inMonth" class="form-control" required />
+            <label asp-for="DurationInMonth" class="form-label">Duration In Month</label>
+            <input asp-for="DurationInMonth" class="form-control" />
+            <span asp-validation-for="DurationInMonth" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <button class="btn btn-primary text-white" style="border-radius: 10px 0 10px 0;">Submit</button>
@@ -37,3 +44,8 @@
         </div>
     </form>
 </div>
+
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

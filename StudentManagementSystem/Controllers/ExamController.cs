@@ -17,6 +17,7 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult Entry()
         {
+            ViewBag.Id = Guid.NewGuid().ToString();
             return View();
         }
 
@@ -26,17 +27,29 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                ExamEntity examData = new ExamEntity()
+                if (ModelState.IsValid)
                 {
-                    Id = Guid.NewGuid().ToString(),
-                    CreatedAt = DateTime.UtcNow,
-                    IsInActive = true,
-                    Name = ui.Name,
-                    ExamDate = ui.ExamDate,
-                };
-                _dbContext.Exams.Add(examData);
-                _dbContext.SaveChanges();
-                TempData["info"] = "save successfully the record";
+
+                    ExamEntity examData = new ExamEntity()
+                    {
+                        Id = ui.Id,
+                        CreatedAt = DateTime.UtcNow,
+                        IsInActive = true,
+                        Name = ui.Name,
+                        ExamDate = ui.ExamDate,
+                    };
+                    _dbContext.Exams.Add(examData);
+                    _dbContext.SaveChanges();
+                    TempData["info"] = "save successfully the record";
+                }
+                else
+                {
+                    //Reload id to populate the dropdown again
+                    
+                    ViewBag.Id = Guid.NewGuid().ToString();
+
+                    return View(ui);
+                }
             }
             catch (Exception e)
             {

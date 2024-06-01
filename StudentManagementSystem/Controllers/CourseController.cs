@@ -17,6 +17,9 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult Entry()
         {
+            var id = Guid.NewGuid().ToString();
+            ViewBag.Id = id;
+
             return View();
         }
 
@@ -26,20 +29,32 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                CourseEntity courseData = new CourseEntity()
+                if (ModelState.IsValid)
                 {
-                    Id = Guid.NewGuid().ToString(),
-                    CreatedAt = DateTime.UtcNow,
-                    IsInActive = true,
-                    Name = ui.Name,
-                    Description = ui.Description,
-                    OpeningDate = ui.OpeningDate,
-                    DurationInHour = ui.DurationInHour,
-                    DurationInMonth = ui.DurationInMonth,
-                };
-                _dbContext.Courses.Add(courseData);
-                _dbContext.SaveChanges();
-                TempData["info"] = "save successfully the record";
+
+                    CourseEntity courseData = new CourseEntity()
+                    {
+                        Id = ui.Id,
+                        CreatedAt = DateTime.UtcNow,
+                        IsInActive = true,
+                        Name = ui.Name,
+                        Description = ui.Description,
+                        OpeningDate = ui.OpeningDate,
+                        DurationInHour = ui.DurationInHour,
+                        DurationInMonth = ui.DurationInMonth,
+                    };
+                    _dbContext.Courses.Add(courseData);
+                    _dbContext.SaveChanges();
+                    TempData["info"] = "save successfully the record";
+                }
+                if (!ModelState.IsValid)
+                {
+                    //Reload id to populate the dropdown again
+                    var id = Guid.NewGuid().ToString();
+                    ViewBag.Id = id;
+
+                    return View(ui);
+                }
             }
             catch (Exception e)
             {
