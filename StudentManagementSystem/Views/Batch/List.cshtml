@@ -30,14 +30,18 @@
                 <table id="batchTable" class="table table-bordred table-striped table-dark">
 
                     <thead>
-                    <th>Batch Name</th>
-                    <th>Description</th>
-                    <th>Course</th>
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <th>Edit</th>
-                            <th>Delete</th>
-                        }
+                        <tr>
+
+                            <td>ID</td>
+                            <th>Batch Name</th>
+                            <th>Description</th>
+                            <th>Course</th>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            }
+                        </tr>
                     </thead>
                     <tbody>
                         @{
@@ -47,9 +51,10 @@
                         {
                             
                             <tr>
+                                <td>@index</td>
                                 <td>@list.Name</td>
                                 <td>@list.Description</td>
-                                <td>@list.CourseInfo</td>
+                                <td>@list.CourseId</td>
                                 @if (User.IsInRole("Admin"))
                                 {
                                     <td><p data-placement="top" data-toggle="tooltip" title="Edit"><a class="btn btn-primary btn-xs" data-title="Edit" href="/batch/edit?Id=@list.Id"><span class="glyphicon glyphicon-pencil"></span></a></p></td>
@@ -63,13 +68,14 @@
                                             </div>
                                             <p class="alert text-danger">Are You Sure Want To Delete The Data?</p>
                                             <div class="offcanvasbottom ">
-                                                <a href="/batch/delete?Id=@list.Id" class="btn btn-danger w-100">Yes</a>
+                                                <a asp-controller="Batch" asp-action="delete" asp-route-id="@list.Id" class="btn btn-danger w-100">Yes</a>
                                                 <button type="button" class="btn btn-secondary w-100 my-3" data-bs-dismiss="offcanvas" aria-label="Close">No</button>
                                             </div>
                                         </div>
                                     </td>
                                 }
                             </tr>
+                            index++;
                         }
 
 

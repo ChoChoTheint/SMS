@@ -17,6 +17,9 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult Entry()
         {
+            var id = Guid.NewGuid().ToString();
+            ViewBag.Id = id;
+
             var courses = _dbContext.Courses.Select(s => new CourseViewModel
             {
                 Id = s.Id,
@@ -33,19 +36,34 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-
-                BatchEntity batchData = new BatchEntity()
+                if (ModelState.IsValid)
                 {
-                    Id = Guid.NewGuid().ToString(),
-                    CreatedAt = DateTime.UtcNow,
-                    IsInActive = true,
-                    Name = ui.Name,
-                    Description = ui.Description,
-                    CourseId = ui.CourseId,
-                };
-                _dbContext.Batches.Add(batchData);
-                _dbContext.SaveChanges();
-                TempData["info"] = "save successfully the record";
+
+                    BatchEntity batchData = new BatchEntity()
+                    {
+                        Id = ui.Id,
+                        CreatedAt = DateTime.UtcNow,
+                        IsInActive = true,
+                        Name = ui.Name,
+                        Description = ui.Description,
+                        CourseId = ui.CourseId,
+                    };
+                    _dbContext.Batches.Add(batchData);
+                    _dbContext.SaveChanges();
+                    TempData["info"] = "save successfully the record";
+                }
+                if (!ModelState.IsValid)
+                {
+                    // Reload courses to populate the dropdown again
+                    var courses = _dbContext.Courses.Select(s => new CourseViewModel
+                    {
+                        Id = s.Id,
+                        Name = s.Name,
+                    }).OrderBy(o => o.Name).ToList();
+                    ViewBag.Course = courses;
+
+                    return View(ui);
+                }
 
             }
             catch (Exception e)
@@ -68,7 +86,7 @@ namespace StudentManagementSystem.Controllers
                                                    Id = batch.Id,
                                                    Name = batch.Name,
                                                    Description = batch.Description,
-                                                   CourseInfo = course.Name,
+                                                   CourseId = course.Name,
                                                }).ToList();
             return View(batchList);
         }
@@ -79,6 +97,7 @@ namespace StudentManagementSystem.Controllers
             try
             {
                 var deleteBatchData = _dbContext.Batches.Where(w => w.Id == Id).FirstOrDefault();
+
                 if(deleteBatchData is not null)
                 {
                     _dbContext.Batches.Remove(deleteBatchData);

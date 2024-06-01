@@ -18,6 +18,12 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult Entry()
         {
+            var aspUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ViewBag.AspUserId = aspUserId;
+
+            var id = Guid.NewGuid().ToString();
+            ViewBag.Id = id;
+
             return View();
         }
 
@@ -25,30 +31,39 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult Entry(AdminViewModel ui)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            
 
             try
             {
-                AdminEntity adminData = new AdminEntity()
+                if (ModelState.IsValid)
                 {
-                    Id = Guid.NewGuid().ToString(),
-                    CreatedAt = DateTime.UtcNow,
-                    IsInActive = true,
-                    Name = ui.Name,
-                    Email = ui.Email,
-                    Phone = ui.Phone,
-                    Address = ui.Address,
-                    NRC = ui.NRC,
-                    DOB = ui.DOB,
-                    FatherName = ui.FatherName,
-                    Gender = ui.Gender,
-                    AspNetUsersId = userId,
-                };
-                _dbContext.Admins.Add(adminData);
-                _dbContext.SaveChanges();
-                TempData["info"] = "save successfully the data";
+
+                    AdminEntity adminData = new AdminEntity()
+                    {
+                        Id = ui.Id,
+                        CreatedAt = DateTime.UtcNow,
+                        IsInActive = true,
+                        Name = ui.Name,
+                        Email = ui.Email,
+                        Phone = ui.Phone,
+                        Address = ui.Address,
+                        NRC = ui.NRC,
+                        DOB = ui.DOB,
+                        FatherName = ui.FatherName,
+                        Gender = ui.Gender,
+                        AspNetUsersId = ui.AspNetUsersId,
+                    };
+                    _dbContext.Admins.Add(adminData);
+                    _dbContext.SaveChanges();
+                    TempData["info"] = "save successfully the data";
+                }
+                if (!ModelState.IsValid)
+                {
+                    return View(ui);
+                }
+
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 TempData["info"] = "error while saving the data";
             }
