@@ -10,7 +10,7 @@ namespace StudentManagementSystem.Models.ViewModels
         public string Name { get; set; }
         [Required(ErrorMessage = "Description is required")]
         public string Description { get; set; }
-        public string URL { get; set; }
+        public string URL { get; set; } = null;
         [Required(ErrorMessage = "File is required")]
         public IFormFile File { get; set; }
         //[ForeignKey(nameof(CourseId))]

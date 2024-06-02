@@ -1,4 +1,8 @@
-﻿<div class="w-75 mx-auto p-5 border shadow">
+﻿@if (TempData["info"] != null)
+{
+    <div class="alert alert-info">@TempData["info"]</div>
+}
+<div class="w-75 mx-auto p-5 border shadow">
     <div class="d-flex justify-content-center align-items-center mb-4">
         <div class="me-3">
             <i class="fa-solid fa-book-open fa-2xl" style="color: #699BF7"></i>
