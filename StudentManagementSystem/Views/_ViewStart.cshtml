@@ -1,14 +1,16 @@
-﻿@if (User.Identity.IsAuthenticated)
-{
-    @if(User.IsInRole("Admin"))
+﻿    @if (User.IsInRole("Admin") && User.Identity.IsAuthenticated)
     {
         Layout = "_LayoutAdmin";
-    }else if (User.IsInRole("Teacher"))
+    }
+    else if (User.IsInRole("Teacher") && User.Identity.IsAuthenticated)
     {
         Layout = "_LayoutTeacher";
     }
-    else
+    else if (User.Identity.IsAuthenticated)
     {
-        Layout = "_Layout";
-    }
+        Layout = "_LayoutStudent";
+}
+else
+{
+    Layout = "_Layout";
 }

@@ -18,6 +18,8 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult Entry()
         {
+            ViewBag.Id = Guid.NewGuid().ToString();
+
             var students = _dbContext.Students.Select(s => new StudentViewModel
             {
                 Id = s.Id,
@@ -36,20 +38,39 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                AttendanceEntity attendanceData = new AttendanceEntity()
+                if (ModelState.IsValid)
                 {
-                    Id = Guid.NewGuid().ToString(),
-                    CreatedAt = DateTime.UtcNow,
-                    IsInActive = true,
-                    AttendanceDate = ui.AttendanceDate,
-                    InTime = ui.InTime,
-                    OutTime = ui.OutTime,
-                    IsLeave = ui.IsLeave,
-                    StudentId = ui.StudentId,
-                };
-                _dbContext.Attendances.Add(attendanceData);
-                _dbContext.SaveChanges();
-                TempData["info"] = "save successfully the record";
+
+                    AttendanceEntity attendanceData = new AttendanceEntity()
+                    {
+                        Id = ui.Id,
+                        CreatedAt = DateTime.UtcNow,
+                        IsInActive = true,
+                        AttendanceDate = ui.AttendanceDate,
+                        InTime = ui.InTime,
+                        OutTime = ui.OutTime,
+                        IsLeave = ui.IsLeave,
+                        StudentId = ui.StudentId,
+                    };
+                    _dbContext.Attendances.Add(attendanceData);
+                    _dbContext.SaveChanges();
+                    TempData["info"] = "save successfully the record";
+                }
+                else
+                {
+                    //Reload students to populate the dropdown again
+
+                    ViewBag.Id = Guid.NewGuid().ToString();
+
+                    var students = _dbContext.Students.Select(s => new StudentViewModel
+                    {
+                        Id = s.Id,
+                        Name = s.Name,
+                    }).OrderBy(o => o.Name).ToList();
+                    ViewBag.Student = students;
+
+                    return View(ui);
+                }
             }
             catch (Exception e)
             {
@@ -73,8 +94,11 @@ namespace StudentManagementSystem.Controllers
                                                              InTime = attendance.InTime,
                                                              OutTime = attendance.OutTime,
                                                              IsLeave = attendance.IsLeave,
-                                                             StudentInfo = student.Name + "/" + batch.Name
+                                                             StudentId = student.Name + "/" + batch.Name,
+                                                             
                                                          }).ToList();
+
+           
             return View(attendanceList);
         }
 

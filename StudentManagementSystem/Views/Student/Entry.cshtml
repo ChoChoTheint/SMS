@@ -1,0 +1,87 @@
+﻿@model StudentManagementSystem.Models.ViewModels.StudentViewModel
+<div class="container w-50 mx-auto my-3 p-5 border-start border-end border-bottom rounded-start rounded-end shadow-sm" style="border-top: 12px solid #699BF7">
+    <div class="d-flex justify-content-center align-items-center mb-4">
+        <div class="me-3">
+            <i class="fa-solid fa-book-open fa-2xl" style="color: #699BF7"></i>
+        </div>
+        <div class="text-center">
+            <span class="mate-sc text-uppercase fw-bold">Leadership</span>
+            <h1 class="h5 brand-space">Excellence</h1>
+        </div>
+    </div>
+
+    <form action="/student/entry" method="post" enctype="multipart/form-data">
+        <input asp-for="Id" value="@ViewBag.Id" hidden />
+        <input asp-for="AspNetUsersId" value="@ViewBag.AspUserId" hidden />
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Name</label>
+            <input asp-for="Name" class="form-control" placeholder="enter name..." />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label">Email</label>
+            <input asp-for="Email" class="form-control" placeholder="enter emale..." />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Address" class="form-label">Address</label>
+            <textarea asp-for="Address" class="form-control" rows="6" cols="6"></textarea>
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Phone" class="form-label">Phone</label>
+            <input asp-for="Phone" class="form-control" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="DOB" class="form-label">DOB</label>
+            <input asp-for="DOB" class="form-control" />
+            <span asp-validation-for="DOB" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="FatherName" class="form-label">Father Name</label>
+            <input asp-for="FatherName" class="form-control" />
+            <span asp-validation-for="FatherName" class="text-danger"></span>
+        </div>
+        <label class="form-label">Gender</label>
+        <div class="mb-3">
+            <div class="d-flex">
+
+                <div class="me-3">
+                    <input type="radio" asp-for="Gender" id="male" value="Male" class="form-check-input"/>
+                    <label for="male" class="form-check-label">Male</label>
+                </div>
+                <div class="me-3">
+                    <input type="radio" asp-for="Gender" id="female" value="Female" class="form-check-input" />
+                    <label for="female" class="form-check-label">Female</label>
+                </div>
+                <div class="me-3">
+                    <input type="radio" asp-for="Gender" id="female" value="Other" class="form-check-input" />
+                    <label for="other" class="form-check-label">Female</label>
+                </div>
+            </div>
+            <span asp-validation-for="Gender" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="NRC" class="form-label">NRC</label>
+            <input asp-for="NRC" class="form-control" />
+            <span asp-validation-for="NRC" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="BatchId" class="form-label">Batch</label>
+            <select asp-for="BatchId" class="form-select">
+                <option selected>---choose option---</option>
+                @foreach (var batch in ViewBag.Batch)
+                {
+                    <option value="@batch.Id">@batch.Name</option>
+                }
+            </select>
+            <span asp-validation-for="BatchId" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-primary text-white" style="border-radius: 10px 0 10px 0;">Submit</button>
+            <button class="btn btn-secondary text-white" style="border-radius: 10px 0 10px 0;" type="reset">Cancel</button>
+        </div>
+    </form>
+</div>

@@ -46,6 +46,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <span class="text-info">please today's attendance is required!</span>
                         @{
                             var index = 1;
                         }
@@ -53,7 +54,7 @@
                         {
                             <tr>
                                 <td>@index</td>
-                                <td>@list</td>
+                                <td>@list.StudentId</td>
                                 <td>@list.AttendanceDate</td>
                                 <td>@list.InTime</td>
                                 <td>@list.OutTime</td>
