@@ -23,83 +23,93 @@
         </div>
     }
 }
-    <table id="adminTable" class="table table-bordred table-striped table-dark">
 
-        <thead>
-        <th scope="col">ID</th>
-        <th scope="col">Name</th>
-        <th>Email</th>
-        <th>Address</th>
-        <th>Phone</th>
-        <th>DOB</th>
-        <th>NRC</th>
-        <th>Gender</th>
-        <th>Father Name</th>
-        <th>Batch</th>
-            @if (User.IsInRole("Admin"))
-            {
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table id="adminTable" class="table table-bordred table-striped table-dark">
+
+                    <thead>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th>DOB</th>
+                    <th>NRC</th>
+                    <th>Gender</th>
+                    <th>Father Name</th>
+                    <th>Batch</th>
+                        @if (User.IsInRole("Admin"))
+                        {
                 
-                <th>Edit</th>
-                <th>Delete</th>
-            }
-        </thead>
-        <tbody>
-            @{
-                int index = 1;
-            }
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        }
+                    </thead>
+                    <tbody>
+                        @{
+                            int index = 1;
+                        }
 
-            @foreach (var item in Model)
-            {   
-                <tr>
-                    @if(item.Name is not null)
-                    {
-                        <span class="text-warning">please today's attendance is required!</span>
-                    }
-                    <td>@index</td>
-                    <td>@item.Name</td>
-                    <td>@item.Email</td>
-                    <td>@item.Address</td>
-                    <td>@item.Phone</td>
-                    <td>@item.DOB.ToString("dd-MM-yyyy")</td>
-                    <td>@item.NRC</td>
-                    <td>@item.Gender</td>
-                    <td>@item.FatherName</td>
-                    <td>@item.BatchId</td>
-                    @if (User.IsInRole("Admin"))
-                    {
+                        @foreach (var item in Model)
+                        {   
+                            <tr>
+                                @if(item.Name is not null)
+                                {
+                                    <span class="text-warning">please today's attendance is required!</span>
+                                }
+                                <td>@index</td>
+                                <td>@item.Name</td>
+                                <td>@item.Email</td>
+                                <td>@item.Address</td>
+                                <td>@item.Phone</td>
+                                <td>@item.DOB.ToString("dd-MM-yyyy")</td>
+                                <td>@item.NRC</td>
+                                <td>@item.Gender</td>
+                                <td>@item.FatherName</td>
+                                <td>@item.BatchId</td>
+                                @if (User.IsInRole("Admin"))
+                                {
                         
-                        <td>
-                            <a href="/student/edit?Id=@item.Id" role="button" class="btn btn-primary btn-xs" data-title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>
+                                    <td>
+                                        <a href="/student/edit?Id=@item.Id" role="button" class="btn btn-primary btn-xs" data-title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>
 
 
-                        </td>
-                        <td>
-                            <p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-bs-toggle="offcanvas" data-bs-target="#delete"><span class="glyphicon glyphicon-trash"></span></button></p>
+                                    </td>
+                                    <td>
+                                        <p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-bs-toggle="offcanvas" data-bs-target="#delete"><span class="glyphicon glyphicon-trash"></span></button></p>
 
-                            <div class="offcanvas offcanvas-top mx-auto" tabindex="-1" id="delete" aria-labelledby="offcanvasExampleLabel" style="width: 500px;">
-                                <div class="offcanvas-header">
-                                    <h5 class="h2 text-warning offcanvas-title" id="offcanvasExampleLabel">Attention</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                                </div>
-                                <div class="offcanvas-body">
-                                    <p class="alert text-danger">Are You Sure Want To Delete The Data?</p>
-                                    <div class="offcanvasbottom ">
-                                        <a href="/student/delete?Id=@item.Id" class="btn btn-danger w-100">Yes</a>
-                                        <a type="button" class="btn btn-secondary w-100 my-3" data-bs-dismiss="offcanvas" aria-label="Close">No</a>
-                                    </div>
-                                </div>
-                            </div>
+                                        <div class="offcanvas offcanvas-top mx-auto" tabindex="-1" id="delete" aria-labelledby="offcanvasExampleLabel" style="width: 500px;">
+                                            <div class="offcanvas-header">
+                                                <h5 class="h2 text-warning offcanvas-title" id="offcanvasExampleLabel">Attention</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                            </div>
+                                            <div class="offcanvas-body">
+                                                <p class="alert text-danger">Are You Sure Want To Delete The Data?</p>
+                                                <div class="offcanvasbottom ">
+                                                    <a href="/student/delete?Id=@item.Id" class="btn btn-danger w-100">Yes</a>
+                                                    <a type="button" class="btn btn-secondary w-100 my-3" data-bs-dismiss="offcanvas" aria-label="Close">No</a>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                        </td>
-                    }
-                </tr>
-                index++;
-            }
+                                    </td>
+                                }
+                            </tr>
+                            index++;
+                        }
 
 
-        </tbody>
+                    </tbody>
 
-    </table>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
