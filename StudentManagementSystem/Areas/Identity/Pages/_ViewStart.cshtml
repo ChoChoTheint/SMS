@@ -1,10 +1,14 @@
 ﻿
-@if(User.IsInRole("Admin")){
+@if(User.IsInRole("Admin")&&User.Identity.IsAuthenticated){
     Layout = "/Views/Shared/_LayoutAdmin.cshtml";
 }
-else if(User.IsInRole("Teacher"))
+else if(User.IsInRole("Teacher")&&User.Identity.IsAuthenticated)
 {
     Layout = "/Views/Shared/_LayoutTeacher.cshtml";
+}
+else if(User.Identity.IsAuthenticated)
+{
+    Layout = "/Views/Shared/_LayoutStudent.cshtml";
 }
 else
 {

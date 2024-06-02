@@ -18,6 +18,7 @@ namespace StudentManagementSystem.Models.ViewModels
         [Required(ErrorMessage = "nrc is requied")]
         public string NRC { get; set; }
         [Required(ErrorMessage = "date of birth is requied")]
+        [DataType(DataType.Date)]
         public DateTime DOB { get; set; }
         [Required(ErrorMessage = "father name is requied")]
         public string FatherName { get; set; }

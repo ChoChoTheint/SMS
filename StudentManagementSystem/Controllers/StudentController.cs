@@ -18,11 +18,19 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult Entry()
         {
-            var batches = _dbContext.Batches.Select(s => new BatchViewModel
-            {
-                Id = s.Id,
-                Name = s.Name,
-            }).OrderBy(o => o.Name).ToList();
+            ViewBag.Id = Guid.NewGuid().ToString();
+
+            ViewBag.AspUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var batches = (from batch in _dbContext.Batches
+                                         join course in _dbContext.Courses
+                                         on batch.CourseId equals course.Id
+
+                                         select new BatchViewModel
+                                         {
+                                             Id = batch.Id,
+                                             Name = batch.Name + "/ " + course.Name
+                                         }).OrderBy(o => o.Name).ToList();
             ViewBag.Batch = batches;
 
             return View();
@@ -32,13 +40,13 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult Entry(StudentViewModel ui)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            
 
             try
             {
                 StudentEntity studentData = new StudentEntity()
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id = ui.Id,
                     CreatedAt = DateTime.UtcNow,
                     IsInActive = true,
                     Name = ui.Name,
@@ -50,7 +58,7 @@ namespace StudentManagementSystem.Controllers
                     FatherName = ui.FatherName,
                     Gender = ui.Gender,
                     BatchId = ui.BatchId,
-                    AspNetUsersId = userId,
+                    AspNetUsersId = ui.AspNetUsersId,
                 };
                 _dbContext.Students.Add(studentData);
                 _dbContext.SaveChanges();
@@ -60,7 +68,7 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while saving data";
             }
-            return View();
+            return RedirectToAction("list");
         }
 
         [Authorize]
@@ -103,13 +111,13 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while deleting data";
             }
-            return View();
+            return RedirectToAction("list");
         }
 
         [Authorize]
         public IActionResult Edit(string Id)
         {
-            IList<StudentViewModel> editStudentData = _dbContext.Students.Where(w => w.Id == Id).Select(s => new StudentViewModel
+            StudentViewModel editStudentData = _dbContext.Students.Where(w => w.Id == Id).Select(s => new StudentViewModel
             {
                 Id = s.Id,
                 Name = s.Name,
@@ -120,7 +128,8 @@ namespace StudentManagementSystem.Controllers
                 DOB = s.DOB,
                 FatherName = s.FatherName,
                 Gender = s.Gender,
-            }).ToList();
+                BatchId = s.BatchId
+            }).FirstOrDefault();
 
             var batches = _dbContext.Batches.Select(s => new BatchViewModel
             {
@@ -128,7 +137,6 @@ namespace StudentManagementSystem.Controllers
                 Name = s.Name,
             }).OrderBy(o => o.Name).ToList();
             ViewBag.Batch = batches;
-
             return View(editStudentData);
         }
 
@@ -136,6 +144,7 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult Update(StudentViewModel ui)
         {
+            var AspNetUsersId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             try
             {
                 StudentEntity updateStudentData = new StudentEntity()
@@ -151,6 +160,7 @@ namespace StudentManagementSystem.Controllers
                     DOB = ui.DOB,
                     FatherName = ui.FatherName,
                     Gender = ui.Gender,
+                    AspNetUsersId = AspNetUsersId,
                     BatchId = ui.BatchId,
                 };
 
@@ -162,7 +172,7 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while updating data";
             }
-            return View();
+            return RedirectToAction("list");
         }
     }
 }
