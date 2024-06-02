@@ -76,7 +76,7 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while saving the record";
             }
-            return View();
+            return RedirectToAction("List");
         }
 
         [Authorize]
@@ -98,8 +98,8 @@ namespace StudentManagementSystem.Controllers
                                                              
                                                          }).ToList();
 
-           
-            return View(attendanceList);
+            
+            return User.IsInRole("Admin") ? View(attendanceList)  : View("/home/index", model: attendanceList);
         }
 
         [Authorize]
