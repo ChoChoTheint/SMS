@@ -208,7 +208,7 @@ else if (User.Identity.IsAuthenticated && User.IsInRole("Teacher"))
                         }
                     </tr>
                 </thead>
-                <tbody>
+               @*  <tbody>
                     <span class="text-info">please today's attendance is required!</span>
                     @{
                         var index = 1;
@@ -246,7 +246,7 @@ else if (User.Identity.IsAuthenticated && User.IsInRole("Teacher"))
 
 
                 </tbody>
-
+ *@
             </table>
         </div>
     </div>
@@ -279,7 +279,7 @@ else if(User.Identity.IsAuthenticated)
                         </tr>
                     </thead>
 
-                    <tbody>
+                   @*  <tbody>
                         @{
                             var index = 1;
                         }
@@ -312,7 +312,7 @@ else if(User.Identity.IsAuthenticated)
                         }
 
 
-                    </tbody>
+                    </tbody> *@
                 </table>
             </div>
         </div>

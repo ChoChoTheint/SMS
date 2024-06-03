@@ -24,16 +24,41 @@
             <span asp-validation-for="Description" class="text-sm text-danger"></span>
         </div>
         <div class="mb-3">
-<<<<<<< HEAD
-            <label for="" class="form-label">File</label>
-            <input type="file" name="File" id="" class="form-control" required />
-=======
             <label asp-for="File" class="form-label">File</label>
             <input type="file" asp-for="File" class="form-control" />
             <span asp-validation-for="File" class="text-sm text-danger"></span>
->>>>>>> yairyint
+
         </div>
         <div class="mb-3">
+            <label asp-for="CourseId" class="form-label">Course</label>
+            <select asp-for="CourseId" class="form-select">
+                <option selected>---select option---</option>
+                @if (ViewBag.Course != null)
+                {
+                    foreach (var course in ViewBag.Course)
+                    {
+                        <option value="@course.Id">@course.Name</option>
+                    }
+                }
+            </select>
+            <span asp-validation-for="CourseId" class="text-sm text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="BatchId" class="form-label">Batch</label>
+            <select asp-for="BatchId" class="form-select">
+                <option selected>---choose option---</option>
+                @if (ViewBag.Batch != null)
+                {
+                    foreach (var batch in ViewBag.Batch)
+                    {
+                        <option value="@batch.Id">@batch.Name</option>
+                    }
+                }
+            </select>
+            <span asp-validation-for="BatchId" class="text-sm text-danger"></span>
+        </div>
+
+        @* <div class="mb-3">
             <label asp-for="CourseId" class="form-label">Course</label>
             <select asp-for="CourseId" class="form-select">
                 <option selected>---select option---</option>
@@ -54,7 +79,7 @@
                 }
             </select>
             <span asp-validation-for="BatchId" class="text-sm text-danger"></span>
-        </div>
+        </div> *@
         <div class="mb-3">
             <button class="btn btn-primary text-white" style="border-radius: 10px 0 10px 0;">Submit</button>
             <button class="btn btn-secondary text-white" style="border-radius: 10px 0 10px 0;" type="reset">Cancel</button>

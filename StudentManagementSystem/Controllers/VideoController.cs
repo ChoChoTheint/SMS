@@ -78,20 +78,20 @@ namespace StudentManagementSystem.Controllers
                         IsInActive = true,
                         Name = ui.Name,
                         Description = ui.Description,
-                        URL = "/videos" + uniqueFileName,
+                        URL = "/videos/" + uniqueFileName,
                         CourseId = ui.CourseId,
                         BatchId = ui.BatchId,
                     };
                     _dbContext.Videos.Add(videoData);
                     _dbContext.SaveChanges();
-                    TempData["info"] = "save successfully the record";
+                    TempData["info"] = "Save successfully the record";
                 
             }
             catch (Exception e)
             {
-                TempData["info"] = "error while saving the record";
+                TempData["info"] = "Error while saving the record";
             }
-            return RedirectToAction("List");
+            return RedirectToAction("list");
         }
 
         [Authorize]
@@ -131,7 +131,7 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["inof"] = "error while deleting the record";
             }
-            return RedirectToAction("List");
+            return RedirectToAction("list");
         }
 
         [Authorize]
@@ -171,10 +171,30 @@ namespace StudentManagementSystem.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Update(VideoViewModel ui)
+        public async Task<IActionResult> Update(VideoViewModel ui)
         {
             try
             {
+                var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "videos");
+
+                // Ensure the directory exists
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                // Generate a unique file name
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + ui.VideoFile.FileName;
+
+                // Define the full path to the file
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                // Save the uploaded file to the specified location
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await ui.VideoFile.CopyToAsync(fileStream);
+                }
+
                 VideoEntity updateVideoData = new VideoEntity()
                 {
                     Id = ui.Id,
@@ -183,7 +203,7 @@ namespace StudentManagementSystem.Controllers
                     IsInActive = true,
                     Name = ui.Name,
                     Description = ui.Description,
-                    URL = ui.URL,
+                    URL = "/videos/" + uniqueFileName,
                     CourseId = ui.CourseId,
                     BatchId = ui.BatchId,
                 };
@@ -195,7 +215,7 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while updating the record";
             }
-            return RedirectToAction("List");
+            return RedirectToAction("list");
         }
     }
 }

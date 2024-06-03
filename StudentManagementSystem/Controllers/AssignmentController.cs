@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authorization;
 using System;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 
 namespace StudentManagementSystem.Controllers
@@ -106,7 +107,7 @@ namespace StudentManagementSystem.Controllers
                     await ui.File.CopyToAsync(fileStream);
                 }
 
-                if (ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
 
                     AssignmentEntity assignmentData = new AssignmentEntity()
@@ -124,7 +125,7 @@ namespace StudentManagementSystem.Controllers
                         _dbContext.SaveChanges();
                         TempData["info"] = "save successfully the record";
                 }
-                if (!ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     return View(ui);
                 }
@@ -134,32 +135,22 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while saving the record";
             }
-            return RedirectToAction("List");
+            return RedirectToAction("list");
         }
 
         [Authorize]
-        public IActionResult DownloadFile()
-        {
-            var memory = FilePath("3fb194b2 - 06a1 - 40f0 - 84fb - eac8576f0667_Andrew_Troelsen, _Phil_Japikse_Pro_C#_10_with_NET_6_Foundational");
-            return File(memory.ToArray(), "application/pdf", "3fb194b2 - 06a1 - 40f0 - 84fb - eac8576f0667_Andrew_Troelsen, _Phil_Japikse_Pro_C#_10_with_NET_6_Foundational");
-        }
-       
-        public IActionResult DownloadFile(string filePath)
-        {
-            var memory = FilePath(filePath);
-            return File(memory.ToArray(), "application/pdf", filePath);
-        }
         private MemoryStream FilePath(string fileName)
         {
 
-            var name = "1b52bf3c - 0ae3 - 4642 - 8938 - f79348270830_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf";
-                var folder = "1b52bf3c-0ae3-4642-8938-f79348270830_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf";
+            string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
 
-            if(fileName == folder)
+            var folder = uploadFolder;
+
+            if (fileName == folder)
             {
                 fileName = folder;
             }
-            string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
+
             var path = Path.Combine(Directory.GetCurrentDirectory(), uploadFolder, fileName);
             var memeory = new MemoryStream();
 
@@ -173,6 +164,12 @@ namespace StudentManagementSystem.Controllers
             memeory.Position = 0;
             return memeory;
         }
+        public IActionResult DownloadFile(string filePath)
+        {
+            var memory = FilePath(filePath);
+            return File(memory.ToArray(), "application/pdf", filePath);
+        }
+        
         [Authorize]
         public IActionResult List()
         {
@@ -213,7 +210,7 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while deleting the record";
             }
-            return RedirectToAction("List");
+            return RedirectToAction("list");
         }
 
         [Authorize]
@@ -253,7 +250,6 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                // Define the path to the uploads folder
                 var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
 
                 // Ensure the directory exists
@@ -273,8 +269,7 @@ namespace StudentManagementSystem.Controllers
                 {
                     await ui.File.CopyToAsync(fileStream);
                 }
-
-                AssignmentEntity updateAssignmentData = new AssignmentEntity()
+                AssignmentEntity updateAssignment = new AssignmentEntity()
                 {
                     Id = ui.Id,
                     CreatedAt = DateTime.UtcNow,
@@ -283,10 +278,10 @@ namespace StudentManagementSystem.Controllers
                     Name = ui.Name,
                     Description = ui.Description,
                     URL = uniqueFileName,
-                    CourseId = ui.CourseInfo,
+                    CourseId = ui.CourseId,
                     BatchId = ui.BatchId,
                 };
-                _dbContext.Assignments.Update(updateAssignmentData);
+                _dbContext.Assignments.Update(updateAssignment);
                 _dbContext.SaveChanges();
                 TempData["info"] = "update successfully the record";
             }
@@ -294,7 +289,7 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while updating the record";
             }
-            return RedirectToAction("List");
+            return RedirectToAction("list");
         }
     }
 }

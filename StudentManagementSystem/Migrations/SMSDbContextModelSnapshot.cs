@@ -271,7 +271,7 @@ namespace StudentManagementSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Admin", (string)null);
+                    b.ToTable("Admin");
                 });
 
             modelBuilder.Entity("StudentManagementSystem.Models.DataModels.AssignmentEntity", b =>
@@ -310,7 +310,7 @@ namespace StudentManagementSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Assignment", (string)null);
+                    b.ToTable("Assignment");
                 });
 
             modelBuilder.Entity("StudentManagementSystem.Models.DataModels.AttendanceEntity", b =>
@@ -345,7 +345,7 @@ namespace StudentManagementSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Attendance", (string)null);
+                    b.ToTable("Attendance");
                 });
 
             modelBuilder.Entity("StudentManagementSystem.Models.DataModels.BatchEntity", b =>
@@ -376,7 +376,7 @@ namespace StudentManagementSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Batch", (string)null);
+                    b.ToTable("Batch");
                 });
 
             modelBuilder.Entity("StudentManagementSystem.Models.DataModels.BookEntity", b =>
@@ -415,7 +415,7 @@ namespace StudentManagementSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Book", (string)null);
+                    b.ToTable("Book");
                 });
 
             modelBuilder.Entity("StudentManagementSystem.Models.DataModels.ChapterEntity", b =>
@@ -454,7 +454,7 @@ namespace StudentManagementSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Chapter", (string)null);
+                    b.ToTable("Chapter");
                 });
 
             modelBuilder.Entity("StudentManagementSystem.Models.DataModels.CourseEntity", b =>
@@ -492,7 +492,7 @@ namespace StudentManagementSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Course", (string)null);
+                    b.ToTable("Course");
                 });
 
             modelBuilder.Entity("StudentManagementSystem.Models.DataModels.ExamEntity", b =>
@@ -518,7 +518,7 @@ namespace StudentManagementSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Exam", (string)null);
+                    b.ToTable("Exam");
                 });
 
             modelBuilder.Entity("StudentManagementSystem.Models.DataModels.ExamResultEntity", b =>
@@ -544,7 +544,7 @@ namespace StudentManagementSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ExamResult", (string)null);
+                    b.ToTable("ExamResult");
                 });
 
             modelBuilder.Entity("StudentManagementSystem.Models.DataModels.StudentEntity", b =>
@@ -602,7 +602,7 @@ namespace StudentManagementSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Student", (string)null);
+                    b.ToTable("Student");
                 });
 
             modelBuilder.Entity("StudentManagementSystem.Models.DataModels.TeacherCourseEntity", b =>
@@ -629,7 +629,7 @@ namespace StudentManagementSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TeacherCourse", (string)null);
+                    b.ToTable("TeacherCourse");
                 });
 
             modelBuilder.Entity("StudentManagementSystem.Models.DataModels.TeacherEntity", b =>
@@ -687,7 +687,7 @@ namespace StudentManagementSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Teacher", (string)null);
+                    b.ToTable("Teacher");
                 });
 
             modelBuilder.Entity("StudentManagementSystem.Models.DataModels.VideoEntity", b =>
@@ -726,7 +726,7 @@ namespace StudentManagementSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Video", (string)null);
+                    b.ToTable("Video");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

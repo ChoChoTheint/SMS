@@ -137,6 +137,7 @@ namespace StudentManagementSystem.Controllers
                                           Id = s.Id,
                                           Name = s.Name,
                                           Description = s.Description,
+                                          URL = s.URL,
                                           CourseId = s.CourseId,
                                           BatchId = s.BatchId,
                                       }).FirstOrDefault();
@@ -160,10 +161,29 @@ namespace StudentManagementSystem.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Update(BookViewModel ui)
+        public async Task<IActionResult> Update(BookViewModel ui)
         {
             try
             {
+                var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
+
+                // Ensure the directory exists
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                // Generate a unique file name
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + ui.File.FileName;
+
+                // Define the full path to the file
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                // Save the uploaded file to the specified location
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await ui.File.CopyToAsync(fileStream);
+                }
                 BookEntity updateBookData = new BookEntity()
                 {
                     Id = ui.Id,
@@ -172,6 +192,7 @@ namespace StudentManagementSystem.Controllers
                     IsInActive = true,
                     Name = ui.Name,
                     Description = ui.Description,
+                    URL = uniqueFileName,
                     CourseId = ui.CourseId,
                     BatchId = ui.BatchId,
                 };
@@ -183,7 +204,38 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while updating the record";
             }
-            return RedirectToAction("List");
+            return RedirectToAction("list");
+        }
+
+        private MemoryStream FilePath(string fileName)
+        {
+
+            string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
+           
+            var folder = uploadFolder;
+
+            if (fileName == folder)
+            {
+                fileName = folder;
+            }
+            
+            var path = Path.Combine(Directory.GetCurrentDirectory(), uploadFolder, fileName);
+            var memeory = new MemoryStream();
+
+            if (System.IO.File.Exists(path))
+            {
+                var net = new System.Net.WebClient();
+                var data = net.DownloadData(path);
+                var content = new System.IO.MemoryStream(data);
+                memeory = content;
+            }
+            memeory.Position = 0;
+            return memeory;
+        }
+        public IActionResult DownloadFile(string filePath)
+        {
+            var memory = FilePath(filePath);
+            return File(memory.ToArray(), "application/pdf", filePath);
         }
     }
 }

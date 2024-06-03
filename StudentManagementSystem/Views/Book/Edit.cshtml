@@ -22,6 +22,10 @@
             <input type="text" name="Description" id="description" class="form-control" value="@Model.Description" required />
         </div>
         <div class="mb-3">
+            <label for="file" class="form-label">File</label>
+            <input type="file" name="File" id="file" class="form-control" value="@Model.URL" required />
+        </div>
+        <div class="mb-3">
             <label for="courseId" class="form-label">Course</label>
             <select name="CourseId" id="courseId" class="form-select">
                 <option>---choose option---</option>
