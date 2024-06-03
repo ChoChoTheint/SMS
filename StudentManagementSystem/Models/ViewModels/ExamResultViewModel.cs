@@ -10,6 +10,5 @@ namespace StudentManagementSystem.Models.ViewModels
         public int Mark { get; set; }
         [Required(ErrorMessage = "student is required")]
         public string StudentId { get; set; }
-        public string StudentInfo { get; set; }
     }
 }

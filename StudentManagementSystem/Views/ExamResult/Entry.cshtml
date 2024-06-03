@@ -1,4 +1,5 @@
-﻿<div class="container w-50 mx-auto my-3 p-5 border-start border-end border-bottom rounded-start rounded-end shadow-sm" style="border-top: 12px solid #699BF7">
+﻿@model StudentManagementSystem.Models.ViewModels.ExamResultViewModel
+<div class="container w-50 mx-auto my-3 p-5 border-start border-end border-bottom rounded-start rounded-end shadow-sm" style="border-top: 12px solid #699BF7">
     <div class="d-flex justify-content-center align-items-center mb-4">
         <div class="me-3">
             <i class="fa-solid fa-book-open fa-2xl" style="color: #699BF7"></i>
@@ -9,15 +10,24 @@
         </div>
     </div>
 
-    <form action="/examresult/entry" method="post" enctype="multipart/form-data">
+    <form asp-controller="ExamResult" asp-action="Entry" method="post" enctype="multipart/form-data">
+        <input asp-for="Id" value="@ViewBag.Id" hidden />
         <div class="mb-3">
-            <label for="mark" class="form-label">Mark</label>
-            <input type="number" name="Mark" id="mark" class="form-control" placeholder="enter mark..." required />
+            <label asp-for="Mark" class="form-label">Mark</label>
+            <input type="number" asp-for="Mark" class="form-control" placeholder="enter mark..." />
+            <span asp-validation-for="Mark" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
-            <label for="studentId" class="form-label">Student</label>
-            <input type="text" name="StudentId" id="studentId" class="form-control" placeholder="enter student..." required />
+            <label asp-for="StudentId" class="form-label">Student</label>
+            <select asp-for="StudentId" class="form-select">
+                <option value="" selected>---choose option---</option>
+                @foreach (var student in ViewBag.Student)
+                {
+                    <option value="@student.Id">@student.Name</option>
+                }
+            </select>
+            <span asp-validation-for="StudentId" class="text-danger"></span>
         </div>
         
         <div class="mb-3">

@@ -52,12 +52,12 @@
                                 <td>@list.Name</td>
                                 <td>@list.Description</td>
                                 <td>
-                                    <a href="/assignment/DownloadFile?filePath=@list.URL">
+                                    <a href="/Book/DownloadFile?filePath=@list.URL">
                                         <i class="fa-solid fa-download fa-xl"></i>
                                     </a>
                                 </td>
-                                <td>@list.CourseInfo</td>
-                                <td>@list.BatchInfo</td>
+                                <td>@list.CourseId</td>
+                                <td>@list.CourseId</td>
                                 @if (User.IsInRole("Admin"))
                                 {
                                     <td><p data-placement="top" data-toggle="tooltip" title="Edit"><a class="btn btn-primary btn-xs" data-title="Edit" href="/book/edit?Id=@list.Id"><span class="glyphicon glyphicon-pencil"></span></a></p></td>

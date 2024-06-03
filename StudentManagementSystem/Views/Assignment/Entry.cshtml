@@ -30,13 +30,14 @@
 =======
             <label asp-for="File" class="form-label">File</label>
             <input type="file" asp-for="File" class="form-control" />
+            <input asp-for="URL" value="URL" hidden />
             <span asp-validation-for="File" class="text-sm text-danger"></span>
 >>>>>>> yairyint
         </div>
         <div class="mb-3">
             <label asp-for="CourseId" class="form-label">Course</label>
             <select asp-for="CourseId" class="form-select">
-                <option selected>---select option---</option>
+                <option value="" selected>---select option---</option>
                 @foreach (var course in ViewBag.Course)
                 {
                     <option value="@course.Id">@course.Name</option>
@@ -47,7 +48,7 @@
         <div class="mb-3">
             <label asp-for="BatchId" class="form-label">Batch</label>
             <select asp-for="BatchId" class="form-select">
-                <option selected>---choose option---</option>
+                <option value="" selected>---choose option---</option>
                 @foreach (var batch in ViewBag.Batch)
                 {
                     <option value="@batch.Id">@batch.Name</option>

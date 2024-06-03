@@ -53,14 +53,11 @@
                         @{
                             int index = 1;
                         }
+                        <span class="text-warning">please today's attendance is required!</span>
 
                         @foreach (var item in Model)
                         {   
                             <tr>
-                                @if(item.Name is not null)
-                                {
-                                    <span class="text-warning">please today's attendance is required!</span>
-                                }
                                 <td>@index</td>
                                 <td>@item.Name</td>
                                 <td>@item.Email</td>

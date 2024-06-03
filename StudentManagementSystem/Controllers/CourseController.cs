@@ -47,7 +47,7 @@ namespace StudentManagementSystem.Controllers
                     _dbContext.SaveChanges();
                     TempData["info"] = "save successfully the record";
                 }
-                if (!ModelState.IsValid)
+                else
                 {
                     //Reload id to populate the dropdown again
                     var id = Guid.NewGuid().ToString();
