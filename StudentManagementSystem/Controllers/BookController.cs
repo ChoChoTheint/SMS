@@ -158,13 +158,8 @@ namespace StudentManagementSystem.Controllers
                                                  Name = book.Name,
                                                  Description = book.Description,
                                                  URL = book.URL,
-<<<<<<< HEAD
-                                                 CourseInfo = course.Name,
-                                                 BatchInfo = batch.Name+"/ "+course.Name
-=======
                                                  CourseId = course.Name,
                                                  BatchId = batch.Name
->>>>>>> yairyint
                                              }).ToList();
             return View(bookList);
         }

@@ -162,18 +162,8 @@ namespace StudentManagementSystem.Controllers
             return RedirectToAction("List");
         }
 
-<<<<<<< HEAD
         [Authorize]
-        public IActionResult DownloadFile()
-        {
-            var memory = FilePath("3fb194b2 - 06a1 - 40f0 - 84fb - eac8576f0667_Andrew_Troelsen, _Phil_Japikse_Pro_C#_10_with_NET_6_Foundational");
-            return File(memory.ToArray(), "application/pdf", "3fb194b2 - 06a1 - 40f0 - 84fb - eac8576f0667_Andrew_Troelsen, _Phil_Japikse_Pro_C#_10_with_NET_6_Foundational");
-        }
-       
-        public IActionResult DownloadFile(string filePath)
-=======
         public IActionResult DownloadFile(string fileName)
->>>>>>> yairyint
         {
             string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
             var memory = FilePath(fileName, uploadFolder);
@@ -182,13 +172,6 @@ namespace StudentManagementSystem.Controllers
         private MemoryStream FilePath(string fileName, string uploadFolder)
         {
 
-            var name = "1b52bf3c - 0ae3 - 4642 - 8938 - f79348270830_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf";
-                var folder = "1b52bf3c-0ae3-4642-8938-f79348270830_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf";
-
-            if(fileName == folder)
-            {
-                fileName = folder;
-            }
             
             var path = Path.Combine(Directory.GetCurrentDirectory(), uploadFolder, fileName);
             var memeory = new MemoryStream();

@@ -46,7 +46,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <span class="text-info">please today's attendance is required!</span>
+                        @if (!User.IsInRole("Admin") && User.IsInRole("Teacher"))
+                        {
+                            <span class="text-info">please today's attendance is required!</span>
+                        }
                         @{
                             var index = 1;
                         }

@@ -34,10 +34,7 @@ namespace StudentManagementSystem.Controllers
             var batches = (from batch in _dbContext.Batches
                            join course in _dbContext.Courses
                            on batch.CourseId equals course.Id
-<<<<<<< HEAD
-=======
 
->>>>>>> yairyint
                            select new BatchViewModel
                            {
                                Id = batch.Id,
@@ -144,13 +141,8 @@ namespace StudentManagementSystem.Controllers
                                                    Name = video.Name,
                                                    Description = video.Description,
                                                    URL = video.URL,
-<<<<<<< HEAD
-                                                   CourseInfo = course.Name,
-                                                   BatchInfo = batch.Name+"/ "+course.Name,
-=======
                                                    CourseId = course.Name,
                                                    BatchId = batch.Name,
->>>>>>> yairyint
                                                }).ToList();
             return View(videoList);
         }
