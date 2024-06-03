@@ -31,21 +31,23 @@
                 <table id="teacherTable" class="table table-bordred table-striped">
 
                     <thead>
-                    <th>Sr.</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Address</th>
-                    <th>Phone</th>
-                    <th>Gender</th>
-                    <th>DOB</th>
-                    <th>NRC</th>
-                    <th>Position</th>
-                    <th>Father Name</th>
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <th>Edit</th>
-                            <th>Delete</th>
-                        }
+                        <tr>
+                            <th>Sr.</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Address</th>
+                            <th>Phone</th>
+                            <th>Gender</th>
+                            <th>DOB</th>
+                            <th>NRC</th>
+                            <th>Position</th>
+                            <th>Father Name</th>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                }
+                        </tr>
                     </thead>
                     <tbody>
                         @{

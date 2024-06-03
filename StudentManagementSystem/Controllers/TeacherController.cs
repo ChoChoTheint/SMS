@@ -60,7 +60,7 @@ namespace StudentManagementSystem.Controllers
                 }
                 else
                 {
-                    //Reload id and AspUserId to populate dropdown again
+                    //Reload id and AspUserId to porpulate dropdown again
 
                     ViewBag.AspUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 

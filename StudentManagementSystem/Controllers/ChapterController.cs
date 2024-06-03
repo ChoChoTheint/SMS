@@ -74,8 +74,7 @@ namespace StudentManagementSystem.Controllers
                     _dbContext.SaveChanges();
                     TempData["info"] = "save successfully the record";
                 }
-
-                if (!ModelState.IsValid)
+                else
                 {
                     //Relode id, batch, book and video to populate dropdown again!
 

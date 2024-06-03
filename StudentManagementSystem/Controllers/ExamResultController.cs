@@ -17,6 +17,8 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult Entry()
         {
+            ViewBag.Id = Guid.NewGuid().ToString();
+
             var students = _dbContext.Students.Select(s => new StudentViewModel
             {
                 Id = s.Id,
@@ -33,17 +35,36 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                ExamResultEntity examResultData = new ExamResultEntity()
+                if (ModelState.IsValid)
                 {
-                    Id = Guid.NewGuid().ToString(),
-                    CreatedAt = DateTime.UtcNow,
-                    IsInActive = true,
-                    Mark = ui.Mark,
-                    StudentId = ui.StudentId,
-                };
-                _dbContext.ExamResults.Add(examResultData);
-                _dbContext.SaveChanges();
-                TempData["info"] = "save successfully the record";
+
+                    ExamResultEntity examResultData = new ExamResultEntity()
+                    {
+                        Id = ui.Id,
+                        CreatedAt = DateTime.UtcNow,
+                        IsInActive = true,
+                        Mark = ui.Mark,
+                        StudentId = ui.StudentId,
+                    };
+                    _dbContext.ExamResults.Add(examResultData);
+                    _dbContext.SaveChanges();
+                    TempData["info"] = "save successfully the record";
+                }
+                else
+                {
+                    //Reload Id, StudentId to populate the dropdown again
+
+                    ViewBag.Id = Guid.NewGuid().ToString();
+
+                    var students = _dbContext.Students.Select(s => new StudentViewModel
+                    {
+                        Id = s.Id,
+                        Name = s.Name,
+                    }).OrderBy(o => o.Name).ToList();
+                    ViewBag.Student = students;
+
+                    return View(ui);
+                }
             }
             catch (Exception e)
             {
@@ -65,7 +86,7 @@ namespace StudentManagementSystem.Controllers
                                                       {
                                                           Id = examResult.Id,
                                                           Mark = examResult.Mark,
-                                                          StudentInfo = student.Name+"/ "+batch.Name
+                                                          StudentId = student.Name+"/ "+batch.Name
                                                       }).ToList();
             return View(examResultList);
         }

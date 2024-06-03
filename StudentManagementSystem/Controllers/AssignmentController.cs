@@ -25,6 +25,8 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult Entry()
         {
+            ViewBag.Id = Guid.NewGuid().ToString();
+
             var courses = _dbContext.Courses.Select(s => new CourseViewModel
             {
                 Id = s.Id,
@@ -69,33 +71,34 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                // Define the path to the uploads folder
-                var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
-
-                // Ensure the directory exists
-                if (!Directory.Exists(uploadsFolder))
-                {
-                    Directory.CreateDirectory(uploadsFolder);
-                }
-
-                // Generate a unique file name
-                var uniqueFileName = Guid.NewGuid().ToString() + "_" + ui.File.FileName;
-
-                // Define the full path to the file
-                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                // Save the uploaded file to the specified location
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await ui.File.CopyToAsync(fileStream);
-                }
-
+                
                 if (ModelState.IsValid)
                 {
+                    // Define the path to the uploads folder
+                    var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
+
+                    // Ensure the directory exists
+                    if (!Directory.Exists(uploadsFolder))
+                    {
+                        Directory.CreateDirectory(uploadsFolder);
+                    }
+
+                    // Generate a unique file name
+                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + ui.File.FileName;
+
+                    // Define the full path to the file
+                    var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    // Save the uploaded file to the specified location
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await ui.File.CopyToAsync(fileStream);
+                    }
+
 
                     AssignmentEntity assignmentData = new AssignmentEntity()
                         {
-                            Id = Guid.NewGuid().ToString(),
+                            Id = ui.Id,
                             CreatedAt = DateTime.UtcNow,
                             IsInActive = true,
                             Name = ui.Name,
@@ -108,8 +111,30 @@ namespace StudentManagementSystem.Controllers
                         _dbContext.SaveChanges();
                         TempData["info"] = "save successfully the record";
                 }
-                if (!ModelState.IsValid)
+                else
                 {
+                    //Roload Id, CourseId and BatchId to populate the dropdown again
+
+                    ViewBag.Id = Guid.NewGuid().ToString();
+
+                    var courses = _dbContext.Courses.Select(s => new CourseViewModel
+                    {
+                        Id = s.Id,
+                        Name = s.Name,
+                    }).OrderBy(o => o.Name).ToList();
+                    ViewBag.Course = courses;
+
+                    var batches = (from batch in _dbContext.Batches
+                                   join course in _dbContext.Courses
+                                   on batch.CourseId equals course.Id
+
+                                   select new BatchViewModel
+                                   {
+                                       Id = batch.Id,
+                                       Name = batch.Name + "/ " + course.Name
+                                   }).OrderBy(o => o.Name).ToList();
+                    ViewBag.Batch = batches;
+
                     return View(ui);
                 }
                 
@@ -121,12 +146,13 @@ namespace StudentManagementSystem.Controllers
             return RedirectToAction("List");
         }
 
-        public IActionResult DownloadFile(string filePath)
+        public IActionResult DownloadFile(string fileName)
         {
-            var memory = FilePath(filePath);
-            return File(memory.ToArray(), "application/pdf", filePath);
+            string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
+            var memory = FilePath(fileName, uploadFolder);
+            return File(memory.ToArray(), "application/pdf", fileName);
         }
-        private MemoryStream FilePath(string fileName)
+        private MemoryStream FilePath(string fileName, string uploadFolder)
         {
             var name = "1b52bf3c - 0ae3 - 4642 - 8938 - f79348270830_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf";
                 var folder = "1b52bf3c-0ae3-4642-8938-f79348270830_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf";
@@ -135,7 +161,7 @@ namespace StudentManagementSystem.Controllers
             {
                 fileName = folder;
             }
-            string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
+            
             var path = Path.Combine(Directory.GetCurrentDirectory(), uploadFolder, fileName);
             var memeory = new MemoryStream();
 
@@ -166,8 +192,8 @@ namespace StudentManagementSystem.Controllers
                                                              Name = assignment.Name,
                                                              Description = assignment.Description,
                                                              URL = assignment.URL,
-                                                             CourseInfo = course.Name,
-                                                             BatchInfo = batch.Name,
+                                                             CourseId = course.Name,
+                                                             BatchId = batch.Name,
                                                          }).ToList();
             return View(assignmentList);
         }
@@ -259,7 +285,7 @@ namespace StudentManagementSystem.Controllers
                     Name = ui.Name,
                     Description = ui.Description,
                     URL = uniqueFileName,
-                    CourseId = ui.CourseInfo,
+                    CourseId = ui.CourseId,
                     BatchId = ui.BatchId,
                 };
                 _dbContext.Assignments.Update(updateAssignmentData);

@@ -40,25 +40,50 @@ namespace StudentManagementSystem.Controllers
 
             try
             {
-                StudentEntity studentData = new StudentEntity()
+                if (ModelState.IsValid)
                 {
-                    Id = ui.Id,
-                    CreatedAt = DateTime.UtcNow,
-                    IsInActive = true,
-                    Name = ui.Name,
-                    Email = ui.Email,
-                    Phone = ui.Phone,
-                    Address = ui.Address,
-                    NRC = ui.NRC,
-                    DOB = ui.DOB,
-                    FatherName = ui.FatherName,
-                    Gender = ui.Gender,
-                    BatchId = ui.BatchId,
-                    AspNetUsersId = ui.AspNetUsersId,
-                };
-                _dbContext.Students.Add(studentData);
-                _dbContext.SaveChanges();
-                TempData["info"] = "save successfully data";
+
+                    StudentEntity studentData = new StudentEntity()
+                    {
+                        Id = ui.Id,
+                        CreatedAt = DateTime.UtcNow,
+                        IsInActive = true,
+                        Name = ui.Name,
+                        Email = ui.Email,
+                        Phone = ui.Phone,
+                        Address = ui.Address,
+                        NRC = ui.NRC,
+                        DOB = ui.DOB,
+                        FatherName = ui.FatherName,
+                        Gender = ui.Gender,
+                        BatchId = ui.BatchId,
+                        AspNetUsersId = ui.AspNetUsersId,
+                    };
+                    _dbContext.Students.Add(studentData);
+                    _dbContext.SaveChanges();
+                    TempData["info"] = "save successfully data";
+                }
+                else
+                {
+                    //Relodad Id,AspUserId and BatchId to populat the dropdown again
+
+                    ViewBag.Id = Guid.NewGuid().ToString();
+
+                    ViewBag.AspUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                    var batches = (from batch in _dbContext.Batches
+                                   join course in _dbContext.Courses
+                                   on batch.CourseId equals course.Id
+
+                                   select new BatchViewModel
+                                   {
+                                       Id = batch.Id,
+                                       Name = batch.Name + "/ " + course.Name
+                                   }).OrderBy(o => o.Name).ToList();
+                    ViewBag.Batch = batches;
+
+                    return View(ui);
+                }
             }
             catch(Exception e)
             {

@@ -19,6 +19,8 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult Entry()
         {
+            ViewBag.Id = Guid.NewGuid().ToString();
+
             var courses = _dbContext.Courses.Select(s => new CourseViewModel
             {
                 Id = s.Id,
@@ -47,46 +49,99 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                // Define the path to the uploads folder
-                var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
-
-                // Ensure the directory exists
-                if (!Directory.Exists(uploadsFolder))
+                if (ModelState.IsValid)
                 {
-                    Directory.CreateDirectory(uploadsFolder);
+                    // Define the path to the uploads folder
+                    var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "books");
+
+                    // Ensure the directory exists
+                    if (!Directory.Exists(uploadsFolder))
+                    {
+                        Directory.CreateDirectory(uploadsFolder);
+                    }
+
+                    // Generate a unique file name
+                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + ui.File.FileName;
+
+                    // Define the full path to the file
+                    var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    // Save the uploaded file to the specified location
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await ui.File.CopyToAsync(fileStream);
+                    }
+                    BookEntity data = new BookEntity()
+                    {
+                        Id = ui.Id,
+                        CreatedAt = DateTime.UtcNow,
+                        IsInActive = true,
+                        Name = ui.Name,
+                        Description = ui.Description,
+                        URL = uniqueFileName,
+                        CourseId = ui.CourseId,
+                        BatchId = ui.BatchId,
+                    };
+                    _dbContext.Books.Add(data);
+                    _dbContext.SaveChanges();
+                    TempData["info"] = "save successfully the record";
                 }
-
-                // Generate a unique file name
-                var uniqueFileName = Guid.NewGuid().ToString() + "_" + ui.File.FileName;
-
-                // Define the full path to the file
-                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                // Save the uploaded file to the specified location
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                else
                 {
-                    await ui.File.CopyToAsync(fileStream);
+                    //Reload Id, CourseId and BatchId to populate the dropdown again
+
+                    ViewBag.Id = Guid.NewGuid().ToString();
+
+                    var courses = _dbContext.Courses.Select(s => new CourseViewModel
+                    {
+                        Id = s.Id,
+                        Name = s.Name,
+                    }).OrderBy(o => o.Name).ToList();
+                    ViewBag.Course = courses;
+
+                    var batches = (from batch in _dbContext.Batches
+                                   join course in _dbContext.Courses
+                                   on batch.CourseId equals course.Id
+
+                                   select new BatchViewModel
+                                   {
+                                       Id = batch.Id,
+                                       Name = batch.Name + "/ " + course.Name
+                                   }).OrderBy(o => o.Name).ToList();
+                    ViewBag.Batch = batches;
+
+                    return View(ui);
                 }
-                BookEntity data = new BookEntity()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    CreatedAt = DateTime.UtcNow,
-                    IsInActive = true,
-                    Name = ui.Name,
-                    Description = ui.Description,
-                    URL = uniqueFileName,
-                    CourseId = ui.CourseId,
-                    BatchId = ui.BatchId,
-                };
-                _dbContext.Books.Add(data);
-                _dbContext.SaveChanges();
-                TempData["info"] = "save successfully the record";
             }
             catch (Exception e)
             {
                 TempData["info"] = "error while saving the record";
             }
             return RedirectToAction("List");
+        }
+
+        private MemoryStream FilePath(string fileName, string uploadFolder)
+        {
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), uploadFolder, fileName);
+            var memeory = new MemoryStream();
+
+            if (System.IO.File.Exists(path))
+            {
+                var net = new System.Net.WebClient();
+                var data = net.DownloadData(fileName);
+                var content = new System.IO.MemoryStream(data);
+                memeory = content;
+            }
+            memeory.Position = 0;
+            return memeory;
+        }
+        public IActionResult DownloadFile(string filePath)
+        {
+            string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "books");
+
+            var memory = FilePath(filePath, uploadFolder);
+            return File(memory.ToArray(), "application/pdf", filePath);
         }
 
         [Authorize]
@@ -103,8 +158,8 @@ namespace StudentManagementSystem.Controllers
                                                  Name = book.Name,
                                                  Description = book.Description,
                                                  URL = book.URL,
-                                                 CourseInfo = course.Name,
-                                                 BatchInfo = batch.Name
+                                                 CourseId = course.Name,
+                                                 BatchId = batch.Name
                                              }).ToList();
             return View(bookList);
         }

@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    <form action="/student/entry" method="post" enctype="multipart/form-data">
+    <form asp-controller="Student" asp-action="Entry" method="post" enctype="multipart/form-data">
         <input asp-for="Id" value="@ViewBag.Id" hidden />
         <input asp-for="AspNetUsersId" value="@ViewBag.AspUserId" hidden />
         <div class="mb-3">
@@ -71,7 +71,7 @@
         <div class="mb-3">
             <label asp-for="BatchId" class="form-label">Batch</label>
             <select asp-for="BatchId" class="form-select">
-                <option selected>---choose option---</option>
+                <option value="" selected>---choose option---</option>
                 @foreach (var batch in ViewBag.Batch)
                 {
                     <option value="@batch.Id">@batch.Name</option>

@@ -57,8 +57,10 @@ namespace StudentManagementSystem.Controllers
                     _dbContext.SaveChanges();
                     TempData["info"] = "save successfully the data";
                 }
-                if (!ModelState.IsValid)
+                else
                 {
+                    //Reload AspUserId and Id to populate the dropdown again
+
                     var aspUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                     ViewBag.AspUserId = aspUserId;
 
