@@ -4,15 +4,11 @@ namespace StudentManagementSystem.Models.ViewModels
 {
     public class AttendanceReportViewModel
     {
-        public string Id { get; set; }
-        public DateTime AttendanceDate { get; set; }
-        public DateTime InTime { get; set; }
-        public DateTime OutTime { get; set; }
-        public bool IsLeave { get; set; }
-        //[ForeignKey(nameof(AttendancePolicyId))]
-       // public string AttendancePolicyId { get; set; }
-        //[ForeignKey(nameof(StudentId))]
-        public string StudentId { get; set; }
         public string StudentInfo { get; set; }
+        public string AttendanceDate { get; set; }
+        public string InTime { get; set; }
+        public string OutTime { get; set; }
+        public string IsLeave { get; set; }
+        
     }
 }

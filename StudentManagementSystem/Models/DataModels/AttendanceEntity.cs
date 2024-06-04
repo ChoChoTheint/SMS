@@ -8,7 +8,7 @@ namespace StudentManagementSystem.Models.DataModels
         public DateTime AttendanceDate { get; set; }
         public DateTime InTime { get; set; }
         public DateTime OutTime { get; set; }
-        public bool IsLeave { get; set; }
+        public string IsLeave { get; set; }
         [ForeignKey(nameof(StudentId))]
         public string StudentId { get; set; }
     }

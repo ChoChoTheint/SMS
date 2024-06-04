@@ -16,7 +16,7 @@ namespace StudentManagementSystem.Models.ViewModels
         [DataType(DataType.Time)]
         public DateTime OutTime { get; set; }
         [Required(ErrorMessage = "is leave is required")]
-        public bool IsLeave { get; set; }
+        public string IsLeave { get; set; }
         //[ForeignKey(nameof(AttendancePolicyId))]
         //public string AttendancePolicyId { get; set; }
         //[ForeignKey(nameof(StudentId))]
