@@ -102,6 +102,8 @@ namespace StudentManagementSystem.Controllers
             IList<StudentViewModel> studentList = (from student in _dbContext.Students
                                                    join batch in _dbContext.Batches
                                                    on student.BatchId equals batch.Id
+                                                   join course in _dbContext.Courses
+                                                   on batch.CourseId equals course.Id
 
                                                    select new StudentViewModel
                                                    {
@@ -114,7 +116,7 @@ namespace StudentManagementSystem.Controllers
                                                        DOB = student.DOB,
                                                        FatherName = student.FatherName,
                                                        Gender = student.Gender,
-                                                       BatchId = batch.Name
+                                                       BatchId = batch.Name+"/ "+course.Name
                                                    }).ToList();
             return View(studentList);
         }
@@ -156,12 +158,18 @@ namespace StudentManagementSystem.Controllers
                 BatchId = s.BatchId
             }).FirstOrDefault();
 
-            var batches = _dbContext.Batches.Select(s => new BatchViewModel
-            {
-                Id = s.Id,
-                Name = s.Name,
-            }).OrderBy(o => o.Name).ToList();
+
+            var batches = (from batch in _dbContext.Batches
+                           join course in _dbContext.Courses
+                           on batch.CourseId equals course.Id
+
+                           select new BatchViewModel
+                           {
+                               Id = batch.Id,
+                               Name = batch.Name + "/ " + course.Name
+                           }).OrderBy(o => o.Name).ToList();
             ViewBag.Batch = batches;
+
             return View(editStudentData);
         }
 

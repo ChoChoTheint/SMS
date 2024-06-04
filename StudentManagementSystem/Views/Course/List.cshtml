@@ -51,7 +51,7 @@
                             <tr>
                                 <td>@list.Name</td>
                                 <td>@list.Description</td>
-                                <td>@list.OpeningDate</td>
+                                <td>@list.OpeningDate.ToString("dd-MM-yyyy")</td>
                                 <td>@list.DurationInHour</td>
                                 <td>@list.DurationInMonth</td>
                                 @if (User.IsInRole("Admin"))

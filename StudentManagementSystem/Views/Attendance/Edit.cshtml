@@ -13,33 +13,44 @@
     <form action="/attendance/update" method="post" enctype="multipart/form-data">
         <input type="text" name="Id" value="@Model.Id" hidden/>
         <div class="mb-3">
+            <label for="studentId" class="form-label">Student</label>
+            <select asp-for="StudentId" class="form-select">
+                <option value="">---choose option---</option>
+                @foreach (var student in ViewBag.Student)
+                {
+                    if (@student.Id == Model.StudentId)
+                    {
+
+                        <option value="@student.Id" selected>@student.Name</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="mb-3">
             <label for="attendaceDate" class="form-label">AttendanceDate</label>
             <input type="date" name="AttendanceDate" id="attendaceDate" class="form-control" value="@Model.AttendanceDate.ToString("yyyy-MM-dd")" required />
         </div>
 
         <div class="mb-3">
             <label for="inTime" class="form-label">InTime</label>
-            <input type="date" name="InTime" id="inTime" class="form-control" value="@Model.InTime" required />
+            <input type="time" name="InTime" id="inTime" class="form-control" value="@Model.InTime" required />
         </div>
         <div class="mb-3">
             <label for="outTime" class="form-label">OutTime</label>
-            <input type="date" name="OutTime" id="outTime" class="form-control" value="@Model.OutTime" required />
+            <input type="time" name="OutTime" id="outTime" class="form-control" value="@Model.OutTime.ToString("hh-mm-ss")" required />
         </div>
         <label for="isLeave" class="form-label">IsLeave</label>
         <div class="mb-3 d-flex">
             <div class="me-3">
-                <input type="radio" name="IsLeave" value="Yes" id="yes" class="form-check-input"  required />
+                <input type="radio" name="IsLeave" value="Yes" id="yes" class="form-check-input" @(Model.IsLeave == "Yes" ? "Checked" : "") />
                 <label for="yes" class="form-label-input">Yes</label>
             </div>
             <div>
-                <input type="radio" name="IsLeave" value="No" id="no" class="form-check-input"  required />
+                <input type="radio" name="IsLeave" value="No" id="no" class="form-check-input" @(Model.IsLeave == "No" ? "Checked" : "") />
                 <label for="no" class="form-label-input">No</label>
             </div>
         </div>
-        <div class="mb-3">
-            <label for="studentId" class="form-label">Student</label>
-            <input type="text" name="StudentId" id="studentId" class="form-control" value="@Model.StudentId" required />
-        </div>
+       
         <div class="mb-3">
             <button class="btn btn-primary text-white" style="border-radius: 10px 0 10px 0;">Update</button>
             <button class="btn btn-secondary text-white" style="border-radius: 10px 0 10px 0;" type="reset">Cancel</button>

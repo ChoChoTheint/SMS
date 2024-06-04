@@ -13,6 +13,17 @@
     <form asp-controller="Attendance" asp-action="Entry" method="post" enctype="multipart/form-data">
         <input asp-for="Id" value="@ViewBag.Id" hidden />
         <div class="mb-3">
+            <label asp-for="StudentId" class="form-label">Student</label>
+            <select asp-for="StudentId" class="form-select">
+                <option value="" selected>---choose option---</option>
+                @foreach (var student in ViewBag.Student)
+                {
+                    <option value="@student.Id">@student.Name</option>
+                }
+            </select>
+            <span asp-validation-for="StudentId" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
             <label asp-for="AttendanceDate" class="form-label">AttendanceDate</label>
             <input asp-for="AttendanceDate" class="form-control" placeholder="entr attendance date..." />
             <span asp-validation-for="AttendanceDate" class="text-danger"></span>
@@ -33,27 +44,17 @@
             <div class="d-flex">
 
                 <div class="me-3">
-                    <input type="radio" asp-for="IsLeave" value="yes" id="yes" class="form-check-input" />
+                    <input type="radio" asp-for="IsLeave" value="Yes" id="yes" class="form-check-input" />
                     <label for="yes" class="form-label-input">Yes</label>
                 </div>
                 <div>
-                    <input type="radio" asp-for="IsLeave" value="no" id="no" class="form-check-input"/>
+                    <input type="radio" asp-for="IsLeave" value="No" id="no" class="form-check-input"/>
                     <label for="no" class="form-label-input">No</label>
                 </div>
             </div>
             <span asp-validation-for="IsLeave" class="text-danger"></span>
         </div>
-        <div class="mb-3">
-            <label asp-for="StudentId" class="form-label">Student</label>
-            <select asp-for="StudentId" class="form-select">
-                <option value="" selected>---choose option---</option>
-                @foreach (var student in ViewBag.Student)
-                {
-                    <option value="@student.Id">@student.Name</option>
-                }
-            </select>
-            <span asp-validation-for="StudentId" class="text-danger"></span>
-        </div>
+        
         <div class="mb-3">
             <button class="btn btn-primary text-white" style="border-radius: 10px 0 10px 0;">Submit</button>
             <button class="btn btn-secondary text-white" style="border-radius: 10px 0 10px 0;" type="reset">Cancel</button>

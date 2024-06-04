@@ -1,4 +1,5 @@
-﻿<div class="container w-50 mx-auto my-3 p-5 border-start border-end border-bottom rounded-start rounded-end shadow-sm" style="border-top: 12px solid #699BF7">
+﻿@model ExamResultViewModel
+<div class="container w-50 mx-auto my-3 p-5 border-start border-end border-bottom rounded-start rounded-end shadow-sm" style="border-top: 12px solid #699BF7">
     <div class="d-flex justify-content-center align-items-center mb-4">
         <div class="me-3">
             <i class="fa-solid fa-book-open fa-2xl" style="color: #699BF7"></i>
@@ -10,18 +11,31 @@
     </div>
 
     <form action="/examresult/update" method="post" enctype="multipart/form-data">
+        <input type="text" name="Id" value="@Model.Id" hidden />
         <div class="mb-3">
             <label for="mark" class="form-label">Mark</label>
-            <input type="number" name="Mark" id="mark" class="form-control" placeholder="enter mark..." required />
+            <input type="number" name="Mark" id="mark" class="form-control" value="@Model.Mark" required />
+        </div>
+
+       
+        <div class="mb-3">
+            <label asp-for="StudentId" class="form-label">Student</label>
+            <select asp-for="StudentId" class="form-select">
+                <option value="">---choose option---</option>
+                @foreach (var student in ViewBag.Student)
+                {
+                    if(@student.Id == Model.StudentId)
+                    {
+
+                        <option value="@student.Id" selected>@student.Name</option>
+                    }
+                }
+            </select>
+            <span asp-validation-for="StudentId" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
-            <label for="studentId" class="form-label">Student</label>
-            <input type="text" name="StudentId" id="studentId" class="form-control" placeholder="enter student..." required />
-        </div>
-
-        <div class="mb-3">
-            <button class="btn btn-primary text-white" style="border-radius: 10px 0 10px 0;">Submit</button>
+            <button class="btn btn-primary text-white" style="border-radius: 10px 0 10px 0;">Update</button>
             <button class="btn btn-secondary text-white" style="border-radius: 10px 0 10px 0;" type="reset">Cancel</button>
         </div>
     </form>

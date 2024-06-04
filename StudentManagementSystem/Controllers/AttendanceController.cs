@@ -20,11 +20,16 @@ namespace StudentManagementSystem.Controllers
         {
             ViewBag.Id = Guid.NewGuid().ToString();
 
-            var students = _dbContext.Students.Select(s => new StudentViewModel
-            {
-                Id = s.Id,
-                Name = s.Name,
-            }).OrderBy(o => o.Name).ToList();
+
+            var students = (from student in _dbContext.Students
+                            join batch in _dbContext.Batches
+                           on student.BatchId equals batch.Id
+
+                           select new StudentViewModel
+                           {
+                               Id = student.Id,
+                               Name = student.Name + "/ " + batch.Name
+                           }).OrderBy(o => o.Name).ToList();
             ViewBag.Student = students;
 
             
@@ -62,11 +67,15 @@ namespace StudentManagementSystem.Controllers
 
                     ViewBag.Id = Guid.NewGuid().ToString();
 
-                    var students = _dbContext.Students.Select(s => new StudentViewModel
-                    {
-                        Id = s.Id,
-                        Name = s.Name,
-                    }).OrderBy(o => o.Name).ToList();
+                    var students = (from student in _dbContext.Students
+                                    join batch in _dbContext.Batches
+                                   on student.BatchId equals batch.Id
+
+                                    select new StudentViewModel
+                                    {
+                                        Id = student.Id,
+                                        Name = student.Name + "/ " + batch.Name
+                                    }).OrderBy(o => o.Name).ToList();
                     ViewBag.Student = students;
 
                     return View(ui);
@@ -132,16 +141,21 @@ namespace StudentManagementSystem.Controllers
                                                 InTime = s.InTime,
                                                 OutTime = s.OutTime,
                                                 IsLeave = s.IsLeave,
+                                                StudentId = s.StudentId,
                                             }).FirstOrDefault();
 
-            var students = _dbContext.Students.Select(s => new StudentViewModel
-            {
-                Id = s.Id,
-                Name = s.Name,
-            }).OrderBy(o => o.Name).ToList();
+            var students = (from student in _dbContext.Students
+                            join batch in _dbContext.Batches
+                           on student.BatchId equals batch.Id
+
+                            select new StudentViewModel
+                            {
+                                Id = student.Id,
+                                Name = student.Name + "/ " + batch.Name
+                            }).OrderBy(o => o.Name).ToList();
             ViewBag.Student = students;
 
-            
+
 
 
             return View(editAttendanceData);

@@ -118,6 +118,7 @@ namespace StudentManagementSystem.Controllers
             {
                 Id = s.Id,
                 Mark = s.Mark,
+                StudentId = s.StudentId
             }).FirstOrDefault();
 
             var students = _dbContext.Students.Select(s => new StudentViewModel
