@@ -192,6 +192,7 @@ namespace StudentManagementSystem.Controllers
                                           Id = s.Id,
                                           Name = s.Name,
                                           Description = s.Description,
+                                          URL = s.URL,
                                           CourseId = s.CourseId,
                                           BatchId = s.BatchId,
                                       }).FirstOrDefault();
@@ -223,6 +224,7 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
+<<<<<<< HEAD
                 if (ModelState.IsValid)
                 {
                     // Define the path to the uploads folder
@@ -285,12 +287,79 @@ namespace StudentManagementSystem.Controllers
 
                     return View("Edit", model: ui);
                 }
+=======
+                var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
+
+                // Ensure the directory exists
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                // Generate a unique file name
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + ui.File.FileName;
+
+                // Define the full path to the file
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                // Save the uploaded file to the specified location
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await ui.File.CopyToAsync(fileStream);
+                }
+                BookEntity updateBookData = new BookEntity()
+                {
+                    Id = ui.Id,
+                    CreatedAt = DateTime.UtcNow,
+                    ModifiedAt = DateTime.UtcNow,
+                    IsInActive = true,
+                    Name = ui.Name,
+                    Description = ui.Description,
+                    URL = uniqueFileName,
+                    CourseId = ui.CourseId,
+                    BatchId = ui.BatchId,
+                };
+                _dbContext.Books.Update(updateBookData);
+                _dbContext.SaveChanges();
+                TempData["info"] = "update successfully the record";
+>>>>>>> 387764fe408c4bf67996027f8108672a83595be3
             }
             catch (Exception e)
             {
                 TempData["info"] = "error while updating the record";
             }
-            return RedirectToAction("List");
+            return RedirectToAction("list");
+        }
+
+        private MemoryStream FilePath(string fileName)
+        {
+
+            string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
+           
+            var folder = uploadFolder;
+
+            if (fileName == folder)
+            {
+                fileName = folder;
+            }
+            
+            var path = Path.Combine(Directory.GetCurrentDirectory(), uploadFolder, fileName);
+            var memeory = new MemoryStream();
+
+            if (System.IO.File.Exists(path))
+            {
+                var net = new System.Net.WebClient();
+                var data = net.DownloadData(path);
+                var content = new System.IO.MemoryStream(data);
+                memeory = content;
+            }
+            memeory.Position = 0;
+            return memeory;
+        }
+        public IActionResult DownloadFile(string filePath)
+        {
+            var memory = FilePath(filePath);
+            return File(memory.ToArray(), "application/pdf", filePath);
         }
     }
 }
