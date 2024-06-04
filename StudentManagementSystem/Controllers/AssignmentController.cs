@@ -88,33 +88,8 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-<<<<<<< HEAD
-                
+               
                 if (ModelState.IsValid)
-=======
-                // Define the path to the uploads folder
-                var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
-
-                // Ensure the directory exists
-                if (!Directory.Exists(uploadsFolder))
-                {
-                    Directory.CreateDirectory(uploadsFolder);
-                }
-
-                // Generate a unique file name
-                var uniqueFileName = Guid.NewGuid().ToString() + "_" + ui.File.FileName;
-
-                // Define the full path to the file
-                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                // Save the uploaded file to the specified location
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await ui.File.CopyToAsync(fileStream);
-                }
-
-                if (!ModelState.IsValid)
->>>>>>> 387764fe408c4bf67996027f8108672a83595be3
                 {
                     // Define the path to the uploads folder
                     var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
@@ -153,11 +128,7 @@ namespace StudentManagementSystem.Controllers
                         _dbContext.SaveChanges();
                         TempData["info"] = "save successfully the record";
                 }
-<<<<<<< HEAD
                 else
-=======
-                if (ModelState.IsValid)
->>>>>>> 387764fe408c4bf67996027f8108672a83595be3
                 {
                     //Roload Id, CourseId and BatchId to populate the dropdown again
 
@@ -193,31 +164,17 @@ namespace StudentManagementSystem.Controllers
         }
 
         [Authorize]
-<<<<<<< HEAD
         public IActionResult DownloadFile(string fileName)
         {
             string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
             var memory = FilePath(fileName, uploadFolder);
             return File(memory.ToArray(), "application/pdf", fileName);
         }
+       
         private MemoryStream FilePath(string fileName, string uploadFolder)
         {
 
             
-=======
-        private MemoryStream FilePath(string fileName)
-        {
-
-            string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
-
-            var folder = uploadFolder;
-
-            if (fileName == folder)
-            {
-                fileName = folder;
-            }
-
->>>>>>> 387764fe408c4bf67996027f8108672a83595be3
             var path = Path.Combine(Directory.GetCurrentDirectory(), uploadFolder, fileName);
             var memeory = new MemoryStream();
 
@@ -231,12 +188,7 @@ namespace StudentManagementSystem.Controllers
             memeory.Position = 0;
             return memeory;
         }
-        public IActionResult DownloadFile(string filePath)
-        {
-            var memory = FilePath(filePath);
-            return File(memory.ToArray(), "application/pdf", filePath);
-        }
-        
+       
         [Authorize]
         public IActionResult List()
         {
@@ -321,15 +273,8 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-<<<<<<< HEAD
                 if (ModelState.IsValid)
-=======
-                var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
-
-                // Ensure the directory exists
-                if (!Directory.Exists(uploadsFolder))
->>>>>>> 387764fe408c4bf67996027f8108672a83595be3
-                {
+                { 
 
                     // Define the path to the uploads folder
                     var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
@@ -390,24 +335,7 @@ namespace StudentManagementSystem.Controllers
 
                     return View("Edit", model: ui);
                 }
-<<<<<<< HEAD
-=======
-                AssignmentEntity updateAssignment = new AssignmentEntity()
-                {
-                    Id = ui.Id,
-                    CreatedAt = DateTime.UtcNow,
-                    ModifiedAt = DateTime.UtcNow,
-                    IsInActive = true,
-                    Name = ui.Name,
-                    Description = ui.Description,
-                    URL = uniqueFileName,
-                    CourseId = ui.CourseId,
-                    BatchId = ui.BatchId,
-                };
-                _dbContext.Assignments.Update(updateAssignment);
-                _dbContext.SaveChanges();
-                TempData["info"] = "update successfully the record";
->>>>>>> 387764fe408c4bf67996027f8108672a83595be3
+                
             }
             catch (Exception e)
             {

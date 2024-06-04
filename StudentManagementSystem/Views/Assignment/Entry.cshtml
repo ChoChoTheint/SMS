@@ -28,18 +28,11 @@
             <input type="file" asp-for="File" class="form-control" placeholder="enter file..."/>
             <input asp-for="URL" value="URL" hidden />
             <span asp-validation-for="File" class="text-sm text-danger"></span>
-<<<<<<< HEAD
-=======
-
->>>>>>> 387764fe408c4bf67996027f8108672a83595be3
         </div>
         <div class="mb-3">
             <label asp-for="CourseId" class="form-label">Course</label>
             <select asp-for="CourseId" class="form-select">
-<<<<<<< HEAD
                 <option value="" selected>---select option---</option>
-=======
-                <option selected>---select option---</option>
                 @if (ViewBag.Course != null)
                 {
                     foreach (var course in ViewBag.Course)
@@ -53,7 +46,7 @@
         <div class="mb-3">
             <label asp-for="BatchId" class="form-label">Batch</label>
             <select asp-for="BatchId" class="form-select">
-                <option selected>---choose option---</option>
+                <option value="" selected>---choose option---</option>
                 @if (ViewBag.Batch != null)
                 {
                     foreach (var batch in ViewBag.Batch)
@@ -65,29 +58,7 @@
             <span asp-validation-for="BatchId" class="text-sm text-danger"></span>
         </div>
 
-        @* <div class="mb-3">
-            <label asp-for="CourseId" class="form-label">Course</label>
-            <select asp-for="CourseId" class="form-select">
-                <option selected>---select option---</option>
->>>>>>> 387764fe408c4bf67996027f8108672a83595be3
-                @foreach (var course in ViewBag.Course)
-                {
-                    <option value="@course.Id">@course.Name</option>
-                }
-            </select>
-            <span asp-validation-for="CourseId" class="text-sm text-danger"></span>
-        </div>
-        <div class="mb-3">
-            <label asp-for="BatchId" class="form-label">Batch</label>
-            <select asp-for="BatchId" class="form-select">
-                <option value="" selected>---choose option---</option>
-                @foreach (var batch in ViewBag.Batch)
-                {
-                    <option value="@batch.Id">@batch.Name</option>
-                }
-            </select>
-            <span asp-validation-for="BatchId" class="text-sm text-danger"></span>
-        </div> *@
+       
         <div class="mb-3">
             <button class="btn btn-primary text-white" style="border-radius: 10px 0 10px 0;">Submit</button>
             <button class="btn btn-secondary text-white" style="border-radius: 10px 0 10px 0;" type="reset">Cancel</button>

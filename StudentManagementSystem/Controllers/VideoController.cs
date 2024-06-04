@@ -61,7 +61,6 @@ namespace StudentManagementSystem.Controllers
                     // Ensure the directory exists
                     if (!Directory.Exists(uploadsFolder))
                     {
-<<<<<<< HEAD
                         Directory.CreateDirectory(uploadsFolder);
                     }
 
@@ -119,20 +118,7 @@ namespace StudentManagementSystem.Controllers
 
                     return View(ui);
                 }
-=======
-                        Id = Guid.NewGuid().ToString(),
-                        CreatedAt = DateTime.UtcNow,
-                        IsInActive = true,
-                        Name = ui.Name,
-                        Description = ui.Description,
-                        URL = "/videos/" + uniqueFileName,
-                        CourseId = ui.CourseId,
-                        BatchId = ui.BatchId,
-                    };
-                    _dbContext.Videos.Add(videoData);
-                    _dbContext.SaveChanges();
-                    TempData["info"] = "Save successfully the record";
->>>>>>> 387764fe408c4bf67996027f8108672a83595be3
+                        
                 
             }
             catch (Exception e)
@@ -223,7 +209,6 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-<<<<<<< HEAD
                 if (ModelState.IsValid)
                 {
 
@@ -264,43 +249,7 @@ namespace StudentManagementSystem.Controllers
 
                     return View("Edit", model: ui);
                 }
-=======
-                var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "videos");
-
-                // Ensure the directory exists
-                if (!Directory.Exists(uploadsFolder))
-                {
-                    Directory.CreateDirectory(uploadsFolder);
-                }
-
-                // Generate a unique file name
-                var uniqueFileName = Guid.NewGuid().ToString() + "_" + ui.VideoFile.FileName;
-
-                // Define the full path to the file
-                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                // Save the uploaded file to the specified location
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await ui.VideoFile.CopyToAsync(fileStream);
-                }
-
-                VideoEntity updateVideoData = new VideoEntity()
-                {
-                    Id = ui.Id,
-                    CreatedAt = DateTime.UtcNow,
-                    ModifiedAt = DateTime.UtcNow,
-                    IsInActive = true,
-                    Name = ui.Name,
-                    Description = ui.Description,
-                    URL = "/videos/" + uniqueFileName,
-                    CourseId = ui.CourseId,
-                    BatchId = ui.BatchId,
-                };
-                _dbContext.Videos.Update(updateVideoData);
-                _dbContext.SaveChanges();
-                TempData["info"] = "update successfully the record";
->>>>>>> 387764fe408c4bf67996027f8108672a83595be3
+               
             }
             catch (Exception e)
             {
