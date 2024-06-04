@@ -1,4 +1,5 @@
-﻿@model AttendanceViewModel
+﻿@model StudentManagementSystem.Models.ViewModels.AttendanceViewModel
+
 <div class="container w-50 mx-auto my-3 p-5 border-start border-end border-bottom rounded-start rounded-end shadow-sm" style="border-top: 12px solid #699BF7">
     <div class="d-flex justify-content-center align-items-center mb-4">
         <div class="me-3">
@@ -9,51 +10,63 @@
             <h1 class="h5 brand-space">Excellence</h1>
         </div>
     </div>
-
-    <form action="/attendance/update" method="post" enctype="multipart/form-data">
-        <input type="text" name="Id" value="@Model.Id" hidden/>
+    <h1 class="h4 mb-3 text-center">To Edit Attendance</h1>
+    <form asp-controller="Attendance" asp-action="Update" method="post" enctype="multipart/form-data">
+        <input asp-for="Id" hidden />
         <div class="mb-3">
-            <label for="studentId" class="form-label">Student</label>
+            <label asp-for="StudentId" class="form-label">Student</label>
             <select asp-for="StudentId" class="form-select">
                 <option value="">---choose option---</option>
                 @foreach (var student in ViewBag.Student)
                 {
-                    if (@student.Id == Model.StudentId)
+                    if(@student.Id == Model.StudentId)
                     {
 
                         <option value="@student.Id" selected>@student.Name</option>
                     }
                 }
             </select>
+            <span asp-validation-for="StudentId" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label for="attendaceDate" class="form-label">AttendanceDate</label>
-            <input type="date" name="AttendanceDate" id="attendaceDate" class="form-control" value="@Model.AttendanceDate.ToString("yyyy-MM-dd")" required />
+            <label asp-for="AttendanceDate" class="form-label">AttendanceDate</label>
+            <input asp-for="AttendanceDate" class="form-control" />
+            <span asp-validation-for="AttendanceDate" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
-            <label for="inTime" class="form-label">InTime</label>
-            <input type="time" name="InTime" id="inTime" class="form-control" value="@Model.InTime" required />
+            <label asp-for="InTime" class="form-label">InTime</label>
+            <input asp-for="InTime" class="form-control" />
+            <span asp-validation-for="InTime" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label for="outTime" class="form-label">OutTime</label>
-            <input type="time" name="OutTime" id="outTime" class="form-control" value="@Model.OutTime.ToString("hh-mm-ss")" required />
+            <label asp-for="OutTime" class="form-label">OutTime</label>
+            <input asp-for="OutTime" class="form-control"  />
+            <span asp-validation-for="OutTime" class="text-danger"></span>
         </div>
         <label for="isLeave" class="form-label">IsLeave</label>
-        <div class="mb-3 d-flex">
-            <div class="me-3">
-                <input type="radio" name="IsLeave" value="Yes" id="yes" class="form-check-input" @(Model.IsLeave == "Yes" ? "Checked" : "") />
-                <label for="yes" class="form-label-input">Yes</label>
+        <div class="mb-3">
+            <div class="d-flex">
+
+                <div class="me-3">
+                    <input type="radio" name="IsLeave" value="Yes" id="yes" class="form-check-input" @(Model.IsLeave=="Yes"? "Checked":"")/>
+                    <label for="yes" class="form-label-input">Yes</label>
+                </div>
+                <div>
+                    <input type="radio" name="IsLeave" value="No" id="no" class="form-check-input" @(Model.IsLeave=="No"? "Checked":"")/>
+                    <label for="no" class="form-label-input">No</label>
+                </div>
             </div>
-            <div>
-                <input type="radio" name="IsLeave" value="No" id="no" class="form-check-input" @(Model.IsLeave == "No" ? "Checked" : "") />
-                <label for="no" class="form-label-input">No</label>
-            </div>
+            <span asp-validation-for="IsLeave" class="text-danger"></span>
         </div>
-       
+
         <div class="mb-3">
             <button class="btn btn-primary text-white" style="border-radius: 10px 0 10px 0;">Update</button>
             <button class="btn btn-secondary text-white" style="border-radius: 10px 0 10px 0;" type="reset">Cancel</button>
         </div>
     </form>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,4 +1,4 @@
-﻿@model ChapterViewModel
+﻿@model StudentManagementSystem.Models.ViewModels.ChapterViewModel
 <div class="container w-50 mx-auto my-3 p-5 border-start border-end border-bottom rounded-start rounded-end shadow-sm" style="border-top: 12px solid #699BF7">
     <div class="d-flex justify-content-center align-items-center mb-4">
         <div class="me-3">
@@ -9,84 +9,61 @@
             <h1 class="h5 brand-space">Excellence</h1>
         </div>
     </div>
-
-
-    <form action="/chapter/update" method="post" enctype="multipart/form-data">
-        <input type="text" name="Id" value="@Model.Id" hidden/>
+    <h1 class="h4 mb-3 text-center">To Edit Chapter</h1>
+    <form asp-controller="Chapter" asp-action="Update" method="post" enctype="multipart/form-data">
+        <input asp-for="Id" hidden />
         <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
-            <input type="text" name="Name" id="name" class="form-control" value="@Model.Name" required />
+            <label asp-for="Name" class="form-label">Name</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            <input type="text" name="Description" id="description" class="form-control" value="@Model.Description" required />
+            <label asp-for="Description" class="form-label">Description</label>
+            <input asp-for="Description" class="form-control" />
+            <span asp-validation-for="Description" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label for="batchId" class="form-label">Batch</label>
-            <select name="BatchId" id="batchId" class="form-select">
-                <option>---choose option---</option>
+            <label asp-for="BatchId" class="form-label">Batch</label>
+            <select asp-for="BatchId" class="form-select">
+                <option value="">---choose option---</option>
                 @foreach (var batch in ViewBag.Batch)
                 {
-                    if (@batch.Id == Model.BatchId)
+                    if(@batch.Id == Model.BatchId)
                     {
-
-                        <option value="@batch.Id" selected>
-                            @batch.Name
-                        </option>
-                    }
-                    else
-                    {
-                        <option value="@batch.Id">
-                            @batch.Name
-                        </option>
+                        <option value="@batch.Id" selected>@batch.Name</option>
                     }
                 }
             </select>
+            <span asp-validation-for="BatchId" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label for="" class="form-label">Book</label>
-            <select name="BookId" id="bookId" class="form-select">
-                <option>---choose option---</option>
+            <label asp-for="BookId" class="form-label">Book</label>
+            <select asp-for="BookId" class="form-select">
+                <option value="">---choose option---</option>
                 @foreach (var book in ViewBag.Book)
                 {
                     if (@book.Id == Model.BookId)
                     {
-
-                        <option value="@book.Id" selected>
-                            @book.Name
-                        </option>
-                    }
-                    else
-                    {
-                        <option value="@book.Id">
-                            @book.Name
-                        </option>
+                        <option value="@book.Id" selected>@book.Name</option>
                     }
                 }
             </select>
+            <span asp-validation-for="BatchId" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label for="" class="form-label">Video</label>
-            <select name="VideoId" id="videoId" class="form-select">
-                <option>---choose option---</option>
+            <label asp-for="VideoId" class="form-label">Video</label>
+            <select asp-for="VideoId" class="form-select">
+                <option value="">---choose option---</option>
                 @foreach (var video in ViewBag.Video)
                 {
-                    if (@video.Id == Model.VideoId)
+                    if(@video.Id == Model.VideoId)
                     {
-
-                        <option value="@video.Id" selected>
-                            @video.Name
-                        </option>
-                    }
-                    else
-                    {
-                        <option value="@video.Id">
-                            @video.Name
-                        </option>
+                        <option value="@video.Id" selected>@video.Name</option>
                     }
                 }
             </select>
+            <span asp-validation-for="VideoId" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <button class="btn btn-primary text-white" style="border-radius: 10px 0 10px 0;">Update</button>
@@ -94,3 +71,8 @@
         </div>
     </form>
 </div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

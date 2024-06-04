@@ -141,20 +141,36 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                BatchEntity updateBatchData = new BatchEntity()
+                if (ModelState.IsValid)
                 {
-                    Id = ui.Id,
-                    CreatedAt   = DateTime.UtcNow,
-                    ModifiedAt = DateTime.UtcNow,
-                    IsInActive = true,
-                    Name = ui.Name,
-                    Description = ui.Description,
-                    CourseId = ui.CourseId,
-                };
 
-                _dbContext.Batches.Update(updateBatchData);
-                _dbContext.SaveChanges();
-                TempData["info"] = "update successfully the record";
+                    BatchEntity updateBatchData = new BatchEntity()
+                    {
+                        Id = ui.Id,
+                        CreatedAt   = DateTime.UtcNow,
+                        ModifiedAt = DateTime.UtcNow,
+                        IsInActive = true,
+                        Name = ui.Name,
+                        Description = ui.Description,
+                        CourseId = ui.CourseId,
+                    };
+
+                    _dbContext.Batches.Update(updateBatchData);
+                    _dbContext.SaveChanges();
+                    TempData["info"] = "update successfully the record";
+                }
+                else
+                {
+
+                    var courses = _dbContext.Courses.Select(s => new CourseViewModel
+                    {
+                        Id = s.Id,
+                        Name = s.Name,
+                    }).OrderBy(o => o.Name).ToList();
+                    ViewBag.Course = courses;
+
+                    return View("Edit", model: ui);
+                }
             }
             catch (Exception e)
             {

@@ -155,9 +155,6 @@ namespace StudentManagementSystem.Controllers
                             }).OrderBy(o => o.Name).ToList();
             ViewBag.Student = students;
 
-
-
-
             return View(editAttendanceData);
         }
 
@@ -167,28 +164,47 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                AttendanceEntity updateAttendanceData = new AttendanceEntity()
+                if (ModelState.IsValid)
                 {
-                    Id = ui.Id,
-                    CreatedAt = DateTime.UtcNow,
-                    IsInActive = true,
-                    ModifiedAt = DateTime.UtcNow,
-                    AttendanceDate = ui.AttendanceDate,
-                    InTime = ui.InTime,
-                    OutTime = ui.OutTime,
-                    IsLeave = ui.IsLeave,
-                    StudentId = ui.StudentId,
-                };
 
-                _dbContext.Attendances.Update(updateAttendanceData);
-                _dbContext.SaveChanges();
-                TempData["info"] = "update successfully the record";
+                    AttendanceEntity updateAttendanceData = new AttendanceEntity()
+                    {
+                        Id = ui.Id,
+                        CreatedAt = DateTime.UtcNow,
+                        IsInActive = true,
+                        ModifiedAt = DateTime.UtcNow,
+                        AttendanceDate = ui.AttendanceDate,
+                        InTime = ui.InTime,
+                        OutTime = ui.OutTime,
+                        IsLeave = ui.IsLeave,
+                        StudentId = ui.StudentId,
+                    };
+
+                    _dbContext.Attendances.Update(updateAttendanceData);
+                    _dbContext.SaveChanges();
+                    TempData["info"] = "update successfully the record";
+                }
+                else
+                {
+                    var students = (from student in _dbContext.Students
+                                    join batch in _dbContext.Batches
+                                   on student.BatchId equals batch.Id
+
+                                    select new StudentViewModel
+                                    {
+                                        Id = student.Id,
+                                        Name = student.Name + "/ " + batch.Name
+                                    }).OrderBy(o => o.Name).ToList();
+                    ViewBag.Student = students;
+
+                    return View("Edit", model: ui);
+                }
             }
             catch (Exception e)
             {
                 TempData["info"] = "error while updating the record";
             }
-            return View("List");
+            return RedirectToAction("List");
         }
     }
 }

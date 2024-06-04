@@ -101,11 +101,11 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                var deleteAdminData = _dbContext.Admins.Where(w => w.Id == Id).FirstOrDefault();
+                var deleteAdminData = _dbContext.Admins.Find(Id);
 
                 if(deleteAdminData is not null)
                 {
-                    _dbContext.Admins.Remove(deleteAdminData);
+                    _dbContext.Remove(deleteAdminData);
                     _dbContext.SaveChanges();
                 }
                 TempData["info"] = "delete successfully the data";
@@ -123,6 +123,7 @@ namespace StudentManagementSystem.Controllers
             AdminViewModel editAdminData = _dbContext.Admins.Where(w => w.Id == Id).Select(s => new AdminViewModel
             {
                 Id = s.Id,
+                AspNetUsersId = s.AspNetUsersId,
                 Name = s.Name,
                 Email = s.Email,
                 Phone = s.Phone,
@@ -132,6 +133,8 @@ namespace StudentManagementSystem.Controllers
                 FatherName = s.FatherName,
                 Gender = s.Gender,
             }).FirstOrDefault();
+
+
             return View(editAdminData);
         }
 
@@ -139,29 +142,36 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult Update(AdminViewModel ui)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             try
             {
-                AdminEntity updateAdminData = new AdminEntity()
+                if (ModelState.IsValid)
                 {
-                    Id = ui.Id,
-                    CreatedAt = DateTime.UtcNow,
-                    ModifiedAt = DateTime.UtcNow,
-                    Name = ui.Name,
-                    Email = ui.Email,
-                    Phone = ui.Phone,
-                    Address = ui.Address,
-                    NRC = ui.NRC,
-                    DOB = ui.DOB,
-                    FatherName = ui.FatherName,
-                    Gender = ui.Gender,
-                    AspNetUsersId = userId,
-                };
 
-                _dbContext.Admins.Update(updateAdminData);
-                _dbContext.SaveChanges();
-                TempData["info"] = "update successfully the data";
+                    AdminEntity updateAdminData = new AdminEntity()
+                    {
+                        Id = ui.Id,
+                        CreatedAt = DateTime.UtcNow,
+                        ModifiedAt = DateTime.UtcNow,
+                        Name = ui.Name,
+                        Email = ui.Email,
+                        Phone = ui.Phone,
+                        Address = ui.Address,
+                        NRC = ui.NRC,
+                        DOB = ui.DOB,
+                        FatherName = ui.FatherName,
+                        Gender = ui.Gender,
+                        AspNetUsersId = ui.AspNetUsersId,
+                    };
+
+                    _dbContext.Admins.Update(updateAdminData);
+                    _dbContext.SaveChanges();
+                    TempData["info"] = "update successfully the data";
+                }
+                else
+                {
+                    return View("Edit", model: ui);
+                }
             }
             catch(Exception e)
             {

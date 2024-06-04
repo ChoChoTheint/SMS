@@ -40,7 +40,7 @@ namespace StudentManagementSystem.Controllers
             {
                 Id = s.Id,
                 Name = s.Name,
-                //URL = s.URL,
+                URL = s.URL,
             }).OrderBy(o => o.Name).ToList();
             ViewBag.Video = videos;
 
@@ -134,7 +134,7 @@ namespace StudentManagementSystem.Controllers
                                                        Name = chapter.Name,
                                                        Description = chapter.Description,
                                                        BatchId = batch.Name + "/ " + course.Name,
-                                                       BookId = book.Name,
+                                                       BookId = book.URL,
                                                        VideoId = video.URL,
                                                    }).ToList();
             return View(chapterList);
@@ -206,21 +206,54 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                ChapterEntity updateChapterData = new ChapterEntity()
+                if (ModelState.IsValid)
                 {
-                    Id = ui.Id,
-                    CreatedAt = DateTime.UtcNow,
-                    ModifiedAt = DateTime.UtcNow,
-                    IsInActive = true,
-                    Name = ui.Name,
-                    Description = ui.Description,
-                    BatchId = ui.BatchId,
-                    BookId = ui.BookId,
-                    VideoId = ui.VideoId,
-                };
-                _dbContext.Chapters.Update(updateChapterData);
-                _dbContext.SaveChanges();
-                TempData["info"] = "update successfully the record";
+
+                    ChapterEntity updateChapterData = new ChapterEntity()
+                    {
+                        Id = ui.Id,
+                        CreatedAt = DateTime.UtcNow,
+                        ModifiedAt = DateTime.UtcNow,
+                        IsInActive = true,
+                        Name = ui.Name,
+                        Description = ui.Description,
+                        BatchId = ui.BatchId,
+                        BookId = ui.BookId,
+                        VideoId = ui.VideoId,
+                    };
+                    _dbContext.Chapters.Update(updateChapterData);
+                    _dbContext.SaveChanges();
+                    TempData["info"] = "update successfully the record";
+                }
+                else
+                {
+
+                    var batches = (from batch in _dbContext.Batches
+                                   join course in _dbContext.Courses
+                                   on batch.CourseId equals course.Id
+                                   select new BatchViewModel
+                                   {
+                                       Id = batch.Id,
+                                       Name = batch.Name + "/ " + course.Name
+                                   }).OrderBy(o => o.Name).ToList();
+                    ViewBag.Batch = batches;
+
+                    var books = _dbContext.Books.Select(s => new BookViewModel
+                    {
+                        Id = s.Id,
+                        Name = s.Name,
+                    }).OrderBy(o => o.Name).ToList();
+                    ViewBag.Book = books;
+
+                    var videos = _dbContext.Videos.Select(s => new VideoViewModel
+                    {
+                        Id = s.Id,
+                        Name = s.Name,
+                    }).OrderBy(o => o.Name).ToList();
+                    ViewBag.Video = videos;
+
+                    return View("Edit", model: ui);
+                }
             }
             catch (Exception e)
             {

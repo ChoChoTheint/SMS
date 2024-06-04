@@ -108,18 +108,26 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                ExamEntity updateExamData = new ExamEntity()
+                if (ModelState.IsValid)
                 {
-                    Id = ui.Id,
-                    CreatedAt = DateTime.UtcNow,
-                    IsInActive = true,
-                    ModifiedAt = DateTime.UtcNow,
-                    Name = ui.Name,
-                    ExamDate = ui.ExamDate,
-                };
-                _dbContext.Exams.Update(updateExamData);
-                _dbContext.SaveChanges();
-                TempData["info"] = "update successfully the record";
+
+                    ExamEntity updateExamData = new ExamEntity()
+                    {
+                        Id = ui.Id,
+                        CreatedAt = DateTime.UtcNow,
+                        IsInActive = true,
+                        ModifiedAt = DateTime.UtcNow,
+                        Name = ui.Name,
+                        ExamDate = ui.ExamDate,
+                    };
+                    _dbContext.Exams.Update(updateExamData);
+                    _dbContext.SaveChanges();
+                    TempData["info"] = "update successfully the record";
+                }
+                else
+                {
+                    return View("Edit", model: ui);
+                }
             }
             catch (Exception e)
             {

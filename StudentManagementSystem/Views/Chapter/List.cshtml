@@ -25,7 +25,7 @@
 <div class="container">
     <div class="row">
 
-
+        <h1 class="h4 mb-3">Chapter List</h1>
         <div class="col-md-12">
             <div class="table-responsive">
                 <table id="chapterTable" class="table table-bordred table-striped">
@@ -55,7 +55,11 @@
                                 <td>@list.Name</td>
                                 <td>@list.Description</td>
                                 <td>@list.BatchId</td>
-                                <td>@list.BookId</td>
+                                <td>
+                                    <a href="/assignment/DownloadFile?filePath=@list.BookId">
+                                        <i class="fa-solid fa-download fa-xl"></i>
+                                    </a>
+                                </td>
                                 <td>
                                     <video width="220" height="140" controls>
                                         <source src="@list.VideoId" type="video/mp4">

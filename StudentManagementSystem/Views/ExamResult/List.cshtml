@@ -24,7 +24,7 @@
 <div class="container">
     <div class="row">
 
-
+        <h1 class="h4 mb-3">Exam Result List</h1>
         <div class="col-md-12">
             <div class="table-responsive">
                 <table id="examResultTable" class="table table-bordred table-striped">
@@ -46,7 +46,7 @@
                         {
                             
                             <tr>
-                                <td>@list.Mark</td>
+                                <td>@list.Mark marks</td>
                                 <td>@list.StudentId</td>
                                 @if (User.IsInRole("Admin"))
                                 {

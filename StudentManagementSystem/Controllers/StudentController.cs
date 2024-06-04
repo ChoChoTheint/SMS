@@ -147,6 +147,7 @@ namespace StudentManagementSystem.Controllers
             StudentViewModel editStudentData = _dbContext.Students.Where(w => w.Id == Id).Select(s => new StudentViewModel
             {
                 Id = s.Id,
+                AspNetUsersId = s.AspNetUsersId,
                 Name = s.Name,
                 Email = s.Email,
                 Phone = s.Phone,
@@ -177,29 +178,47 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult Update(StudentViewModel ui)
         {
-            var AspNetUsersId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             try
             {
-                StudentEntity updateStudentData = new StudentEntity()
+                if (ModelState.IsValid)
                 {
-                    Id = ui.Id,
-                    CreatedAt = DateTime.UtcNow,
-                    ModifiedAt = DateTime.UtcNow,
-                    Name = ui.Name,
-                    Email = ui.Email,
-                    Phone = ui.Phone,
-                    Address = ui.Address,
-                    NRC = ui.NRC,
-                    DOB = ui.DOB,
-                    FatherName = ui.FatherName,
-                    Gender = ui.Gender,
-                    AspNetUsersId = AspNetUsersId,
-                    BatchId = ui.BatchId,
-                };
 
-                _dbContext.Students.Update(updateStudentData);
-                _dbContext.SaveChanges();
-                TempData["info"] = "update successfully data";
+                    StudentEntity updateStudentData = new StudentEntity()
+                    {
+                        Id = ui.Id,
+                        CreatedAt = DateTime.UtcNow,
+                        ModifiedAt = DateTime.UtcNow,
+                        Name = ui.Name,
+                        Email = ui.Email,
+                        Phone = ui.Phone,
+                        Address = ui.Address,
+                        NRC = ui.NRC,
+                        DOB = ui.DOB,
+                        FatherName = ui.FatherName,
+                        Gender = ui.Gender,
+                        AspNetUsersId = ui.AspNetUsersId,
+                        BatchId = ui.BatchId,
+                    };
+
+                    _dbContext.Students.Update(updateStudentData);
+                    _dbContext.SaveChanges();
+                    TempData["info"] = "update successfully data";
+                }
+                else
+                {
+                    var batches = (from batch in _dbContext.Batches
+                                   join course in _dbContext.Courses
+                                   on batch.CourseId equals course.Id
+
+                                   select new BatchViewModel
+                                   {
+                                       Id = batch.Id,
+                                       Name = batch.Name + "/ " + course.Name
+                                   }).OrderBy(o => o.Name).ToList();
+                    ViewBag.Batch = batches;
+
+                    return View("Edit", model: ui);
+                }
             }
             catch(Exception e)
             {

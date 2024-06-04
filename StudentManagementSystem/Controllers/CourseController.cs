@@ -119,26 +119,34 @@ namespace StudentManagementSystem.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Update(CourseEntity ui)
+        public IActionResult Update(CourseViewModel ui)
         {
             try
             {
-                CourseEntity updateCourseData = new CourseEntity()
+                if (ModelState.IsValid)
                 {
-                    Id = ui.Id,
-                    CreatedAt = DateTime.UtcNow,
-                    ModifiedAt = DateTime.UtcNow,
-                    IsInActive = true,
-                    Name = ui.Name,
-                    Description = ui.Description,
-                    OpeningDate = ui.OpeningDate,
-                    DurationInHour = ui.DurationInHour,
-                    DurationInMonth = ui.DurationInMonth,
-                };
 
-                _dbContext.Courses.Update(updateCourseData);
-                _dbContext.SaveChanges();
-                TempData["info"] = "update successfully the record";
+                    CourseEntity updateCourseData = new CourseEntity()
+                    {
+                        Id = ui.Id,
+                        CreatedAt = DateTime.UtcNow,
+                        ModifiedAt = DateTime.UtcNow,
+                        IsInActive = true,
+                        Name = ui.Name,
+                        Description = ui.Description,
+                        OpeningDate = ui.OpeningDate,
+                        DurationInHour = ui.DurationInHour,
+                        DurationInMonth = ui.DurationInMonth,
+                    };
+
+                    _dbContext.Courses.Update(updateCourseData);
+                    _dbContext.SaveChanges();
+                    TempData["info"] = "update successfully the record";
+                }
+                else
+                {
+                    return View("Edit", model: ui);
+                }
             }
             catch (Exception e)
             {

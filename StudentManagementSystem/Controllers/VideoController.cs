@@ -208,21 +208,46 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                VideoEntity updateVideoData = new VideoEntity()
+                if (ModelState.IsValid)
                 {
-                    Id = ui.Id,
-                    CreatedAt = DateTime.UtcNow,
-                    ModifiedAt = DateTime.UtcNow,
-                    IsInActive = true,
-                    Name = ui.Name,
-                    Description = ui.Description,
-                    URL = ui.URL,
-                    CourseId = ui.CourseId,
-                    BatchId = ui.BatchId,
-                };
-                _dbContext.Videos.Update(updateVideoData);
-                _dbContext.SaveChanges();
-                TempData["info"] = "update successfully the record";
+
+                    VideoEntity updateVideoData = new VideoEntity()
+                    {
+                        Id = ui.Id,
+                        CreatedAt = DateTime.UtcNow,
+                        ModifiedAt = DateTime.UtcNow,
+                        IsInActive = true,
+                        Name = ui.Name,
+                        Description = ui.Description,
+                        URL = ui.URL,
+                        CourseId = ui.CourseId,
+                        BatchId = ui.BatchId,
+                    };
+                    _dbContext.Videos.Update(updateVideoData);
+                    _dbContext.SaveChanges();
+                    TempData["info"] = "update successfully the record";
+                }
+                else
+                {
+                    var courses = _dbContext.Courses.Select(s => new CourseViewModel
+                    {
+                        Id = s.Id,
+                        Name = s.Name,
+                    }).OrderBy(o => o.Name).ToList();
+                    ViewBag.Course = courses;
+
+                    var batches = (from batch in _dbContext.Batches
+                                   join course in _dbContext.Courses
+                                   on batch.CourseId equals course.Id
+                                   select new BatchViewModel
+                                   {
+                                       Id = batch.Id,
+                                       Name = batch.Name + "/ " + course.Name
+                                   }).OrderBy(o => o.Name).ToList();
+                    ViewBag.Batch = batches;
+
+                    return View("Edit", model: ui);
+                }
             }
             catch (Exception e)
             {

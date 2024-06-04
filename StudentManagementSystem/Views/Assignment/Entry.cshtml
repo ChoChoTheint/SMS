@@ -9,7 +9,7 @@
             <h1 class="h5 brand-space">Excellence</h1>
         </div>
     </div>
-
+    <h1 class="h4 mb-3 text-center">Assignment Entry Form</h1>
     <form asp-controller="Assignment" asp-action="Entry" method="post" enctype="multipart/form-data">
         <input asp-for="Id" value="@ViewBag.Id" hidden/>
         <div class="mb-3">
@@ -25,7 +25,7 @@
         </div>
         <div class="mb-3">
             <label asp-for="File" class="form-label">File</label>
-            <input type="file" asp-for="File" class="form-control" />
+            <input type="file" asp-for="File" class="form-control" placeholder="enter file..."/>
             <input asp-for="URL" value="URL" hidden />
             <span asp-validation-for="File" class="text-sm text-danger"></span>
         </div>

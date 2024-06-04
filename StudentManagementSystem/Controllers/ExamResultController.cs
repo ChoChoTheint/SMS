@@ -137,18 +137,33 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                ExamResultEntity updateExamResultData = new ExamResultEntity()
+                if (ModelState.IsValid)
                 {
-                    Id = ui.Id,
-                    CreatedAt = DateTime.UtcNow,
-                    ModifiedAt = DateTime.UtcNow,
-                    IsInActive = true,
-                    Mark = ui.Mark,
-                    StudentId = ui.StudentId,
-                };
-                _dbContext.ExamResults.Update(updateExamResultData);
-                _dbContext.SaveChanges();
-                TempData["info"] = "update successfully the record";
+
+                    ExamResultEntity updateExamResultData = new ExamResultEntity()
+                    {
+                        Id = ui.Id,
+                        CreatedAt = DateTime.UtcNow,
+                        ModifiedAt = DateTime.UtcNow,
+                        IsInActive = true,
+                        Mark = ui.Mark,
+                        StudentId = ui.StudentId,
+                    };
+                    _dbContext.ExamResults.Update(updateExamResultData);
+                    _dbContext.SaveChanges();
+                    TempData["info"] = "update successfully the record";
+                }
+                else
+                {
+                    var students = _dbContext.Students.Select(s => new StudentViewModel
+                    {
+                        Id = s.Id,
+                        Name = s.Name,
+                    }).OrderBy(o => o.Name).ToList();
+                    ViewBag.Student = students;
+
+                    return View("Edit", model: ui);
+                }
             }
             catch (Exception e)
             {

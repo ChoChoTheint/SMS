@@ -203,11 +203,15 @@ namespace StudentManagementSystem.Controllers
             }).OrderBy(o => o.Name).ToList();
             ViewBag.Course = courses;
 
-            var batches = _dbContext.Batches.Select(s => new BatchViewModel
-            {
-                Id = s.Id,
-                Name = s.Name,
-            }).OrderBy(o => o.Name).ToList();
+            var batches = (from batch in _dbContext.Batches
+                           join course in _dbContext.Courses
+                           on batch.CourseId equals course.Id
+
+                           select new BatchViewModel
+                           {
+                               Id = batch.Id,
+                               Name = batch.Name + "/ " + course.Name
+                           }).OrderBy(o => o.Name).ToList();
             ViewBag.Batch = batches;
 
             return View(editBookData);
@@ -215,24 +219,72 @@ namespace StudentManagementSystem.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Update(BookViewModel ui)
+        public async Task<IActionResult> Update(BookViewModel ui)
         {
             try
             {
-                BookEntity updateBookData = new BookEntity()
+                if (ModelState.IsValid)
                 {
-                    Id = ui.Id,
-                    CreatedAt = DateTime.UtcNow,
-                    ModifiedAt = DateTime.UtcNow,
-                    IsInActive = true,
-                    Name = ui.Name,
-                    Description = ui.Description,
-                    CourseId = ui.CourseId,
-                    BatchId = ui.BatchId,
-                };
-                _dbContext.Books.Update(updateBookData);
-                _dbContext.SaveChanges();
-                TempData["info"] = "update successfully the record";
+                    // Define the path to the uploads folder
+                    var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "books");
+
+                    // Ensure the directory exists
+                    if (!Directory.Exists(uploadsFolder))
+                    {
+                        Directory.CreateDirectory(uploadsFolder);
+                    }
+
+                    // Generate a unique file name
+                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + ui.File.FileName;
+
+                    // Define the full path to the file
+                    var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    // Save the uploaded file to the specified location
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await ui.File.CopyToAsync(fileStream);
+                    }
+
+                    BookEntity updateBookData = new BookEntity()
+                    {
+                        Id = ui.Id,
+                        CreatedAt = DateTime.UtcNow,
+                        ModifiedAt = DateTime.UtcNow,
+                        IsInActive = true,
+                        Name = ui.Name,
+                        Description = ui.Description,
+                        URL = uniqueFileName,
+                        CourseId = ui.CourseId,
+                        BatchId = ui.BatchId,
+                    };
+                    _dbContext.Books.Update(updateBookData);
+                    _dbContext.SaveChanges();
+                    TempData["info"] = "update successfully the record";
+                }
+                else
+                {
+
+                    var courses = _dbContext.Courses.Select(s => new CourseViewModel
+                    {
+                        Id = s.Id,
+                        Name = s.Name,
+                    }).OrderBy(o => o.Name).ToList();
+                    ViewBag.Course = courses;
+
+                    var batches = (from batch in _dbContext.Batches
+                                   join course in _dbContext.Courses
+                                   on batch.CourseId equals course.Id
+
+                                   select new BatchViewModel
+                                   {
+                                       Id = batch.Id,
+                                       Name = batch.Name + "/ " + course.Name
+                                   }).OrderBy(o => o.Name).ToList();
+                    ViewBag.Batch = batches;
+
+                    return View("Edit", model: ui);
+                }
             }
             catch (Exception e)
             {

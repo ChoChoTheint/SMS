@@ -1,5 +1,4 @@
-﻿@using StudentManagementSystem.Models.ViewModels;
-@model TeacherViewModel;
+﻿@model StudentManagementSystem.Models.ViewModels.TeacherViewModel
 <div class="container w-50 mx-auto my-3 p-5 border-start border-end border-bottom rounded-start rounded-end shadow-sm" style="border-top: 12px solid #699BF7">
     <div class="d-flex justify-content-center align-items-center mb-4">
         <div class="me-3">
@@ -10,56 +9,69 @@
             <h1 class="h5 brand-space">Excellence</h1>
         </div>
     </div>
-
-    <form action="/teacher/update" method="post" enctype="multipart/form-data">
-        <input type="text" value="@Model.Id" name="Id" id="name" class="form-control" hidden />
-        <input type="text" value="@Model.AspNetUsersId" name="AspNetUsersId" id="name" class="form-control" hidden />
+    <h1 class="h4 mb-3 text-center">To Edit Teacher </h1>
+    <form asp-controller="Teacher" asp-action="Update" method="post" enctype="multipart/form-data">
+        <input asp-for="Id" hidden />
+        <input asp-for="AspNetUsersId" hidden />
         <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
-            <input type="text" name="Name" value="@Model.Name" id="name" class="form-control" required />
+            <label asp-for="Name" class="form-label">Name</label>
+            <input asp-for="Name" class="form-control"  />
+            <span asp-validation-for="Name" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
-            <label for="description" class="form-label">Email</label>
-            <input type="Email" name="Email" value="@Model.Email" id="description" class="form-control" required />
+            <label asp-for="Email" class="form-label">Email</label>
+            <input asp-for="Email" class="form-control"  />
+            <span asp-validation-for="Email" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label for="" class="form-label">Address</label>
-            <textarea name="Address" class="form-control" id="address" rows="6" cols="6" required>@Model.Address</textarea>
+            <label asp-for="Address" class="form-label">Address</label>
+            <textarea asp-for="Address" class="form-control" rows="6" cols="6"></textarea>
+            <span asp-validation-for="Address" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label for="" class="form-label">Phone</label>
-            <input type="number" name="Phone" value="@Model.Phone" id="" class="form-control" required />
+            <label asp-for="Phone" class="form-label">Phone</label>
+            <input asp-for="Phone" class="form-control" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
         </div>
+        <label for="" class="form-label">Gender</label>
         <div class="mb-3">
-            <label for="" class="form-label">DOB</label>
-            <input type="date" name="DOB" value="@Model.DOB.ToString("yyyy-MM-dd")" id="" class="form-control" required />
-        </div>
-        <div class="mb-3">
-            <label for="" class="form-label">Father Name</label>
-            <input type="text" name="FatherName" value="@Model.FatherName" id="" class="form-control" required />
-        </div>
-        <div class="mb-3">
-            <div class="form-check">
-                <input type="radio" class="form-check-input" name="Gender" value="Male" @(Model.Gender == "Male" ? "Checked" : "")>
-                <label for="" class="form-check-label">Male</label>
+            <div class="d-flex">
+
+                <div class="form-check me-3">
+                    <input type="radio" class="form-check-input" name="Gender" id="male" value="Male" @(Model.Gender=="Male"?"Checked":"")>
+                    <label for="male" class="form-check-label">Male</label>
+                </div>
+                <div class="form-check me-3">
+                    <input type="radio" class="form-check-input" name="Gender" id="female" value="Female" @(Model.Gender == "Female" ? "Checked" : "")>
+                    <label for="female" class="form-check-label">Female</label>
+                </div>
+                <div class="form-check me-3">
+                    <input type="radio" class="form-check-input" name="Gender" id="other" value="Other" @(Model.Gender == "Other" ? "Checked" : "")>
+                    <label for="other" class="form-check-label">Other</label>
+                </div>
             </div>
-            <div class="form-check">
-                <input type="radio" class="form-check-input" name="Gender" value="Female" @(Model.Gender == "Female" ? "Checked" : "")>
-                <label for="" class="form-check-label">Female</label>
-            </div>
-            <div class="form-check">
-                <input type="radio" class="form-check-input" name="Gender" value="Other" @(Model.Gender == "Other" ? "Checked" : "")>
-                <label for="" class="form-check-label">Other</label>
-            </div>
+            <span asp-validation-for="Gender" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label for="" class="form-label">NRC</label>
-            <input type="text" name="NRC" value="@Model.NRC" id="" class="form-control" required />
+            <label asp-for="DOB" class="form-label">DOB</label>
+            <input asp-for="DOB" class="form-control" />
+            <span asp-validation-for="DOB" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label for="" class="form-label">Position</label>
-            <input type="text" name="Position" value="@Model.Position" id="" class="form-control" required />
+            <label asp-for="NRC" class="form-label">NRC</label>
+            <input asp-for="NRC" class="form-control" />
+            <span asp-validation-for="NRC" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Position" class="form-label">Position</label>
+            <input asp-for="Position" class="form-control" />
+            <span asp-validation-for="Position" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="FatherName" class="form-label">Father Name</label>
+            <input asp-for="FatherName" class="form-control" />
+            <span asp-validation-for="FatherName" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <button class="btn btn-primary text-white" style="border-radius: 10px 0 10px 0;">Update</button>
@@ -67,3 +79,8 @@
         </div>
     </form>
 </div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

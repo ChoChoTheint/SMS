@@ -160,18 +160,40 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                TeacherCourseEntity updateTeacherCourseData = new TeacherCourseEntity()
+                if (ModelState.IsValid)
                 {
-                    Id = ui.Id,
-                    CreatedAt = DateTime.UtcNow,
-                    ModifiedAt = DateTime.UtcNow,
-                    IsInActive = true,
-                    TeacherId = ui.TeacherId,
-                    CourseId = ui.CourseId,
-                };
-                _dbContext.TeacherCourses.Update(updateTeacherCourseData);
-                _dbContext.SaveChanges();
-                TempData["info"] = "update successfully the record";
+
+                    TeacherCourseEntity updateTeacherCourseData = new TeacherCourseEntity()
+                    {
+                        Id = ui.Id,
+                        CreatedAt = DateTime.UtcNow,
+                        ModifiedAt = DateTime.UtcNow,
+                        IsInActive = true,
+                        TeacherId = ui.TeacherId,
+                        CourseId = ui.CourseId,
+                    };
+                    _dbContext.TeacherCourses.Update(updateTeacherCourseData);
+                    _dbContext.SaveChanges();
+                    TempData["info"] = "update successfully the record";
+                }
+                else
+                {
+                    var teachers = _dbContext.Teachers.Select(s => new TeacherViewModel
+                    {
+                        Id = s.Id,
+                        Name = s.Name,
+                    }).OrderBy(o => o.Name).ToList();
+                    ViewBag.Teacher = teachers;
+
+                    var courses = _dbContext.Courses.Select(s => new CourseViewModel
+                    {
+                        Id = s.Id,
+                        Name = s.Name,
+                    }).OrderBy(o => o.Name).ToList();
+                    ViewBag.Course = courses;
+
+                    return View("Edit", model: ui);
+                }
             }
             catch (Exception e)
             {

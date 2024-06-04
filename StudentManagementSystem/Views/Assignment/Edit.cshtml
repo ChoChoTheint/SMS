@@ -1,5 +1,4 @@
-﻿@model AssignmentViewModel
-
+﻿@model StudentManagementSystem.Models.ViewModels.AssignmentViewModel
 <div class="container w-50 mx-auto my-3 p-5 border-start border-end border-bottom rounded-start rounded-end shadow-sm" style="border-top: 12px solid #699BF7">
     <div class="d-flex justify-content-center align-items-center mb-4">
         <div class="me-3">
@@ -10,65 +9,47 @@
             <h1 class="h5 brand-space">Excellence</h1>
         </div>
     </div>
-
-    <form action="/assignment/update" method="post" enctype="multipart/form-data">
-        <input type="text" name="Id" value="@Model.Id" hidden/>
+    <h1 class="h4 mb-3 text-center">To Edit Assignment</h1>
+    <form asp-controller="Assignment" asp-action="Update" method="post" enctype="multipart/form-data">
+        <input asp-for="Id" hidden />
         <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
-            <input type="text" name="Name" id="name" class="form-control" value="@Model.Name" required />
+            <label asp-for="Name" class="form-label">Name</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            <input type="text" name="Description" id="description" class="form-control" value="@Model.Description" required />
+            <label asp-for="Description" class="form-label">Description</label>
+            <input asp-for="Description" class="form-control" />
+            <span asp-validation-for="Description" class="text-sm text-danger"></span>
         </div>
         <div class="mb-3">
-            <label for="file" class="form-label">File</label>
-            <input type="file" name="File" id="file" class="form-control" value="@Model.URL" required />
+            <label asp-for="File" class="form-label">File</label>
+            <input type="file" asp-for="File" class="form-control" />
+            <input asp-for="URL" value="URL" hidden />
+            <span asp-validation-for="File" class="text-sm text-danger"></span>
         </div>
         <div class="mb-3">
-            <label for="courseId" class="form-label">Course</label>
-            <select name="CourseId" id="courseId" class="form-select">
-                <option>---select option---</option>
+            <label asp-for="CourseId" class="form-label">Course</label>
+            <select asp-for="CourseId" class="form-select">
+                <option value="" selected>---select option---</option>
                 @foreach (var course in ViewBag.Course)
                 {
-                    if (@course.Id == Model.CourseId)
-                    {
-
-                        <option value="@course.Id" selected>
-                            @course.Name
-                        </option>
-                    }
-                    else
-                    {
-                        <option value="@course.Id">
-                            @course.Name
-                        </option>
-                    }
+                    <option value="@course.Id">@course.Name</option>
                 }
             </select>
+            <span asp-validation-for="CourseId" class="text-sm text-danger"></span>
         </div>
         <div class="mb-3">
-            <label for="batchIn" class="form-label">Batch</label>
-            <select name="BatchId" id="batchIn" class="form-select">
-                <option>---choose option---</option>
+            <label asp-for="BatchId" class="form-label">Batch</label>
+            <select asp-for="BatchId" class="form-select">
+                <option value="" selected>---choose option---</option>
                 @foreach (var batch in ViewBag.Batch)
                 {
-                    if (@batch.Id == Model.BatchId)
-                    {
-
-                        <option value="@batch.Id" selected>
-                            @batch.Name
-                        </option>
-                    }
-                    else
-                    {
-                        <option value="@batch.Id">
-                            @batch.Name
-                        </option>
-                    }
+                    <option value="@batch.Id">@batch.Name</option>
                 }
             </select>
+            <span asp-validation-for="BatchId" class="text-sm text-danger"></span>
         </div>
         <div class="mb-3">
             <button class="btn btn-primary text-white" style="border-radius: 10px 0 10px 0;">Update</button>
@@ -76,3 +57,8 @@
         </div>
     </form>
 </div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

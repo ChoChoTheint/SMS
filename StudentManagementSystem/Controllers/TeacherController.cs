@@ -131,6 +131,7 @@ namespace StudentManagementSystem.Controllers
                 FatherName = s.FatherName,
                 Position = s.Position,
                 Gender = s.Gender,
+                AspNetUsersId = s.AspNetUsersId,
             }).FirstOrDefault();
             return View(editTeacherData);
         }
@@ -138,31 +139,38 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult Update(TeacherViewModel ui)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             try
             {
-                TeacherEntity updateTeacherData = new TeacherEntity()
+                if (ModelState.IsValid)
                 {
-                    Id = ui.Id,
-                    CreatedAt = DateTime.UtcNow,
-                    ModifiedAt = DateTime.UtcNow,
-                    IsInActive = true,
-                    Name = ui.Name,
-                    Email = ui.Email,
-                    Phone = ui.Phone,
-                    Address = ui.Address,
-                    NRC = ui.NRC,
-                    DOB = ui.DOB,
-                    FatherName = ui.FatherName,
-                    Position = ui.Position,
-                    Gender = ui.Gender,
-                    AspNetUsersId = userId,
-                };
 
-                _dbContext.Teachers.Update(updateTeacherData);
-                _dbContext.SaveChanges();
-                TempData["info"] = "update successfully the record";
+                    TeacherEntity updateTeacherData = new TeacherEntity()
+                    {
+                        Id = ui.Id,
+                        CreatedAt = DateTime.UtcNow,
+                        ModifiedAt = DateTime.UtcNow,
+                        IsInActive = true,
+                        Name = ui.Name,
+                        Email = ui.Email,
+                        Phone = ui.Phone,
+                        Address = ui.Address,
+                        NRC = ui.NRC,
+                        DOB = ui.DOB,
+                        FatherName = ui.FatherName,
+                        Position = ui.Position,
+                        Gender = ui.Gender,
+                        AspNetUsersId = ui.AspNetUsersId,
+                    };
+
+                    _dbContext.Teachers.Update(updateTeacherData);
+                    _dbContext.SaveChanges();
+                    TempData["info"] = "update successfully the record";
+                }
+                else
+                {
+                    return View("Edit", model: ui);
+                }
             }
             catch (Exception e)
             {
