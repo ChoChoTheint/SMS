@@ -30,14 +30,12 @@
             <span asp-validation-for="File" class="text-sm text-danger"></span>
         </div>
         <div class="mb-3">
-<<<<<<< HEAD
             <label asp-for="CourseId" class="form-label">Course</label>
             <select asp-for="CourseId" class="form-select">
                 <option value="" selected>---select option---</option>
                 @foreach (var course in ViewBag.Course)
                 {
                     <option value="@course.Id">@course.Name</option>
-=======
             <label for="courseId" class="form-label">Course</label>
             <select name="CourseId" id="courseId" class="form-select">
                 <option>---choose option---</option>
@@ -55,20 +53,17 @@
                             @course.Name
                         </option>
                     }
->>>>>>> 387764fe408c4bf67996027f8108672a83595be3
                 }
             </select>
             <span asp-validation-for="CourseId" class="text-sm text-danger"></span>
         </div>
         <div class="mb-3">
-<<<<<<< HEAD
             <label asp-for="BatchId" class="form-label">Batch</label>
             <select asp-for="BatchId" class="form-select">
                 <option value="" selected>---choose option---</option>
                 @foreach (var batch in ViewBag.Batch)
                 {
                     <option value="@batch.Id">@batch.Name</option>
-=======
             <label for="batchId" class="form-label">Batch</label>
             <select name="BatchId" id="batchId" class="form-select">
                 <option>---choose option---</option>
@@ -86,7 +81,6 @@
                             @batch.Name
                         </option>
                     }
->>>>>>> 387764fe408c4bf67996027f8108672a83595be3
                 }
             </select>
             <span asp-validation-for="BatchId" class="text-sm text-danger"></span>
