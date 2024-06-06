@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Versioning;
 using StudentManagementSystem.DAO;
 using StudentManagementSystem.Models.DataModels;
 using StudentManagementSystem.Models.ViewModels;
@@ -97,7 +98,7 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                var deleteAdminData = _dbContext.Admins.Find(Id);
+                var deleteAdminData = _dbContext.Admins.FirstOrDefault(w => w.Id == Id);
 
                 if(deleteAdminData is not null)
                 {

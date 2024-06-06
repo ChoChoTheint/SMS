@@ -31,9 +31,9 @@
 
                     <thead>
                         <tr>
-                            <th>Assignment Name</th>
+                            <th>Name</th>
                             <th>Description</th>
-                            <th>URL</th>
+                            <th>Assignment</th>
                             <th>Course</th>
                             <th>Batch</th>
                                 @if (User.IsInRole("Admin"))
@@ -54,7 +54,7 @@
                                 <td>@list.Name</td>
                                 <td>@list.Description</td>
                                 <td>
-                                    <a href="/assignment/DownloadFile?filePath=@list.URL">
+                                    <a href="/assignment/DownloadFile?fileName=@list.URL">
                                         <i class="fa-solid fa-download fa-xl"></i>
                                     </a>
                                 </td>

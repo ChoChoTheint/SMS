@@ -27,6 +27,8 @@ namespace StudentManagementSystem.Models.ViewModels
         [Required(ErrorMessage = "Gender is required")]
         public string Gender { get; set; }
         public string AspNetUsersId { get; set; }
+        //public string CourseInfo { get; set; }
+       // public string BatchInfo { get; set; }
 
 
     }

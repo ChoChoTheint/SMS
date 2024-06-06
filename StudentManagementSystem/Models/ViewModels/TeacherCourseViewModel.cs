@@ -11,5 +11,6 @@ namespace StudentManagementSystem.Models.ViewModels
         [Required(ErrorMessage = "Course is required")]
         public string CourseId { get; set; }
 
+        public string BatchInfo { get; set; }
     }
 }
