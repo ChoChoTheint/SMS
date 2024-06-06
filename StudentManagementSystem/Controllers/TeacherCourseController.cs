@@ -96,12 +96,15 @@ namespace StudentManagementSystem.Controllers
                                                          on tc.TeacherId equals teacher.Id
                                                          join course in _dbContext.Courses
                                                          on tc.CourseId equals course.Id
+                                                         join batch in _dbContext.Batches
+                                                         on course.Id equals batch.CourseId
 
                                                          select new TeacherCourseViewModel
                                                          {
                                                              Id = tc.Id,
                                                              TeacherId = teacher.Name,
-                                                             CourseId = course.Name
+                                                             CourseId = course.Name,
+                                                             BatchInfo = batch.Name,
                                                          }).ToList();
             return View(teacherCourseList);
         }

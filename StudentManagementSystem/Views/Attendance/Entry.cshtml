@@ -1,5 +1,5 @@
 ﻿@model StudentManagementSystem.Models.ViewModels.AttendanceViewModel
-<div class="container w-50 mx-auto my-3 p-5 border-start border-end border-bottom rounded-start rounded-end shadow-sm" style="border-top: 12px solid #699BF7">
+<div class="container w-50 mx-auto mt-5 p-5 border-start border-end border-bottom rounded-start rounded-end shadow-sm" style="border-top: 12px solid #699BF7">
     <div class="d-flex justify-content-center align-items-center mb-4">
         <div class="me-3">
             <i class="fa-solid fa-book-open fa-2xl" style="color: #699BF7"></i>
@@ -55,13 +55,39 @@
             <span asp-validation-for="IsLeave" class="text-danger"></span>
         </div>
         
-        <div class="mb-3">
-            <button class="btn btn-primary text-white" style="border-radius: 10px 0 10px 0;">Submit</button>
+        <div class="mb-3" >
+            <button id="" class="btn btn-primary text-white" style="border-radius: 10px 0 10px 0;">Submit</button>
             <button class="btn btn-secondary text-white" style="border-radius: 10px 0 10px 0;" type="reset">Cancel</button>
         </div>
     </form>
 </div>
 
+<script>
+    $("#attendanceBtn").click(function () {
+        var Attendance = {};//create an object to send the data to controller 
+        Attendance.Id = $("#Id").val();
+        Attendance.StudentId = $("#StudentId").val();
+        Attendance.AttendanceDate = $("#AttendanceDate").val();
+        Attendance.InTime = $("#InTime").val();
+        Attendance.OutTime = $("#OutTime").val();
+        Attendance.IsLeave = $("#yes").val();
+        Attendance.IsLeave = $("#no").val();
+
+
+        $.ajax({
+            type: "POST",
+            url: "/Attendance/Entry",
+            data: Attendance,
+            success: function (res) {
+                var data = JSON.stringify(res);
+
+            },
+            failure: function (error) {
+                console.log(error)
+            },
+        });
+    });
+</script>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

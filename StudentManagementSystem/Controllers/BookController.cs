@@ -120,6 +120,16 @@ namespace StudentManagementSystem.Controllers
             return RedirectToAction("List");
         }
 
+        [Authorize]
+        public IActionResult DownloadFile(string filePath)
+        {
+            string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "books");
+
+            var memory = FilePath(filePath, uploadFolder);
+            return File(memory.ToArray(), "application/pdf", filePath);
+        }
+
+        [Authorize]
         private MemoryStream FilePath(string fileName, string uploadFolder)
         {
 
@@ -136,13 +146,7 @@ namespace StudentManagementSystem.Controllers
             memeory.Position = 0;
             return memeory;
         }
-        public IActionResult DownloadFile(string filePath)
-        {
-            string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "books");
-
-            var memory = FilePath(filePath, uploadFolder);
-            return File(memory.ToArray(), "application/pdf", filePath);
-        }
+        
 
         [Authorize]
         public IActionResult List()
