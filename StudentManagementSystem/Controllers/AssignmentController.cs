@@ -65,23 +65,7 @@ namespace StudentManagementSystem.Controllers
             }
             return uniqueFileName;
         }
-       // private string UploadedFile(AssignmentViewModel model)
-        //{
-          //  string uniqueFileName = null;
-
-           // if (model.File != null)
-            //{
-              //  string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
-              //  uniqueFileName = Guid.NewGuid().ToString() + "_" + model.File.FileName;
-              //  string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-              //  using (var fileStream = new FileStream(filePath, FileMode.Create))
-              //  {
-                //    model.File.CopyTo(fileStream);
-              //  }
-          //  }
-          //  return uniqueFileName;
-      //  }
-
+      
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Entry(AssignmentViewModel ui)
@@ -164,31 +148,30 @@ namespace StudentManagementSystem.Controllers
         }
 
         [Authorize]
-        public IActionResult DownloadFile(string fileName)
-        {
-            string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
-            var memory = FilePath(fileName, uploadFolder);
-            return File(memory.ToArray(), "application/pdf", fileName);
-        }
-       
         private MemoryStream FilePath(string fileName, string uploadFolder)
         {
 
-            
             var path = Path.Combine(Directory.GetCurrentDirectory(), uploadFolder, fileName);
             var memeory = new MemoryStream();
 
             if (System.IO.File.Exists(path))
             {
                 var net = new System.Net.WebClient();
-                var data = net.DownloadData(path);
+                var data = net.DownloadData(fileName);
                 var content = new System.IO.MemoryStream(data);
                 memeory = content;
             }
             memeory.Position = 0;
             return memeory;
         }
-       
+        public IActionResult DownloadFile(string filePath)
+        {
+            string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "books");
+
+            var memory = FilePath(filePath, uploadFolder);
+            return File(memory.ToArray(), "application/pdf", filePath);
+        }
+
         [Authorize]
         public IActionResult List()
         {
@@ -217,19 +200,21 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                var deleteAssignmentData = _dbContext.Assignments.Where(w => w.Id == Id).FirstOrDefault();
-                if(deleteAssignmentData is not null)
+                var deleteAssignmentData = _dbContext.Assignments.Find(Id);
+
+                if (deleteAssignmentData is not null)
                 {
-                    _dbContext.Assignments.Remove(deleteAssignmentData);
+                    _dbContext.Remove(deleteAssignmentData);
                     _dbContext.SaveChanges();
                 }
-                TempData["info"] = "delete successfully the record";
+                TempData["info"] = "delete successfully the data";
             }
             catch (Exception e)
             {
-                TempData["info"] = "error while deleting the record";
+                TempData["info"] = "error while deleting the data";
             }
-            return RedirectToAction("list");
+            return RedirectToAction("List");
+            
         }
 
         [Authorize]

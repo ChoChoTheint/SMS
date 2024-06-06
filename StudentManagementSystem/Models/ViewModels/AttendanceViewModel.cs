@@ -6,18 +6,18 @@ namespace StudentManagementSystem.Models.ViewModels
     public class AttendanceViewModel
     {
         public string Id { get; set; }
-        [Required(ErrorMessage ="attendance date is required")]
+        [Required(ErrorMessage ="Attendance date is required")]
         [DataType(DataType.Date)]
         public DateTime AttendanceDate { get; set; }
-        [Required(ErrorMessage = "intime is required")]
+        [Required(ErrorMessage = "In time is required")]
         [DataType(DataType.Time)]
         public DateTime InTime { get; set; }
-        [Required(ErrorMessage = "outtime is required")]
+        [Required(ErrorMessage = "Out time is required")]
         [DataType(DataType.Time)]
         public DateTime OutTime { get; set; }
-        [Required(ErrorMessage = "isleave is required")]
+        [Required(ErrorMessage = "Leave is required")]
         public string IsLeave { get; set; }
-        [Required(ErrorMessage = "student is required")]
+        [Required(ErrorMessage = "Student Name is required")]
         public string StudentId { get; set; }
     }
 }
