@@ -155,12 +155,8 @@ namespace StudentManagementSystem.Controllers
             var memory = FilePath(fileName);
             return File(memory.ToArray(), "application/pdf", $"{fileName}.pdf");
         }
-<<<<<<< HEAD
        
-        private MemoryStream FilePath(string fileName, string uploadFolder)
-=======
         private MemoryStream FilePath(string fileName)
->>>>>>> yairyint
         {
             string videoPath = Path.Combine("wwwroot", "files", $"{fileName}.pdf");
             //string projectPath = Directory.GetCurrentDirectory();
@@ -180,9 +176,6 @@ namespace StudentManagementSystem.Controllers
             memeory.Position = 0;
             return memeory;
         }
-<<<<<<< HEAD
-       
-=======
 
 
        // public class VideoService
@@ -201,7 +194,6 @@ namespace StudentManagementSystem.Controllers
             //   return videoPath;
            // }
         //}
->>>>>>> yairyint
         [Authorize]
         public IActionResult List()
         {

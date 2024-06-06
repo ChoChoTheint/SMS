@@ -20,13 +20,7 @@
 }
 else if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
 {
-<<<<<<< HEAD
-    <div class="row">
-        
-=======
     <div class="row pt-5">
-        <div class="mx-auto">
->>>>>>> yairyint
 
             <div class="container">
                 <div class="row">
@@ -51,7 +45,7 @@ else if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                                 <p>In here, you can see all the student's details in this school</p>
                             </div>
                             <div class="card-footer">
-                                <a asp-controller="ှStudent" asp-action="List" class="btn btn-primary float-end">Details</a>
+                                <a asp-controller="Student" asp-action="List" class="btn btn-primary float-end">Details</a>
                             </div>
                         </div>
 
@@ -96,7 +90,7 @@ else if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
             
                
             </div>
-        </div>
+    </div>
 
     
 
@@ -105,35 +99,6 @@ else if (User.Identity.IsAuthenticated && User.IsInRole("Teacher"))
 {
     // Layout = "_LayoutTeacher";
     <h1 class="h4 mb-3">Attendance List</h1>
-    <div class="container">
-        <div class="row">
-
-<<<<<<< HEAD
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>StudentName</th>
-                        <th>AttendanceDate</th>
-                        <th>InTime</th>
-                        <th>OutTime</th>
-                        <th>IsLeave</th>
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <th>Edit</th>
-                            <th>Delete</th>
-                        }
-                    </tr>
-                </thead>
-                <tbody>
-                    <span class="text-info">please today's attendance is required!</span>
-                    @{
-                        var index = 1;
-                    }
-                    @foreach (var list in Model)
-                    {
-                        
-=======
-
             <div class="col-md-12">
                 <div class="table-responsive">
                     <table id="attendanceTable" class="table table-bordred table-striped">
@@ -159,7 +124,6 @@ else if (User.Identity.IsAuthenticated && User.IsInRole("Teacher"))
                             }
                             @foreach(var list in Model)
                             {
->>>>>>> yairyint
                                 <tr>
                                     <td>@index</td>
                                     <td>@list.StudentId</td>
@@ -194,11 +158,11 @@ else if (User.Identity.IsAuthenticated && User.IsInRole("Teacher"))
                         </tbody>
 
 
+                    </table>
 
 
-
-        </div>
-    </div>
+                </div>
+            </div>
 
    
     
