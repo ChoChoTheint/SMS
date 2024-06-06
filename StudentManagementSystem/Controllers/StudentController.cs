@@ -116,7 +116,8 @@ namespace StudentManagementSystem.Controllers
                                                        DOB = student.DOB,
                                                        FatherName = student.FatherName,
                                                        Gender = student.Gender,
-                                                       BatchId = batch.Name+"/ "+course.Name
+                                                       BatchId = batch.Name,
+                                                       CourseId = course.Name,
                                                    }).ToList();
             return View(studentList);
         }
@@ -126,7 +127,7 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                var deleteStudentData = _dbContext.Students.Where(w => w.Id == Id).FirstOrDefault();
+                var deleteStudentData = _dbContext.Students.FirstOrDefault(w => w.Id == Id);
                 if(deleteStudentData is not null)
                 {
                     _dbContext.Students.Remove(deleteStudentData);

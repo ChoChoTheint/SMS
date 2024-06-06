@@ -108,7 +108,7 @@ namespace StudentManagementSystem.Controllers
                                                          }).ToList();
 
             
-            return User.IsInRole("Admin") ? View(attendanceList)  : View("/home/index", model: attendanceList);
+            return View(attendanceList);
         }
 
         [Authorize]

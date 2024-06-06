@@ -49,22 +49,7 @@ namespace StudentManagementSystem.Controllers
         }
 
         [Authorize]
-        private string UploadedFile(AssignmentViewModel model)
-        {
-            string uniqueFileName = null;
-
-            if (model.File != null)
-            {
-                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.File.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    model.File.CopyTo(fileStream);
-                }
-            }
-            return uniqueFileName;
-        }
+        
        // private string UploadedFile(AssignmentViewModel model)
         //{
           //  string uniqueFileName = null;
@@ -167,15 +152,22 @@ namespace StudentManagementSystem.Controllers
         public IActionResult DownloadFile(string fileName)
         {
             string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
-            var memory = FilePath(fileName, uploadFolder);
-            return File(memory.ToArray(), "application/pdf", fileName);
+            var memory = FilePath(fileName);
+            return File(memory.ToArray(), "application/pdf", $"{fileName}.pdf");
         }
+<<<<<<< HEAD
        
         private MemoryStream FilePath(string fileName, string uploadFolder)
+=======
+        private MemoryStream FilePath(string fileName)
+>>>>>>> yairyint
         {
+            string videoPath = Path.Combine("wwwroot", "files", $"{fileName}.pdf");
+            //string projectPath = Directory.GetCurrentDirectory();
 
-            
-            var path = Path.Combine(Directory.GetCurrentDirectory(), uploadFolder, fileName);
+
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), videoPath);
             var memeory = new MemoryStream();
 
             if (System.IO.File.Exists(path))
@@ -188,7 +180,28 @@ namespace StudentManagementSystem.Controllers
             memeory.Position = 0;
             return memeory;
         }
+<<<<<<< HEAD
        
+=======
+
+
+       // public class VideoService
+        //{
+          //  private readonly IWebHostEnvironment _env;
+
+            //public VideoService(IWebHostEnvironment env)
+            //{
+               /// _env = env;
+           // }
+
+           // public string GetVideoPath()
+            //{
+            //    string webRootPath = _env.WebRootPath; // wwwroot folder
+            //    string videoPath = Path.Combine(webRootPath, "video");
+            //   return videoPath;
+           // }
+        //}
+>>>>>>> yairyint
         [Authorize]
         public IActionResult List()
         {

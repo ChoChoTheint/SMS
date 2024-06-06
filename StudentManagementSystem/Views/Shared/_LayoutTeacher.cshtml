@@ -210,7 +210,7 @@
         </symbol>
     </svg>
 
-    <header class="navbar sticky-top bg-white flex-md-nowrap p-0" data-bs-theme="white">
+    <header class="navbar sticky-top bg-white flex-md-nowrap p-0 d-md-none" data-bs-theme="white">
 
         <a class="navbar-brand bg-white col-md-3 col-lg-2 text-white d-flex align-items-center justify-content-center" href="#">
             <i class="fa-solid fa-book-open fa-lg" style="color: #699BF7"></i>
@@ -248,7 +248,7 @@
 
     <div class="fluid-container">
         <div class="row">
-            <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary vh-100 overflow-auto">
+            <div class="sidebar border border-right col-md-3 col-lg-2 bg-body-tertiary overflow-auto" style="height: 240vh;">
                 <div class="offcanvas-md offcanvas-end bg-body-tertiary" tabindex="-1" id="sidebarMenu"
                      aria-labelledby="sidebarMenuLabel">
                     <div class="offcanvas-header">
@@ -261,6 +261,13 @@
                                 data-bs-target="#sidebarMenu" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
+                        <a class="text-white d-flex align-items-center justify-content-center" href="#">
+                            <i class="fa-solid fa-book-open fa-xl" style="color: #699BF7"></i>
+                            <div class=" text-center">
+                                <span class="mate-sc text-uppercase">Leadership</span>
+                                <h1 class="h5 font-monospace ms-2" style="color: #699BF7">Excellence</h1>
+                            </div>
+                        </a>
                         <ul class="nav flex-column">
                             @* <li class="nav-item">
                             <a class="col-md-3 col-lg-2 me-0 px-3 fs-4 text-decoration-none fw-bold" href="#"><span class="text-dark">Leadership</span> <span class="text-primary">Excellence</span></a>
@@ -456,7 +463,7 @@
                 </div>
             </div>
 
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <main class="col-md-9 ms-sm-auto col-lg-10">
                 <div class="">
                     @RenderBody()
                 </div>

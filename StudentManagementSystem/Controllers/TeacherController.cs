@@ -73,25 +73,33 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while saving the record";
             }
-            return RedirectToAction("List");
+            return RedirectToAction("/TeacherCourse/List");
         }
 
+        public IActionResult Detail()
+        {
+            return View();
+        }
         [Authorize]
         public IActionResult List()
         {
-            IList<TeacherViewModel> teacherList = _dbContext.Teachers.Select(s => new TeacherViewModel
-            {
-                Id = s.Id,
-                Name = s.Name,
-                Email = s.Email,
-                Phone = s.Phone,
-                Address = s.Address,
-                NRC = s.NRC,
-                DOB = s.DOB,
-                FatherName = s.FatherName,
-                Position = s.Position,
-                Gender = s.Gender,
-            }).ToList();
+            IList<TeacherViewModel> teacherList = (from t in _dbContext.Teachers
+                                                  
+
+                                                   select new TeacherViewModel
+                                                   {
+                                                       Name = t.Name,
+                                                       Email = t.Email,
+                                                       Phone = t.Phone,
+                                                       Address = t.Address,
+                                                       NRC = t.NRC,
+                                                       DOB = t.DOB,
+                                                       FatherName = t.Name,
+                                                       Position = t.Position,
+                                                       Gender = t.Gender,
+                                                       //CourseInfo = c.Name,
+                                                       //BatchInfo = b.Name,
+                                                   }).ToList();
             return View(teacherList);
         }
 
