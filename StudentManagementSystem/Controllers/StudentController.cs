@@ -181,7 +181,7 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
 
                     StudentEntity updateStudentData = new StudentEntity()

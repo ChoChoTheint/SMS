@@ -34,7 +34,7 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
 
                     AdminEntity adminData = new AdminEntity()
@@ -142,7 +142,7 @@ namespace StudentManagementSystem.Controllers
 
             try
             {
-                if (ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
 
                     AdminEntity updateAdminData = new AdminEntity()
@@ -153,7 +153,7 @@ namespace StudentManagementSystem.Controllers
                         Name = ui.Name,
                         Email = ui.Email,
                         Phone = ui.Phone,
-                        Address = ui.Address,
+                        Address = ui.Address,ှ
                         NRC = ui.NRC,
                         DOB = ui.DOB,
                         FatherName = ui.FatherName,

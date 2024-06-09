@@ -49,7 +49,7 @@ namespace StudentManagementSystem.Controllers
         }
 
         [Authorize]
-<<<<<<< HEAD
+
         private string UploadedFile(AssignmentViewModel model)
         {
             string uniqueFileName = null;
@@ -67,7 +67,7 @@ namespace StudentManagementSystem.Controllers
             return uniqueFileName;
         }
       
-=======
+
         
        // private string UploadedFile(AssignmentViewModel model)
         //{
@@ -86,7 +86,7 @@ namespace StudentManagementSystem.Controllers
           //  return uniqueFileName;
       //  }
 
->>>>>>> origin/main
+
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Entry(AssignmentViewModel ui)
@@ -169,29 +169,20 @@ namespace StudentManagementSystem.Controllers
         }
 
         [Authorize]
-<<<<<<< HEAD
-        private MemoryStream FilePath(string fileName, string uploadFolder)
-=======
-        public IActionResult DownloadFile(string fileName)
+
+        public IActionResult DownloadFile(string filePath)
         {
             string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
-            var memory = FilePath(fileName);
-            return File(memory.ToArray(), "application/pdf", $"{fileName}.pdf");
+
+            var memory = FilePath(filePath, uploadFolder);
+            return File(memory.ToArray(), "application/pdf", filePath);
         }
-       
-        private MemoryStream FilePath(string fileName)
->>>>>>> origin/main
+
+        [Authorize]
+        private MemoryStream FilePath(string fileName, string uploadFolder)
         {
-            string videoPath = Path.Combine("wwwroot", "files", $"{fileName}.pdf");
-            //string projectPath = Directory.GetCurrentDirectory();
 
-<<<<<<< HEAD
             var path = Path.Combine(Directory.GetCurrentDirectory(), uploadFolder, fileName);
-=======
-
-
-            var path = Path.Combine(Directory.GetCurrentDirectory(), videoPath);
->>>>>>> origin/main
             var memeory = new MemoryStream();
 
             if (System.IO.File.Exists(path))
@@ -204,40 +195,11 @@ namespace StudentManagementSystem.Controllers
             memeory.Position = 0;
             return memeory;
         }
-<<<<<<< HEAD
-        public IActionResult DownloadFile(string filePath)
-        {
-            string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "books");
-
-            var memory = FilePath(filePath, uploadFolder);
-            return File(memory.ToArray(), "application/pdf", filePath);
-        }
-
-=======
 
 
-       // public class VideoService
-        //{
-          //  private readonly IWebHostEnvironment _env;
-
-            //public VideoService(IWebHostEnvironment env)
-            //{
-               /// _env = env;
-           // }
-
-           // public string GetVideoPath()
-            //{
-            //    string webRootPath = _env.WebRootPath; // wwwroot folder
-            //    string videoPath = Path.Combine(webRootPath, "video");
-            //   return videoPath;
-           // }
-        //}
->>>>>>> origin/main
         [Authorize]
         public IActionResult List()
         {
-            
-
             IList<AssignmentViewModel> assignmentList = (from assignment in _dbContext.Assignments
                                                          join course in _dbContext.Courses
                                                          on assignment.CourseId equals course.Id
