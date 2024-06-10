@@ -104,6 +104,8 @@ namespace StudentManagementSystem.Controllers
                                                    on student.BatchId equals batch.Id
                                                    join course in _dbContext.Courses
                                                    on batch.CourseId equals course.Id
+                                                   
+                                                   where student.BatchId == batch.Id
 
                                                    select new StudentViewModel
                                                    {
@@ -116,10 +118,13 @@ namespace StudentManagementSystem.Controllers
                                                        DOB = student.DOB,
                                                        FatherName = student.FatherName,
                                                        Gender = student.Gender,
-                                                       BatchId = batch.Name,
-                                                       CourseId = course.Name,
+                                                       BatchId = batch.Name+"/ "+ course.Name,
+                                                       
                                                    }).ToList();
-            return View(studentList);
+
+            
+
+            return  View(studentList);
         }
 
         [Authorize]

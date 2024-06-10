@@ -34,6 +34,8 @@ namespace StudentManagementSystem.Controllers
             }).OrderBy(o => o.Name).ToList();
             ViewBag.Course = courses;
 
+           
+
             var batches = (from batch in _dbContext.Batches
                            join course in _dbContext.Courses
                            on batch.CourseId equals course.Id
@@ -47,24 +49,6 @@ namespace StudentManagementSystem.Controllers
             return View();
         }
 
-        [Authorize]
-        
-       // private string UploadedFile(AssignmentViewModel model)
-        //{
-          //  string uniqueFileName = null;
-
-           // if (model.File != null)
-            //{
-              //  string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
-              //  uniqueFileName = Guid.NewGuid().ToString() + "_" + model.File.FileName;
-              //  string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-              //  using (var fileStream = new FileStream(filePath, FileMode.Create))
-              //  {
-                //    model.File.CopyTo(fileStream);
-              //  }
-          //  }
-          //  return uniqueFileName;
-      //  }
 
         [HttpPost]
         [Authorize]
@@ -76,7 +60,7 @@ namespace StudentManagementSystem.Controllers
                 if (ModelState.IsValid)
                 {
                     // Define the path to the uploads folder
-                    var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
+                    var uploadsFolder = Path.Combine("wwwroot", "files");
 
                     // Ensure the directory exists
                     if (!Directory.Exists(uploadsFolder))
@@ -125,6 +109,12 @@ namespace StudentManagementSystem.Controllers
                     }).OrderBy(o => o.Name).ToList();
                     ViewBag.Course = courses;
 
+                    ViewBag.Student = _dbContext.Students.Select(s => new StudentViewModel
+                    {
+                        Id = s.Id,
+                        Name = s.Name,
+
+                    }).OrderBy(o => o.Name).ToString();
                     var batches = (from batch in _dbContext.Batches
                                    join course in _dbContext.Courses
                                    on batch.CourseId equals course.Id
@@ -150,7 +140,7 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult DownloadFile(string fileName)
         {
-            string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
+            //string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
             var memory = FilePath(fileName);
             return File(memory.ToArray(), "application/pdf", $"{fileName}.pdf");
         }
@@ -202,15 +192,17 @@ namespace StudentManagementSystem.Controllers
                                                          on assignment.CourseId equals course.Id
                                                          join batch in _dbContext.Batches
                                                          on assignment.BatchId equals batch.Id
+                                                         join student in _dbContext.Students
+                                                         on batch.Id equals student.BatchId
 
                                                          select new AssignmentViewModel
                                                          {
                                                              Id = assignment.Id,
-                                                             Name = assignment.Name,
+                                                             Name = student.Name,
                                                              Description = assignment.Description,
                                                              URL = assignment.URL,
                                                              CourseId = course.Name,
-                                                             BatchId = batch.Name,
+                                                             BatchId = batch.Name+"/ "+course.Name,
                                                          }).ToList();
             return View(assignmentList);
         }

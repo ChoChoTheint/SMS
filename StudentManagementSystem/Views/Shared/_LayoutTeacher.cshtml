@@ -261,93 +261,29 @@
                                 data-bs-target="#sidebarMenu" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
-                        <a class="text-white d-flex align-items-center justify-content-center" href="#">
+                        <a class="text-white d-flex align-items-center justify-content-center" href="/Home/Index">
                             <i class="fa-solid fa-book-open fa-xl" style="color: #699BF7"></i>
                             <div class=" text-center">
                                 <span class="mate-sc text-uppercase">Leadership</span>
                                 <h1 class="h5 font-monospace ms-2" style="color: #699BF7">Excellence</h1>
                             </div>
                         </a>
-                        <ul class="nav flex-column">
+                        <ul class="nav flex-column text-center">
                             @* <li class="nav-item">
                             <a class="col-md-3 col-lg-2 me-0 px-3 fs-4 text-decoration-none fw-bold" href="#"><span class="text-dark">Leadership</span> <span class="text-primary">Excellence</span></a>
                             </li> *@
                             <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="#">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
-                                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
-                                    </svg>
+                                <a class="nav-link text-center active my-4" aria-current="page" href="#">
+                                    <div class="mb-3">
+                                        <i class="fa-regular fa-circle-user fa-2xl fs-1"></i>
+                                    </div>
                                     @if (SignInManager.IsSignedIn(User))
                                     {
                                         <span>@UserManager.GetUserName(User)!</span>
                                     }
                                 </a>
                             </li>
-                            <li class="nav-item dropdown align-items-center gap-2 active">
-                                <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Teacher
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-white">
-                                    <a class="dropdown-item link-underline link-underline-opacity-0" aria-current="page" href="/teacher/entry">
-                                        <i class="fa-solid fa-plus fa-lg"></i>
-                                        Entry
-                                    </a>
-                                    <a class="dropdown-item link-underline link-underline-opacity-0" aria-current="page" href="/teacher/list">
-                                        <i class="fa-solid fa-list"></i>
-                                        List
-                                    </a>
-
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown align-items-center gap-2 active">
-                                <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Attendance
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-white">
-                                    <a class="dropdown-item link-underline link-underline-opacity-0" aria-current="page" href="/attendance/entry">
-                                        <i class="fa-solid fa-plus fa-lg"></i>
-                                        Entry
-                                    </a>
-                                    <a class="dropdown-item link-underline link-underline-opacity-0" aria-current="page" href="/attendance/list">
-                                        <i class="fa-solid fa-list"></i>
-                                        List
-                                    </a>
-
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown align-items-center gap-2 active">
-                                <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Course
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-white">
-                                    <a class="dropdown-item link-underline link-underline-opacity-0" aria-current="page" href="/course/entry">
-                                        <i class="fa-solid fa-plus fa-lg"></i>
-                                        Entry
-                                    </a>
-                                    <a class="dropdown-item link-underline link-underline-opacity-0" aria-current="page" href="/course/list">
-                                        <i class="fa-solid fa-list"></i>
-                                        List
-                                    </a>
-
-                                </ul>
-                            </li>
-
-                            <li class="nav-item dropdown align-items-center gap-2 active">
-                                <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Exam
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-white">
-                                    <a class="dropdown-item link-underline link-underline-opacity-0" aria-current="page" href="/exam/entry">
-                                        <i class="fa-solid fa-plus fa-lg"></i>
-                                        Entry
-                                    </a>
-                                    <a class="dropdown-item link-underline link-underline-opacity-0" aria-current="page" href="/exam/list">
-                                        <i class="fa-solid fa-list"></i>
-                                        List
-                                    </a>
-
-                                </ul>
-                            </li>
+                            <hr class="my-3">
                             <li class="nav-item dropdown align-items-center gap-2 active">
                                 <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                     Exam Result
@@ -357,103 +293,18 @@
                                         <i class="fa-solid fa-plus fa-lg"></i>
                                         Entry
                                     </a>
-                                    <a class="dropdown-item link-underline link-underline-opacity-0" aria-current="page" href="/examresult/list">
-                                        <i class="fa-solid fa-list"></i>
-                                        List
-                                    </a>
-
                                 </ul>
                             </li>
-                            <li class="nav-item dropdown align-items-center gap-2 active">
-                                <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Chapter
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-white">
-                                    <a class="dropdown-item link-underline link-underline-opacity-0" aria-current="page" href="/chapter/entry">
-                                        <i class="fa-solid fa-plus fa-lg"></i>
-                                        Entry
-                                    </a>
-                                    <a class="dropdown-item link-underline link-underline-opacity-0" aria-current="page" href="/chapter/list">
-                                        <i class="fa-solid fa-list"></i>
-                                        List
-                                    </a>
-
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown align-items-center gap-2 active">
-                                <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Batch
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-white">
-                                    <a class="dropdown-item link-underline link-underline-opacity-0" aria-current="page" href="/batch/entry">
-                                        <i class="fa-solid fa-plus fa-lg"></i>
-                                        Entry
-                                    </a>
-                                    <a class="dropdown-item link-underline link-underline-opacity-0" aria-current="page" href="/batch/list">
-                                        <i class="fa-solid fa-list"></i>
-                                        List
-                                    </a>
-
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown align-items-center gap-2 active">
-                                <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Assignment
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-white">
-                                    <a class="dropdown-item link-underline link-underline-opacity-0" aria-current="page" href="/assignment/entry">
-                                        <i class="fa-solid fa-plus fa-lg"></i>
-                                        Entry
-                                    </a>
-                                    <a class="dropdown-item link-underline link-underline-opacity-0" aria-current="page" href="/assignment/list">
-                                        <i class="fa-solid fa-list"></i>
-                                        List
-                                    </a>
-
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown align-items-center gap-2 active">
-                                <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Teacher Course
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-white">
-                                    <a class="dropdown-item link-underline link-underline-opacity-0" aria-current="page" href="/teachercourse/entry">
-                                        <i class="fa-solid fa-plus fa-lg"></i>
-                                        Entry
-                                    </a>
-                                    <a class="dropdown-item link-underline link-underline-opacity-0" aria-current="page" href="/teachercourse/list">
-                                        <i class="fa-solid fa-list"></i>
-                                        List
-                                    </a>
-
-                                </ul>
-                            </li>
-                            @* <ul>
-                            <li class="nav-item">
-                            <a class="nav-link d-flex align-items-center gap-2 ms-4" href="/teachercourse/entry">
-                            <i class="fa-solid fa-square-poll-horizontal fa-xl" style="color: #000031;"></i>
-                            Teacher Course
-                            </a>
-                            </li>
-                            <li class="nav-item">
-                            <a class="nav-link d-flex align-items-center gap-2 ms-4" href="/teachercourse/entry">
-                            <i class="fa-solid fa-square-poll-horizontal fa-xl" style="color: #000031;"></i>
-                            list
-                            </a>
-                            </li>
-                            </ul> *@
                         </ul>
 
 
                         <hr class="my-3">
 
-                        <ul class="nav flex-column mb-auto">
+                        <ul class="nav flex-column mx-auto mb-auto">
                             <li class="nav-item">
                                 <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                                     <button id="logout" type="submit" class="nav-link btn btn-link border-0">
-                                        <svg class="bi">
-                                            <use xlink:href="#door-closed" />
-                                        </svg>
+                                        <i class="fa-solid fa-right-from-bracket me-2"></i>
                                         Sign out
                                     </button>
                                 </form>

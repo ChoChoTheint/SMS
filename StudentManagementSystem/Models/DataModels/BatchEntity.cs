@@ -9,5 +9,8 @@ namespace StudentManagementSystem.Models.DataModels
         public string Description { get; set; }
         [ForeignKey(nameof(CourseId))]
         public string CourseId { get; set; }
+        public DateTime OpeningDate { get; set; }
+        public string DurationInHour { get; set; }
+        public string DurationInMonth { get; set; }
     }
 }

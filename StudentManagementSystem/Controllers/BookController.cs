@@ -52,19 +52,19 @@ namespace StudentManagementSystem.Controllers
                 if (ModelState.IsValid)
                 {
                     // Define the path to the uploads folder
-                    var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "books");
+                    var uploadFolder = Path.Combine("wwwroot", "books");
 
                     // Ensure the directory exists
-                    if (!Directory.Exists(uploadsFolder))
+                    if (!Directory.Exists(uploadFolder))
                     {
-                        Directory.CreateDirectory(uploadsFolder);
+                        Directory.CreateDirectory(uploadFolder);
                     }
 
                     // Generate a unique file name
                     var uniqueFileName = Guid.NewGuid().ToString() + "_" + ui.File.FileName;
 
                     // Define the full path to the file
-                    var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    var filePath = Path.Combine(uploadFolder, uniqueFileName);
 
                     // Save the uploaded file to the specified location
                     using (var fileStream = new FileStream(filePath, FileMode.Create))
@@ -123,7 +123,7 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult DownloadFile(string filePath)
         {
-            string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "books");
+            string uploadFolder = Path.Combine("wwwroot", "books");
 
             var memory = FilePath(filePath, uploadFolder);
             return File(memory.ToArray(), "application/pdf", filePath);
@@ -154,16 +154,18 @@ namespace StudentManagementSystem.Controllers
             IList<BookViewModel> bookList = (from book in _dbContext.Books
                                              join course in _dbContext.Courses
                                              on book.CourseId equals course.Id
-                                             join batch in _dbContext.Batches
-                                             on book.BatchId equals batch.Id
+                                             join video in _dbContext.Videos
+                                             on course.Id equals video.CourseId
+                                             
+
                                              select new BookViewModel
                                              {
                                                  Id = book.Id,
                                                  Name = book.Name,
                                                  Description = book.Description,
-                                                 URL = book.URL,
                                                  CourseId = course.Name,
-                                                 BatchId = batch.Name
+                                                 BookURL = book.URL,
+                                                 VideoURL = video.URL,
                                              }).ToList();
             return View(bookList);
         }
