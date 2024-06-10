@@ -6,25 +6,25 @@ namespace StudentManagementSystem.Models.ViewModels
     public class StudentViewModel
     {
         public string Id { get; set; }
-        [Required(ErrorMessage ="name is requied")]
+        [Required(ErrorMessage ="Name is requied")]
         public string Name { get; set; }
-        [Required(ErrorMessage = "email is requied")]
+        [Required(ErrorMessage = "Email is requied")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
-        [Required(ErrorMessage = "phone is requied")]
+        [Required(ErrorMessage = "Phone is requied")]
         public string Phone { get; set; }
-        [Required(ErrorMessage = "address is requied")]
+        [Required(ErrorMessage = "Address is requied")]
         public string Address { get; set; }
-        [Required(ErrorMessage = "nrc is requied")]
+        [Required(ErrorMessage = "NRC is requied")]
         public string NRC { get; set; }
-        [Required(ErrorMessage = "date of birth is requied")]
+        [Required(ErrorMessage = "Date of birth is requied")]
         [DataType(DataType.Date)]
         public DateTime DOB { get; set; }
-        [Required(ErrorMessage = "father name is requied")]
+        [Required(ErrorMessage = "Father name is requied")]
         public string FatherName { get; set; }
-        [Required(ErrorMessage = "gender is requied")]
+        [Required(ErrorMessage = "Gender is requied")]
         public string Gender { get; set; }
-        [Required(ErrorMessage = "batch is requied")]
+        [Required(ErrorMessage = "Batch Name is requied")]
         public string BatchId { get; set; }
         public string CourseId { get; set; }
         public string AspNetUsersId { get; set; }

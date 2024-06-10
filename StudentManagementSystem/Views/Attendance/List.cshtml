@@ -69,6 +69,7 @@
                                 @if (!User.IsInRole("Teacher"))
                                 {
                                     <th>Action</th>
+                                    
                                 }
                             </tr>
                         </thead>
@@ -91,31 +92,18 @@
                                     <td class="dropdown">
                                         <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action</button>
                                         <ul class="dropdown-menu">
-                                            <li class="dropdown-item">
+                                            <li class="dropdown-item" data-placement="top" data-toggle="tooltip" title="Edit">
                                                 <a class="btn btn-primary btn-xs" data-title="Edit" href="/attendance/edit?Id=@list.Id"><span class="glyphicon glyphicon-pencil"></span></a>
                                             </li>
                                              @if (User.IsInRole("Admin"))
                                              {
-                                                <li class="dropdown-item">
+                                                <li class="dropdown-item" data-placement="top" data-toggle="tooltip" title="Delete">
                                                     <a class="btn btn-danger btn-xs" data-title="Delete" data-bs-toggle="offcanvas" data-bs-target="#delete"><span class="glyphicon glyphicon-trash"></span></a>
                                                 </li>
                                              }
                                         </ul>
                                     </td>
-
-                                    <div class="offcanvas offcanvas-top mx-auto h-50" tabindex="-1" id="delete" aria-labelledby="offcanvasExampleLabel" style="width: 500px;">
-                                        <div class="offcanvas-header">
-                                            <h5 class="h2 text-warning offcanvas-title" id="offcanvasExampleLabel">Attention</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                                        </div>
-                                        <div class="offcanvas-body">
-                                            <p class="alert text-danger">Are You Sure Want To Delete The Data?</p>
-                                            <div class="offcanvasbottom ">
-                                                <a asp-controller="Attendance" asp-action="Delete" asp-route-id="@list.Id" class="btn btn-danger w-100">Yes</a>
-                                                <a type="button" class="btn btn-secondary w-100 my-3" data-bs-dismiss="offcanvas" aria-label="Close">No</a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
                                 }
                                 </tr>
                                 index++;

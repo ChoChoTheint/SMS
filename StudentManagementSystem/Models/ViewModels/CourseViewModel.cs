@@ -5,10 +5,10 @@ namespace StudentManagementSystem.Models.ViewModels
     public class CourseViewModel
     {
         public string Id { get; set; }
-        [Required(ErrorMessage ="name is required")]
+        [Required(ErrorMessage ="Name is required")]
         public string Name { get; set; }
-        [Required(ErrorMessage = "description is required")]
+        [Required(ErrorMessage = "Description is required")]
         public string Description { get; set; }
-       
+        
     }
 }

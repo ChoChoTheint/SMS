@@ -34,8 +34,6 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult Entry(AdminViewModel ui)
         {
-            
-
             try
             {
                 if (ModelState.IsValid)
@@ -62,8 +60,6 @@ namespace StudentManagementSystem.Controllers
                 }
                 else
                 {
-                    //Reload AspUserId and Id to populate the dropdown again
-
                     var aspUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                     ViewBag.AspUserId = aspUserId;
 

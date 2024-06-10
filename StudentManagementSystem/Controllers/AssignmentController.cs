@@ -50,7 +50,6 @@ namespace StudentManagementSystem.Controllers
             return View();
         }
 
-
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Entry(AssignmentViewModel ui)
@@ -148,24 +147,26 @@ namespace StudentManagementSystem.Controllers
        
         private MemoryStream FilePath(string fileName)
         {
-            string videoPath = Path.Combine("wwwroot", "files", $"{fileName}.pdf");
+            string uploadFolder = Path.Combine("wwwroot", "files", $"{fileName}.pdf");
             //string projectPath = Directory.GetCurrentDirectory();
 
+            //var path = Path.Combine(Directory.GetCurrentDirectory(), uploadFolder, fileName);
 
 
-            var path = Path.Combine(Directory.GetCurrentDirectory(), videoPath);
+            var path = Path.Combine(Directory.GetCurrentDirectory(), uploadFolder);
             var memeory = new MemoryStream();
 
             if (System.IO.File.Exists(path))
             {
                 var net = new System.Net.WebClient();
-                var data = net.DownloadData(path);
+                var data = net.DownloadData(fileName);
                 var content = new System.IO.MemoryStream(data);
                 memeory = content;
             }
             memeory.Position = 0;
             return memeory;
         }
+        
 
 
        // public class VideoService
@@ -184,7 +185,6 @@ namespace StudentManagementSystem.Controllers
             //   return videoPath;
            // }
         //}
-        [Authorize]
         public IActionResult List()
         {
             
@@ -214,19 +214,21 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                var deleteAssignmentData = _dbContext.Assignments.Where(w => w.Id == Id).FirstOrDefault();
-                if(deleteAssignmentData is not null)
+                var deleteAssignmentData = _dbContext.Assignments.Find(Id);
+
+                if (deleteAssignmentData is not null)
                 {
-                    _dbContext.Assignments.Remove(deleteAssignmentData);
+                    _dbContext.Remove(deleteAssignmentData);
                     _dbContext.SaveChanges();
                 }
-                TempData["info"] = "delete successfully the record";
+                TempData["info"] = "delete successfully the data";
             }
             catch (Exception e)
             {
-                TempData["info"] = "error while deleting the record";
+                TempData["info"] = "error while deleting the data";
             }
-            return RedirectToAction("list");
+            return RedirectToAction("List");
+            
         }
 
         [Authorize]

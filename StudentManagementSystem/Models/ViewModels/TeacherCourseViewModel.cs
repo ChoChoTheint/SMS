@@ -6,9 +6,9 @@ namespace StudentManagementSystem.Models.ViewModels
     public class TeacherCourseViewModel
     {
         public string Id { get; set; }
-        [Required(ErrorMessage ="teacher is required")]
+        [Required(ErrorMessage ="Teacher is required")]
         public string TeacherId { get; set; }
-        [Required(ErrorMessage = "course is required")]
+        [Required(ErrorMessage = "Course is required")]
         public string CourseId { get; set; }
 
         public string BatchInfo { get; set; }
