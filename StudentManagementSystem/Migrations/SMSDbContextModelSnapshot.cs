@@ -330,8 +330,9 @@ namespace StudentManagementSystem.Migrations
                     b.Property<bool>("IsInActive")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsLeave")
-                        .HasColumnType("bit");
+                    b.Property<string>("IsLeave")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime2");
@@ -364,6 +365,14 @@ namespace StudentManagementSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("DurationInHour")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DurationInMonth")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsInActive")
                         .HasColumnType("bit");
 
@@ -373,6 +382,9 @@ namespace StudentManagementSystem.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("OpeningDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -469,14 +481,6 @@ namespace StudentManagementSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DurationInHour")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DurationInMonth")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsInActive")
                         .HasColumnType("bit");
 
@@ -486,9 +490,6 @@ namespace StudentManagementSystem.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("OpeningDate")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

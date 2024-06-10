@@ -19,5 +19,6 @@ namespace StudentManagementSystem.Models.ViewModels
         public string IsLeave { get; set; }
         [Required(ErrorMessage = "student is required")]
         public string StudentId { get; set; }
+        public string BatchInfo { get; set; }
     }
 }

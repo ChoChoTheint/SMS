@@ -19,11 +19,17 @@ namespace StudentManagementSystem.Controllers
         {
             ViewBag.Id = Guid.NewGuid().ToString();
 
-            var students = _dbContext.Students.Select(s => new StudentViewModel
-            {
-                Id = s.Id,
-                Name = s.Name,
-            }).OrderBy(o => o.Name).ToList();
+            var students = (from student in _dbContext.Students
+                            join batch in _dbContext.Batches
+                            on student.BatchId equals batch.Id
+                            join course in _dbContext.Courses
+                            on batch.CourseId equals course.Id
+
+                            select new StudentViewModel
+                            {
+                                Id = student.Id,
+                                Name = student.Name+"/ "+batch.Name+"/ "+course.Name
+                            }).OrderBy(o => o.Name).ToList();
             ViewBag.Student = students;
 
             return View();
@@ -56,11 +62,17 @@ namespace StudentManagementSystem.Controllers
 
                     ViewBag.Id = Guid.NewGuid().ToString();
 
-                    var students = _dbContext.Students.Select(s => new StudentViewModel
-                    {
-                        Id = s.Id,
-                        Name = s.Name,
-                    }).OrderBy(o => o.Name).ToList();
+                    var students = (from student in _dbContext.Students
+                                    join batch in _dbContext.Batches
+                                    on student.BatchId equals batch.Id
+                                    join course in _dbContext.Courses
+                                    on batch.CourseId equals course.Id
+
+                                    select new StudentViewModel
+                                    {
+                                        Id = student.Id,
+                                        Name = student.Name + "/ " + batch.Name + "/ " + course.Name
+                                    }).OrderBy(o => o.Name).ToList();
                     ViewBag.Student = students;
 
                     return View(ui);
@@ -81,12 +93,16 @@ namespace StudentManagementSystem.Controllers
                                                       on examResult.StudentId equals student.Id
                                                       join batch in _dbContext.Batches
                                                       on student.BatchId equals batch.Id
+                                                      join course in _dbContext.Courses
+                                                      on batch.CourseId equals course.Id
+                                                         
+                                                         where examResult.StudentId == student.Id
 
                                                       select new ExamResultViewModel
                                                       {
                                                           Id = examResult.Id,
                                                           Mark = examResult.Mark,
-                                                          StudentId = student.Name+"/ "+batch.Name
+                                                          StudentId = student.Name+"/ "+batch.Name+"/ "+course.Name,
                                                       }).ToList();
             return View(examResultList);
         }
@@ -121,11 +137,17 @@ namespace StudentManagementSystem.Controllers
                 StudentId = s.StudentId
             }).FirstOrDefault();
 
-            var students = _dbContext.Students.Select(s => new StudentViewModel
-            {
-                Id = s.Id,
-                Name = s.Name,
-            }).OrderBy(o => o.Name).ToList();
+            var students = (from student in _dbContext.Students
+                            join batch in _dbContext.Batches
+                            on student.BatchId equals batch.Id
+                            join course in _dbContext.Courses
+                            on batch.CourseId equals course.Id
+
+                            select new StudentViewModel
+                            {
+                                Id = student.Id,
+                                Name = student.Name + "/ " + batch.Name + "/ " + course.Name
+                            }).OrderBy(o => o.Name).ToList();
             ViewBag.Student = students;
 
             return View(editExamResultData);
@@ -155,11 +177,17 @@ namespace StudentManagementSystem.Controllers
                 }
                 else
                 {
-                    var students = _dbContext.Students.Select(s => new StudentViewModel
-                    {
-                        Id = s.Id,
-                        Name = s.Name,
-                    }).OrderBy(o => o.Name).ToList();
+                    var students = (from student in _dbContext.Students
+                                    join batch in _dbContext.Batches
+                                    on student.BatchId equals batch.Id
+                                    join course in _dbContext.Courses
+                                    on batch.CourseId equals course.Id
+
+                                    select new StudentViewModel
+                                    {
+                                        Id = student.Id,
+                                        Name = student.Name + "/ " + batch.Name + "/ " + course.Name
+                                    }).OrderBy(o => o.Name).ToList();
                     ViewBag.Student = students;
 
                     return View("Edit", model: ui);

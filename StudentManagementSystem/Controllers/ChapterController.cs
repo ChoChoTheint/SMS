@@ -140,6 +140,29 @@ namespace StudentManagementSystem.Controllers
             return View(chapterList);
         }
 
+        public IActionResult Detail(string Id)
+        {
+            IList<ChapterViewModel> chapterDetail = (from chapter in _dbContext.Chapters
+                                                     join batch in _dbContext.Batches
+                                                     on chapter.BatchId equals batch.Id
+                                                     join book in _dbContext.Books
+                                                     on chapter.BookId equals book.Id
+                                                     join video in _dbContext.Videos
+                                                     on chapter.VideoId equals video.Id
+                                                     where chapter.BatchId == Id
+
+                                                     select new ChapterViewModel
+                                                     {
+                                                         Id = chapter.Id,
+                                                         Name = chapter.Name,
+                                                         Description = chapter.Description,
+                                                         BatchId = batch.Name,
+                                                         BookId = book.URL,
+                                                         VideoId = video.URL,
+                                                     }).ToList();
+            return View(chapterDetail);
+        }
+
         [Authorize]
         public IActionResult Delete(string Id)
         {

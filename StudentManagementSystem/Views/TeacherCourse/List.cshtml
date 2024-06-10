@@ -23,16 +23,16 @@
     }
 }
     <div class="container">
-
-            <div class="row mt-5">
+        <h1 class="h3 fw-bold">Teacher: </h1>
+        <div class="row mt-5 border-bottom">
                 @foreach (var detail in Model)
                 {
 
-                    <div class="col-lg-4 mb-4">
+                    <div class="col-lg-4 mb-5">
                         <div class="card">
                             <div class="card-body">
-                                <h1 class="h5"><span class="fw-bold">Name: </span>@detail.TeacherId</h1>
-                                <div class="d-flex gap-4">
+                            <h1 class="h3 border-bottom border-danger"><span class="fw-bold">Name: </span>@detail.TeacherId</h1>
+                            <div class="gap-4 border-bottom border-danger pb-3">
 
                                     <p class="card-text"><span class="fw-bold">Course: </span>@detail.CourseId</p>
                                     <p class="card-text"><span class="fw-bold">Batch: </span>@detail.BatchInfo</p>
@@ -41,7 +41,6 @@
                         </div>
                     </div>
                 }
-                 <hr class="border border-danger my-4 w-75 mx-auto">
             </div>
 
             <div class="table-responsive">

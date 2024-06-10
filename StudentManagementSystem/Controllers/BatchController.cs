@@ -47,6 +47,9 @@ namespace StudentManagementSystem.Controllers
                         Name = ui.Name,
                         Description = ui.Description,
                         CourseId = ui.CourseId,
+                        OpeningDate = ui.OpeningDate,
+                        DurationInHour = ui.DurationInHour,
+                        DurationInMonth = ui.DurationInMonth,
                     };
                     _dbContext.Batches.Add(batchData);
                     _dbContext.SaveChanges();
@@ -82,6 +85,8 @@ namespace StudentManagementSystem.Controllers
             IList<BatchViewModel> batchList = (from batch in _dbContext.Batches
                                                join course in _dbContext.Courses
                                                on batch.CourseId equals course.Id
+                                               
+                                               
 
                                                select new BatchViewModel
                                                {
@@ -89,8 +94,34 @@ namespace StudentManagementSystem.Controllers
                                                    Name = batch.Name,
                                                    Description = batch.Description,
                                                    CourseId = course.Name,
+                                                   OpeningDate = batch.OpeningDate,
+                                                   DurationInHour = batch.DurationInHour,
+                                                   DurationInMonth = batch.DurationInMonth,
                                                }).ToList();
+
+            
             return View(batchList);
+        }
+
+        [Authorize]
+        public IActionResult Detail(string Id)
+        {
+            IList<BatchViewModel> batchDetail = (from batch in _dbContext.Batches
+                                                 join course in _dbContext.Courses
+                                                 on batch.CourseId equals course.Id
+                                                 where batch.CourseId == Id
+
+                                                 select new BatchViewModel
+                                                 {
+                                                     Id = batch.Id,
+                                                     Name = batch.Name,
+                                                     Description = batch.Description,
+                                                     CourseId = course.Name,
+                                                     OpeningDate = batch.OpeningDate,
+                                                     DurationInHour = batch.DurationInHour,
+                                                     DurationInMonth = batch.DurationInMonth,
+                                                 }).ToList();
+            return View(batchDetail);
         }
 
         [Authorize]
@@ -123,6 +154,9 @@ namespace StudentManagementSystem.Controllers
                 Name = s.Name,
                 Description = s.Description,
                 CourseId = s.CourseId,
+                OpeningDate = s.OpeningDate,
+                DurationInHour = s.DurationInHour,
+                DurationInMonth = s.DurationInMonth,
             }).FirstOrDefault();
 
             var courses = _dbContext.Courses.Select(s => new CourseViewModel
@@ -153,6 +187,9 @@ namespace StudentManagementSystem.Controllers
                         Name = ui.Name,
                         Description = ui.Description,
                         CourseId = ui.CourseId,
+                        OpeningDate = ui.OpeningDate,
+                        DurationInHour = ui.DurationInHour,
+                        DurationInMonth = ui.DurationInMonth,
                     };
 
                     _dbContext.Batches.Update(updateBatchData);

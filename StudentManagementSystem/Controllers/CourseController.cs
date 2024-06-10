@@ -39,9 +39,7 @@ namespace StudentManagementSystem.Controllers
                         IsInActive = true,
                         Name = ui.Name,
                         Description = ui.Description,
-                        OpeningDate = ui.OpeningDate,
-                        DurationInHour = ui.DurationInHour,
-                        DurationInMonth = ui.DurationInMonth,
+                        
                     };
                     _dbContext.Courses.Add(courseData);
                     _dbContext.SaveChanges();
@@ -71,9 +69,7 @@ namespace StudentManagementSystem.Controllers
                 Id = s.Id,
                 Name = s.Name,
                 Description = s.Description,
-                OpeningDate = s.OpeningDate,
-                DurationInHour = s.DurationInHour,
-                DurationInMonth = s.DurationInMonth,
+                
             }).ToList();
 
             return View(courseList);
@@ -108,9 +104,7 @@ namespace StudentManagementSystem.Controllers
                     Id = s.Id,
                     Name = s.Name,
                     Description = s.Description,
-                    OpeningDate = s.OpeningDate,
-                    DurationInHour = s.DurationInHour,
-                    DurationInMonth = s.DurationInMonth,
+                    
                 }).FirstOrDefault();
 
                
@@ -134,9 +128,7 @@ namespace StudentManagementSystem.Controllers
                         IsInActive = true,
                         Name = ui.Name,
                         Description = ui.Description,
-                        OpeningDate = ui.OpeningDate,
-                        DurationInHour = ui.DurationInHour,
-                        DurationInMonth = ui.DurationInMonth,
+                        
                     };
 
                     _dbContext.Courses.Update(updateCourseData);
