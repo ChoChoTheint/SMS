@@ -58,8 +58,8 @@
                                 <td>@index</td>
                                 <td>@list.StudentId</td>
                                 <td>@list.AttendanceDate.ToString("dd-MM-yyyy")</td>
-                                <td>@list.InTime.ToString("hh-mm-ss")</td>
-                                <td>@list.OutTime.ToString("hh-mm-ss")</td>
+                                <td>@list.InTime.ToString("hh:mm:ss tt")</td>
+                                <td>@list.OutTime.ToString("hh:mm:ss tt")</td>
                                 <td>@list.IsLeave</td>
                                 @if (User.IsInRole("Admin"))
                                 {

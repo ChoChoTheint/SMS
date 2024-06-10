@@ -66,7 +66,6 @@ namespace StudentManagementSystem.Controllers
             }
             return uniqueFileName;
         }
-      
 
         
        // private string UploadedFile(AssignmentViewModel model)
@@ -85,6 +84,7 @@ namespace StudentManagementSystem.Controllers
           //  }
           //  return uniqueFileName;
       //  }
+
 
 
         [HttpPost]
@@ -170,32 +170,45 @@ namespace StudentManagementSystem.Controllers
 
         [Authorize]
 
-        public IActionResult DownloadFile(string filePath)
-        {
-            string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
 
-            var memory = FilePath(filePath, uploadFolder);
-            return File(memory.ToArray(), "application/pdf", filePath);
-        }
 
-        [Authorize]
-        private MemoryStream FilePath(string fileName, string uploadFolder)
-        {
 
-            var path = Path.Combine(Directory.GetCurrentDirectory(), uploadFolder, fileName);
-            var memeory = new MemoryStream();
+        //public IActionResult DownloadFile(string fileName)
 
-            if (System.IO.File.Exists(path))
-            {
-                var net = new System.Net.WebClient();
-                var data = net.DownloadData(fileName);
-                var content = new System.IO.MemoryStream(data);
-                memeory = content;
-            }
-            memeory.Position = 0;
-            return memeory;
-        }
+        //{
+        //    string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
 
+        //    var memory = FilePath(filePath, uploadFolder);
+        //    return File(memory.ToArray(), "application/pdf", filePath);
+        //}
+
+
+        //[Authorize]
+      
+        //private MemoryStream FilePath(string fileName)
+
+        //{
+
+
+        //    var path = Path.Combine(Directory.GetCurrentDirectory(), uploadFolder, fileName);
+
+
+
+        //    var path = Path.Combine(Directory.GetCurrentDirectory(), videoPath);
+
+
+        //    var memeory = new MemoryStream();
+
+        //    if (System.IO.File.Exists(path))
+        //    {
+        //        var net = new System.Net.WebClient();
+        //        var data = net.DownloadData(fileName);
+        //        var content = new System.IO.MemoryStream(data);
+        //        memeory = content;
+        //    }
+        //    memeory.Position = 0;
+        //    return memeory;
+        //}
 
         [Authorize]
         public IActionResult List()

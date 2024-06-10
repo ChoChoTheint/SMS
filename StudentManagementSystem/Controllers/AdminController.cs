@@ -153,7 +153,7 @@ namespace StudentManagementSystem.Controllers
                         Name = ui.Name,
                         Email = ui.Email,
                         Phone = ui.Phone,
-                        Address = ui.Address,ှ
+                        Address = ui.Address,
                         NRC = ui.NRC,
                         DOB = ui.DOB,
                         FatherName = ui.FatherName,

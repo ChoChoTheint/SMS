@@ -161,6 +161,16 @@ namespace StudentManagementSystem.Controllers
             }).FirstOrDefault();
 
 
+            //var batches = (from batch in _dbContext.Batches
+            //               join course in _dbContext.Courses
+            //               on batch.CourseId equals course.Id
+
+            //               select new BatchViewModel
+            //               {
+            //                   Id = batch.Id,
+            //                   Name = batch.Name + "/ " + course.Name
+            //               }).OrderBy(o => o.Name).ToList();
+            //ViewBag.Batch = batches;
             var batches = (from batch in _dbContext.Batches
                            join course in _dbContext.Courses
                            on batch.CourseId equals course.Id
@@ -207,6 +217,16 @@ namespace StudentManagementSystem.Controllers
                 }
                 else
                 {
+                    //var batches = (from batch in _dbContext.Batches
+                    //               join course in _dbContext.Courses
+                    //               on batch.CourseId equals course.Id
+
+                    //               select new BatchViewModel
+                    //               {
+                    //                   Id = batch.Id,
+                    //                   Name = batch.Name + "/ " + course.Name
+                    //               }).OrderBy(o => o.Name).ToList();
+                    //ViewBag.Batch = batches;
                     var batches = (from batch in _dbContext.Batches
                                    join course in _dbContext.Courses
                                    on batch.CourseId equals course.Id
@@ -217,7 +237,6 @@ namespace StudentManagementSystem.Controllers
                                        Name = batch.Name + "/ " + course.Name
                                    }).OrderBy(o => o.Name).ToList();
                     ViewBag.Batch = batches;
-
                     return View("Edit", model: ui);
                 }
             }

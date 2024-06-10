@@ -19,8 +19,6 @@ namespace StudentManagementSystem.Controllers
         public IActionResult Entry()
         {
             ViewBag.Id = Guid.NewGuid().ToString();
-
-
             var students = (from student in _dbContext.Students
                             join batch in _dbContext.Batches
                            on student.BatchId equals batch.Id
@@ -31,9 +29,6 @@ namespace StudentManagementSystem.Controllers
                                Name = student.Name + "/ " + batch.Name
                            }).OrderBy(o => o.Name).ToList();
             ViewBag.Student = students;
-
-            
-
             return View();
         }
 
@@ -58,14 +53,12 @@ namespace StudentManagementSystem.Controllers
                     };
                     _dbContext.Attendances.Add(attendanceData);
                     _dbContext.SaveChanges();
-                    TempData["info"] = "save successfully the record";
+                    TempData["info"] = "save successfully data";
                 }
                 else
                 {
-                    //Reload students to populate the dropdown again
 
                     ViewBag.Id = Guid.NewGuid().ToString();
-
                     var students = (from student in _dbContext.Students
                                     join batch in _dbContext.Batches
                                    on student.BatchId equals batch.Id
@@ -76,7 +69,6 @@ namespace StudentManagementSystem.Controllers
                                         Name = student.Name + "/ " + batch.Name
                                     }).OrderBy(o => o.Name).ToList();
                     ViewBag.Student = students;
-
                     return View(ui);
                 }
             }
