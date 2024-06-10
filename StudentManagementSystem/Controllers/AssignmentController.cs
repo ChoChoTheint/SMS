@@ -50,6 +50,25 @@ namespace StudentManagementSystem.Controllers
             return View();
         }
 
+        [Authorize]
+
+        private string UploadedFile(AssignmentViewModel model)
+        {
+            string uniqueFileName = null;
+
+            if (model.File != null)
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.File.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    model.File.CopyTo(fileStream);
+                }
+            }
+            return uniqueFileName;
+        }
+      
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Entry(AssignmentViewModel ui)
@@ -154,6 +173,11 @@ namespace StudentManagementSystem.Controllers
 
 
             var path = Path.Combine(Directory.GetCurrentDirectory(), uploadFolder);
+
+          //  var path = Path.Combine(Directory.GetCurrentDirectory(), uploadFolder, fileName);
+
+
+
             var memeory = new MemoryStream();
 
             if (System.IO.File.Exists(path))
@@ -185,6 +209,8 @@ namespace StudentManagementSystem.Controllers
             //   return videoPath;
            // }
         //}
+
+        [Authorize]
         public IActionResult List()
         {
             

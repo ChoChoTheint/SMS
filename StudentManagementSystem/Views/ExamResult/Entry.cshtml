@@ -13,12 +13,6 @@
     <form asp-controller="ExamResult" asp-action="Entry" method="post" enctype="multipart/form-data">
         <input asp-for="Id" value="@ViewBag.Id" hidden />
         <div class="mb-3">
-            <label asp-for="Mark" class="form-label">Mark</label>
-            <input type="number" asp-for="Mark" class="form-control" placeholder="enter mark..." />
-            <span asp-validation-for="Mark" class="text-danger"></span>
-        </div>
-
-        <div class="mb-3">
             <label asp-for="StudentId" class="form-label">Student</label>
             <select asp-for="StudentId" class="form-select">
                 <option value="" selected>---choose option---</option>
@@ -29,7 +23,11 @@
             </select>
             <span asp-validation-for="StudentId" class="text-danger"></span>
         </div>
-        
+        <div class="mb-3">
+            <label asp-for="Mark" class="form-label">Mark</label>
+            <input type="number" asp-for="Mark" class="form-control" placeholder="Enter mark..." />
+            <span asp-validation-for="Mark" class="text-danger"></span>
+        </div>
         <div class="mb-3">
             <button class="btn btn-primary text-white" style="border-radius: 10px 0 10px 0;">Submit</button>
             <button class="btn btn-secondary text-white" style="border-radius: 10px 0 10px 0;" type="reset">Cancel</button>
