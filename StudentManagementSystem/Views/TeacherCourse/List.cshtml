@@ -72,14 +72,14 @@
                                 <td>@list.CourseId</td>
                                 @if (User.IsInRole("Admin"))
                                 {
-<<<<<<< HEAD
+
                                     <td><p data-placement="top" data-toggle="tooltip" title="Edit"><a class="btn btn-primary btn-xs" data-title="Edit" href="/teachercourse/edit?Id=@list.Id"><span class="glyphicon glyphicon-pencil"></span></a></p></td>
                                     <td>
                                         <p data-placement="top" data-toggle="tooltip" title="Delete">
                                             <a class="btn btn-danger btn-xs" data-title="Delete" href="/teachercourse/delete?Id=@list.Id" onclick="return confirm('Are you sure to delete the record?')">Delete</a>
                                         </p>
                                     </td>
-=======
+
                                     <td class="dropdown">
                                         <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action</button>
                                         <ul class="dropdown-menu">
@@ -105,7 +105,7 @@
                                                 </div>
                                             </div>
                                         </div>
->>>>>>> origin/main
+
                                 }
                             </tr>
                         }
@@ -117,9 +117,6 @@
 
             </div>
     </div>
-
-
-
 
 <script>
     $(document).ready(function () {
