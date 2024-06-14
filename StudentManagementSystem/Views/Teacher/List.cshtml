@@ -46,8 +46,7 @@
                             <th>Father Name</th>
                                 @if (User.IsInRole("Admin"))
                                 {
-                                    <th>Edit</th>
-                                    <th>Delete</th>
+                                    <th>Action</th>
                                 }
                         </tr>
                     </thead>
@@ -71,11 +70,27 @@
                                 <td>@item.FatherName</td>
                                 @if (User.IsInRole("Admin"))
                                 {
+<<<<<<< HEAD
                                     <td><p data-placement="top" data-toggle="tooltip" title="Edit"><a href="/teacher/edit?Id=@item.Id"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit"><span class="glyphicon glyphicon-pencil"></span></button></a></p></td>
+=======
+>>>>>>> origin/main
                                     <td>
-                                        <p data-placement="top" data-toggle="tooltip" title="Delete">
-                                            <a class="btn btn-danger btn-xs" data-title="Delete" href="/teacher/delete?Id=@item.Id" onclick="return confirm('Are you sure to delete the record?')">Delete</a>
-                                        </p>
+                                        <div class="dropdown">
+                                            <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action</button>
+                                                <ul class="dropdown-menu">
+
+                                                    <li>
+                                                        <a type="button" class="dropdown-item btn text-info btn-xs mb-2" href="/teacher/edit?Id=@item.Id">
+                                                            <i class="fa-regular fa-pen-to-square"></i> Edit
+                                                        </a>
+                                                    </li>
+                                                    <li class="">
+                                                        <a type="button" class="dropdown-item btn text-danger btn-xs " asp-controller="Teacher" asp-action="Delete" asp-route-Id="@item.Id" onclick="return confirm('Are you sure want to delete the record?')">
+                                                            <i class="fa-regular fa-trash-can"></i> Delete
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                        </div>
                                     </td>
                                 }
                             </tr>

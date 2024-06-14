@@ -17,5 +17,8 @@ namespace StudentManagementSystem.Models.ViewModels
         public string CourseId { get; set; }
         [Required(ErrorMessage = "Batch is required")]
         public string BatchId { get; set; }
+        
+        public string BookURL { get; set; }
+        
     }
 }

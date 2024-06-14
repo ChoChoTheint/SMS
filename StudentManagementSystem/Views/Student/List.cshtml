@@ -6,8 +6,8 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
 
-@using StudentManagementSystem.Models.ViewModels;
-@model IList<StudentViewModel>
+
+@model IList<StudentManagementSystem.Models.ViewModels.StudentViewModel>
 @if (TempData["info"] != null)
 {
     @if (TempData["info"].ToString().Contains("delete"))
@@ -26,96 +26,85 @@
 
 
 <div class="container">
-    <div class="row mt-5">
-        @foreach (var detail in Model)
-        {
 
-            <div class="col-lg-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h1 class="h5 pb-2 border-bottom border-danger"><span class="fw-bold">Name: </span>@detail.Name</h1>
-                        <div class="d-flex gap-4 border-bottom border-danger">
-
-                            <p class="card-text"><span class="fw-bold">Course: </span>@detail.CourseId</p>
-                            <p class="card-text"><span class="fw-bold">Batch: </span>@detail.BatchId</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
-        <hr class="border border-danger my-4 w-75 mx-auto">
-    </div>
-
-    <div class="row">
+    @if (User.IsInRole("Admin"))
+    {
         
-        <h1 class="h4 mb-3">Student List</h1>
-        <div class="col-md-12">
-            <div class="table-responsive">
-                <table id="adminTable" class="table table-bordred table-striped">
+        <div class="row">
+        
+            <h1 class="h4 mb-3">Student List</h1>
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table id="adminTable" class="table table-bordred table-striped">
 
-                    <thead>
-                    <th scope="col">ID</th>
-                    <th scope="col">Name</th>
-                    <th>Email</th>
-                    <th>Address</th>
-                    <th>Phone</th>
-                    <th>DOB</th>
-                    <th>NRC</th>
-                    <th>Gender</th>
-                    <th>Father Name</th>
-                    <th>Batch</th>
-                        @if (User.IsInRole("Admin"))
-                        {
-                
-                            <th>Edit</th>
-                            <th>Delete</th>
-                        }
-                    </thead>
-                    <tbody>
-                        @{
-                            int index = 1;
-                        }
-                        @if(!User.IsInRole("Admin")&&User.IsInRole("Teacher")){
-
-                            <span class="text-warning">please today's attendance is required!</span>
-                        }
-
-                        @foreach (var item in Model)
-                        {   
-                            <tr>
-                                <td>@index</td>
-                                <td>@item.Name</td>
-                                <td>@item.Email</td>
-                                <td>@item.Address</td>
-                                <td>@item.Phone</td>
-                                <td>@item.DOB.ToString("dd-MM-yyyy")</td>
-                                <td>@item.NRC</td>
-                                <td>@item.Gender</td>
-                                <td>@item.FatherName</td>
-                                <td>@item.BatchId</td>
+                        <thead>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th>Email</th>
+                            <th>Address</th>
+                            <th>Phone</th>
+                            <th>DOB</th>
+                            <th>NRC</th>
+                            <th>Gender</th>
+                            <th>Father Name</th>
                                 @if (User.IsInRole("Admin"))
                                 {
-                        
-                                    <td>
-                                        <a href="/student/edit?Id=@item.Id" role="button" class="btn btn-primary btn-xs" data-title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>
-                                    </td>
-                                    <td>
-                                        <p data-placement="top" data-toggle="tooltip" title="Delete">
-                                            <a class="btn btn-danger btn-xs" data-title="Delete" href="/student/delete?Id=@item.Id" onclick="return confirm('Are you sure to delete the record?')">Delete</a>
-                                        </p>
-                                    </td>
+                
+                                    <th>Action</th>
                                 }
-                            </tr>
-                            index++;
-                        }
+                        </thead>
+                        <tbody>
+                            @{
+                                int index = 1;
+                            }
+                            @if(!User.IsInRole("Admin")&&User.IsInRole("Teacher")){
 
+                                <span class="text-warning">please today's attendance is required!</span>
+                            }
 
-                    </tbody>
+                            @foreach (var item in Model)
+                            {   
+                                <tr>
+                                    <td>@index</td>
+                                    <td>@item.Name</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.Address</td>
+                                    <td>@item.Phone</td>
+                                    <td>@item.DOB.ToString("dd-MM-yyyy")</td>
+                                    <td>@item.NRC</td>
+                                    <td>@item.Gender</td>
+                                    <td>@item.FatherName</td>
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="btn btn-white dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Action</button>
+                                                    <ul class="dropdown-menu">
 
-                </table>
+                                                        <li>
+                                                            <a type="button" class="dropdown-item btn text-info btn-xs mb-2" href="/student/edit?Id=@item.Id">
+                                                                <i class="fa-regular fa-pen-to-square"></i> Edit
+                                                            </a>
+                                                        </li>
+                                                        <li class="">
+                                                            <a type="button" class="dropdown-item btn text-danger btn-xs " asp-controller="Student" asp-action="Delete" asp-route-Id="@item.Id" onclick="return confirm('Are you sure want to delete the record?')">
+                                                                <i class="fa-regular fa-trash-can"></i> Delete
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                            </div>
+                                        </td>
+                                    }
+                                </tr>
+                                index++;
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
+    }
 </div>
 
 

@@ -2,9 +2,11 @@
     ViewData["Title"] = "Home Page";
 }
 
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 
-@using StudentManagementSystem.Models.ViewModels;
-@model IList<AttendanceViewModel>
+@model IList<AdminViewModel>
 @if (!User.Identity.IsAuthenticated)
 {
     <div class="text-center my-5">
@@ -18,294 +20,285 @@
         <a class="btn btn-secondary btn-lg" asp-area="Identity" asp-page="/Account/Register">Register</a>
     </div>
 }
-else if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-{
-    <div class="row pt-5">
+else if(User.IsInRole("Admin"))
+{ 
+        <div class="row">
+            <div class="mx-auto">
 
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-4 mb-3">
-                        <h1 class="h3">Teachers</h1>
-                        <div class="card">
-                            <div class="card-title ms-2 mt-2">Teacher List</div>
-                            <div class="card-body">
-                                <p>In here, you can see all the teacher's details in this school</p>
+                <div class="container">
+                    <div class="col bg-white sticky-top">
+                        <div class="ps-4 pt-2 d-flex align-items-center border-primary border-bottom" style="height: 70px;">
+                            <div>
+                                <h1 class="h5">Admin</h1>
+                                @if (SignInManager.IsSignedIn(User))
+                                {
+                                    <span style="color: #999999;">@UserManager.GetUserName(User)!</span>
+                                }
                             </div>
-                            <div class="card-footer">
-                                <a asp-controller="TeacherCourse" asp-action="List" class="btn btn-primary float-end">Details</a>
+                            <div class="ms-auto me-3 dropdown">
+                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-regular fa-circle-user fa-2xl"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    @foreach(var list in Model)
+                                    {
+                                        
+                                        <li class="dropdown-item">
+                                            <i class="fa-solid fa-gear me-2"></i>
+                                            <a href="/admin/edit?Id=@list.Id" class="link-secondary link-underline link-underline-opacity-0">Setting</a>
+                                        </li>
+                                    }
+
+                                    <li class="dropdown-item d-flex align-items-center">
+
+                                        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                            <button id="logout" type="submit" class="nav-link btn btn-link border-0">
+                                                <i class="fa-solid fa-right-from-bracket me-2"></i>
+                                                Sign out
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
-
                     </div>
-                    <div class="col-lg-4 mb-3">
-                        <h1 class="h3">Students</h1>
-                        <div class="card">
-                            <div class="card-title ms-2 mt-2">Student List</div>
-                            <div class="card-body">
-                                <p>In here, you can see all the student's details in this school</p>
+
+                    <div class="row my-5 gap-lg-5">
+                        <div class="col-lg-5">
+                            <div class="card position-relative shadow">
+                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@ViewBag.TeacherCount</span>
+                                <div class="card-body w-75">
+                                    <h1 class="h3">Teacher</h1>
+                                    <p class="card-text">In here, you can see all of Teacher's Info.</p>
+                                 </div>
+                                <div class="card-footer">
+                                    <a asp-controller="TeacherCourse" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
+                                </div>
                             </div>
-                            <div class="card-footer">
-                                <a asp-controller="Student" asp-action="List" class="btn btn-primary float-end">Details</a>
+
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="card position-relative shadow">
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@ViewBag.StudentCount</span>
+                                <div class="card-body">
+                                    <h1 class="h3">Student</h1>
+                                    <p class="card-text">In here, you can see all of the student's batches.</p>
+                                </div>
+
+                                <div class="card-footer">
+                                    <a asp-controller="StudentBatch" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
+                                </div>
                             </div>
                         </div>
+                        
+                    </div>
+                    <div class="row gap-lg-5 mb-5">
+                        <div class="col-lg-5">
+                            <div class="card position-relative shadow">
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@ViewBag.CourseCount</span>
+                                <div class="card-body">
+                                    <h1 class="h3">Course</h1>
+                                    <p class="card-text">In here, you can see all of courses in this school.</p>
+                                </div>
+
+                                <div class="card-footer">
+                                    <a asp-controller="Course" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-5">
+                            <div class="card position-relative shadow">
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@ViewBag.BatchCount</span>
+                                <div class="card-body">
+                                    <h1 class="h3">Batch</h1>
+                                    <p class="card-text">In here, you can see all of batches in this school.</p>
+                                </div>
+
+                                <div class="card-footer">
+                                    <a asp-controller="Batch" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
 
                     </div>
-                    <div class="col-lg-4">
-                        <canvas id="myTableChart" height="220"></canvas>
-                    </div>
+                    
+
+
                 </div>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <h1 class="h3">Courses</h1>
-                        <div class="card">
-                            <div class="card-title ms-2 mt-2">Course List</div>
-                            <div class="card-body">
-                                <p>In here, you can see all the course's details in each batches</p>
-                            </div>
-                            <div class="card-footer">
-                                <a asp-controller="Course" asp-action="Detail" class="btn btn-primary float-end">Details</a>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="col-lg-4">
-                        <h1 class="h3">Batches</h1>
-                        <div class="card">
-                            <div class="card-title ms-2 mt-2">Batche List</div>
-                            <div class="card-body">
-                                <p>In here, you can see all the batche's details in this school</p>
-                            </div>
-                            <div class="card-footer">
-                                <a asp-controller="Batch" asp-action="Detail" class="btn btn-primary float-end">Details</a>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="col-lg-4">
-                        <canvas id="myBubbleChart" height="220"></canvas>
-                    </div>
-
-                </div>
-                
-            
-               
             </div>
-    </div>
+        </div>
 
     
-
 }
 else if (User.Identity.IsAuthenticated && User.IsInRole("Teacher"))
 {
     // Layout = "_LayoutTeacher";
-    <h1 class="h4 mb-3">Attendance List</h1>
-            <div class="col-md-12">
-                <div class="table-responsive">
-                    <table id="attendanceTable" class="table table-bordred table-striped">
+   
+    <div class="container mt-3">
+        <div class="row mb-5">
+            <div class="col-lg-4">
+                <div class="card position-relative shadow">
+                    <div class="card-body">
+                        <h1 class="h3">Course</h1>
+                        <p>In here, you can see all of the courses in this school.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a asp-controller="Course" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
+                    </div>
+                </div>
 
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>StudentName</th>
-                                <th>AttendanceDate</th>
-                                <th>InTime</th>
-                                <th>OutTime</th>
-                                <th>IsLeave</th>
-                                @if (User.IsInRole("Admin"))
-                                {
-                                    <th>Edit</th>
-                                    <th>Delete</th>
-                                }
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @{
-                                var index = 1;
-                            }
-                            @foreach(var list in Model)
-                            {
-                                <tr>
-                                    <td>@index</td>
-                                    <td>@list.StudentId</td>
-                                    <td>@list.AttendanceDate</td>
-                                    <td>@list.InTime</td>
-                                    <td>@list.OutTime</td>
-                                    <td>@list.IsLeave</td>
-                                    @if (User.IsInRole("Admin"))
-                                    {
-                                        <td><p data-placement="top" data-toggle="tooltip" title="Edit"><a class="btn btn-primary btn-xs" data-title="Edit" href="/attendance/edit?Id=@list.Id"><span class="glyphicon glyphicon-pencil"></span></a></p></td>
-                                        <td>
-                                            <p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-bs-toggle="offcanvas" data-bs-target="#delete"><span class="glyphicon glyphicon-trash"></span></button></p>
+            </div>
+            <div class="col-lg-4">
 
-                                            <div class="offcanvas offcanvas-top mx-auto h-50" tabindex="-1" id="delete" aria-labelledby="offcanvasExampleLabel" style="width: 500px;">
-                                                <div class="offcanvas-header">
-                                                    <h5 class="h2 text-warning offcanvas-title" id="offcanvasExampleLabel">Attention</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                                                </div>
-                                                <p class="alert text-danger">Are You Sure Want To Delete The Data?</p>
-                                                <div class="offcanvasbottom ">
-                                                    <a href="/attendance/delete?Id=@list.Id" class="btn btn-danger w-100">Yes</a>
-                                                    <button type="button" class="btn btn-secondary w-100 my-3" data-bs-dismiss="offcanvas" aria-label="Close">No</button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    }
-                                </tr>
-                                index++;
-                            }
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h1 class="h3">Batch</h1>
+                        <p>In here, you can see all of your batches in this school.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a asp-controller="TeacherCourse" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
+                    </div>
+                </div>
 
+            </div>
+            <div class="col-lg-4">
 
-                        </tbody>
-
-
-                    </table>
-
-
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h1 class="h3">Attendance</h1>
+                        <p>In here, you can see all of your student's attendance.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a asp-controller="Attendance" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
+                    </div>
                 </div>
             </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-lg-4">
 
-   
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h1 class="h3">Assignment</h1>
+                        <p>In here, you can see all of your student's assignment.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a asp-controller="Assignment" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h1 class="h3">Exam Result</h1>
+                        <p>In here, you can see all of the exam results in this school.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a asp-controller="ExamResult" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-4">
+
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h1 class="h3">Exam</h1>
+                        <p>In here, you can see all of the exams in this school.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a asp-controller="Exam" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+   </div>
     
 }
 else if(User.Identity.IsAuthenticated)
 {
-    <h1 class="h4 mb-3">Attendance List</h1>
-        <div class="row">
-            <div class="container">
-                <table id="attendanceTable" class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>StudentName</th>
-                            <th>AttendanceDate</th>
-                            <th>InTime</th>
-                            <th>OutTime</th>
-                            <th>IsLeave</th>
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <th>Edit</th>
-                            <th>Delete</th>
-                        }
-                        </tr>
-                    </thead>
 
-                    <tbody>
-                        <span class="text-warning fw-bold">please today's attendance is required!</span>
-                        @{
-                            var index = 1;
-                        }
-                        @foreach(var list in Model)
-                        {
-                            <tr>
-                                <td>@index</td>
-                                <td>@list.StudentId</td>
-                                <td>@list.AttendanceDate</td>
-                                <td>@list.InTime</td>
-                                <td>@list.OutTime</td>
-                                <td>@list.IsLeave</td>
-                                @if (User.IsInRole("Admin"))
-                                {
-                                    <td><p data-placement="top" data-toggle="tooltip" title="Edit"><a class="btn btn-primary btn-xs" data-title="Edit" href="/attendance/edit?Id=@list.Id"><span class="glyphicon glyphicon-pencil"></span></a></p></td>
-                                    <td>
-                                        <p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-bs-toggle="offcanvas" data-bs-target="#delete"><span class="glyphicon glyphicon-trash"></span></button></p>
+        <div class="container mt-3">
+        <div class="row mb-5">
+                <div class="col-lg-5 ">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h1 class="h3">Courses</h1>
+                            <p class="">In here, you can see all of courses.</p>
+                        </div>
 
-                                        <div class="offcanvas offcanvas-top mx-auto h-50" tabindex="-1" id="delete" aria-labelledby="offcanvasExampleLabel" style="width: 500px;">
-                                            <div class="offcanvas-header">
-                                                <h5 class="h2 text-warning offcanvas-title" id="offcanvasExampleLabel">Attention</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                                            </div>
-                                            <p class="alert text-danger">Are You Sure Want To Delete The Data?</p>
-                                            <div class="offcanvasbottom ">
-                                                <a href="/attendance/delete?Id=@list.Id" class="btn btn-danger w-100">Yes</a>
-                                                <button type="button" class="btn btn-secondary w-100 my-3" data-bs-dismiss="offcanvas" aria-label="Close">No</button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                }
-                            </tr>
-                            index++;
-                        }
+                        <div class="card-footer">
+                        <a asp-controller="Course" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h1 class="h3">Batch</h1>
+                            <p>In here, you can see all of your batches.</p>
+                            
+                        </div>
+                        <div class="card-footer">
+                            <a asp-controller="Batch" asp-action="StudentDetail" class="btn btn-primary float-end">Details>></a>
+                        </div>
+                    </div>
 
-
-                    </tbody> 
-                </table>
-            </div>
+                </div>
+                
         </div>
+        <div class="row mb-5">
+                <div class="col-lg-5">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h1 class="h3">Assignments</h1>
+                            <p>In here, you can see all of your assignments.</p>
+                        </div>
+                        <div class="card-footer">
+                            <a asp-controller="Assignment" asp-action="StudentDetail" class="btn btn-primary float-end">Details>></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-5">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h1 class="h3">Attendance</h1>
+                            <p>In here, you can see all of your attendance.</p>
+                        </div>
+                        <div class="card-footer">
+                            <a asp-controller="Attendance" asp-action="List" class="btn btn-primary float-end">Details>></a>
+                        </div>
+                    </div>
+
+                </div>
+                
+            </div>
+            <div class="row mb-3">
+                <div class="col-lg-5">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h1 class="h3">Exam Results</h1>
+                            <p>In here, you can see your exam result.</p>
+                        </div>
+                        <div class="card-footer">
+                            <a asp-controller="ExamResult" asp-action="List" class="btn btn-primary float-end">Details>></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+    </div>
+
     
-    
+}
+else
+{
+    Layout = "_Layout";
 }
 
 
-<script>
-    $(document).ready(function () {
-        $("#attendanceTable").DataTable();
-    })
-
-
-    const tableCtx = document.getElementById('myTableChart').getContext('2d');
-    const myTableChart = new Chart(tableCtx, {
-        type: 'bar',
-        data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-                label: 'My First Dataset',
-                data: [65, 59, 80, 81, 56, 55, 40],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
-                    'rgba(255, 205, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(201, 203, 207, 0.2)'
-                ],
-                borderColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(255, 159, 64)',
-                    'rgb(255, 205, 86)',
-                    'rgb(75, 192, 192)',
-                    'rgb(54, 162, 235)',
-                    'rgb(153, 102, 255)',
-                    'rgb(201, 203, 207)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-
-
-    
-    const bubbleCtx = document.getElementById('myBubbleChart').getContext('2d');
-    const myBubbleChart = new Chart(bubbleCtx, {
-        type: 'bubble',
-        data: {
-            datasets: [{
-                label: 'First Dataset',
-                data: [{
-                    x: 20,
-                    y: 30,
-                    r: 15
-                }, {
-                    x: 40,
-                    y: 10,
-                    r: 10
-                }],
-                backgroundColor: 'rgb(255, 99, 132)'
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-</script>

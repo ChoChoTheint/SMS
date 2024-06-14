@@ -71,6 +71,18 @@ namespace StudentManagementSystem.Controllers
             return View(examList);
         }
 
+        [Authorize]
+        public IActionResult Detail()
+        {
+            IList<ExamViewModel> examDetail = _dbContext.Exams.Select(s => new ExamViewModel
+                                            {
+                                                Id = s.Id,
+                                                Name = s.Name,
+                                                ExamDate = s.ExamDate,
+                                            }).ToList();
+            return View(examDetail);
+        }
+        [Authorize]
         public IActionResult Delete(string Id)
         {
             try

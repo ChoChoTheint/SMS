@@ -5,78 +5,103 @@
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+
+@using StudentManagementSystem.Models.ViewModels
 @model IList<BatchViewModel>
 @if (TempData["info"] != null)
 {
     @if (TempData["info"].ToString().Contains("delete"))
     {
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger mt-3" role="alert">
             @TempData["info"]
         </div>
     }
     else
     {
-        <div class="alert alert-success" role="alert">
+        <div class="alert alert-success mt-3" role="alert">
             @TempData["info"]
         </div>
     }
 }
-<div class="">
-    <div class="">
+<div class="container">
+    
 
-        <h1 class="h4 mb-3">Batch List</h1>
-        <div class="">
-            <div class="table-responsive">
-                <table id="batchTable" class="table table-bordred table-striped">
+    @if (User.IsInRole("Admin"))
+    {
+        
+        <div class="row">
 
-                    <thead>
-                        <tr>
+            <h1 class="h4 mb-3">Batch List</h1>
+            <div class="">
+                <div class="table-responsive">
+                    <table id="batchTable" class="table table-bordred table-striped">
 
-                            <td>ID</td>
-                            <th>Batch Name</th>
-                            <th>Description</th>
-                            <th>Course</th>
-                            @if (User.IsInRole("Admin"))
-                            {
-                                <th>Edit</th>
-                                <th>Delete</th>
-                            }
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @{
-                            var index = 1;
-                        }
-                        @foreach(var list in Model)
-                        {
-                            
+                        <thead>
                             <tr>
-                                <td>@index</td>
-                                <td>@list.Name</td>
-                                <td>@list.Description</td>
-                                <td>@list.CourseId</td>
+
+                                <td>ID</td>
+                                <th>Batch Name</th>
+                                <th>Course</th>
+                                <th>Opening Date</th>
+                                <th>Duration In Hour</th>
+                                <th>Duration In Month</th>
                                 @if (User.IsInRole("Admin"))
                                 {
-                                    <td><p data-placement="top" data-toggle="tooltip" title="Edit"><a class="btn btn-primary btn-xs" data-title="Edit" href="/batch/edit?Id=@list.Id"><span class="glyphicon glyphicon-pencil"></span></a></p></td>
-                                    <td>
-                                        <p data-placement="top" data-toggle="tooltip" title="Delete">
-                                            <a class="btn btn-danger btn-xs" data-title="Delete" href="/batch/delete?Id=@list.Id" onclick="return confirm('Are you sure to delete the record?')">Delete</a>
-                                        </p>
-                                    </td>
+                                    <th>Action</th>
+                                    <th>Detail</th>
                                 }
                             </tr>
-                            index++;
-                        }
+                        </thead>
+                        <tbody>
+                            @{
+                                var index = 1;
+                            }
+                            @foreach(var list in Model)
+                            {
+                            
+                                <tr>
+                                    <td>@index</td>
+                                    <td>@list.Name</td>
+                                    <td>@list.CourseId</td>
+                                    <td>@list.OpeningDate.ToString("dd-MM-yyyy")</td>
+                                    <td>@list.DurationInHour</td>
+                                    <td>@list.DurationInMonth</td>
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action</button>
+                                                    <ul class="dropdown-menu">
 
+                                                        <li>
+                                                            <a type="button" class="dropdown-item btn text-info btn-xs mb-2" href="/batch/edit?Id=@list.Id">
+                                                                <i class="fa-regular fa-pen-to-square"></i> Edit
+                                                            </a>
+                                                        </li>
+                                                        <li class="">
+                                                            <a type="button" class="dropdown-item btn text-danger btn-xs " asp-controller="Batch" asp-action="Delete" asp-route-Id="@list.Id" onclick="return confirm('Are you sure want to delete the record?')">
+                                                                <i class="fa-regular fa-trash-can"></i> Delete
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a asp-controller="Chapter" asp-action="Detail" asp-route-id="@list.Id" class="link-underline-primary link-underline-opacity-100-hover">Details>></a>
+                                        </td>
+                                    }
+                                </tr>
+                                index++;
+                            }
+                        </tbody>
 
-                    </tbody>
+                    </table>
 
-                </table>
+                </div>
 
             </div>
-
         </div>
-    </div>
+    }
 </div>
 
 

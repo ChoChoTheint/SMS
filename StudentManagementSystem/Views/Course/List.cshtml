@@ -10,72 +10,88 @@
 {
     @if (TempData["info"].ToString().Contains("delete"))
     {
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger mt-3" role="alert">
             @TempData["info"]
         </div>
     }
     else
     {
-        <div class="alert alert-success" role="alert">
+        <div class="alert alert-success mt-3" role="alert">
             @TempData["info"]
         </div>
     }
 }
-<div class="container">
-    <div class="row">
+    
+    <div class="container">
 
-        <h1 class="h4 mb-3">Course List</h1>
-        <div class="col-md-12">
-            <div class="table-responsive">
-                <table id="courseTable" class="table table-bordred table-striped">
+        @if (User.IsInRole("Admin"))
+        {
+            
+            <div class="row">
 
-                    <thead>
-                    <th>Course Name</th>
-                    <th>Description</th>
-                    <th>Opening Date</th>
-                    <th>Duration In Hour</th>
-                    <th>Duration In Month</th>
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <th>Edit</th>
-                            <th>Delete</th>
-                        }
-                    </thead>
-                    <tbody>
-                        @{
-                            var index = 1;
-                        }
-                        @foreach(var list in Model)
-                        {
-                            
-                            <tr>
-                                <td>@list.Name</td>
-                                <td>@list.Description</td>
-                                <td>@list.OpeningDate.ToString("dd-MM-yyyy")</td>
-                                <td>@list.DurationInHour hr</td>
-                                <td>@list.DurationInMonth months</td>
+                <h1 class="h4 mb-3">Course List</h1>
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table id="courseTable" class="table table-bordred table-striped">
+
+                            <thead>
+                            <th>Course Name</th>
+                            <th>Description</th>
                                 @if (User.IsInRole("Admin"))
                                 {
-                                    <td><p data-placement="top" data-toggle="tooltip" title="Edit"><a class="btn btn-primary btn-xs" data-title="Edit" href="/course/edit?Id=@list.Id"><span class="glyphicon glyphicon-pencil"></span></a></p></td>
-                                    <td>
-                                        <p data-placement="top" data-toggle="tooltip" title="Delete">
-                                            <a class="btn btn-danger btn-xs" data-title="Delete" href="/course/delete?Id=@list.Id" onclick="return confirm('Are you sure to delete the record?')">Delete</a>
-                                        </p>
-                                    </td>
+                                    <th>Action</th>
+                                    <th>Details</th>
                                 }
-                            </tr>
-                        }
+                            </thead>
+                            <tbody>
+                                @{
+                                    var index = 1;
+                                }
+                                @foreach(var list in Model)
+                                {
+                            
+                                    <tr>
+                                        <td>@list.Name</td>
+                                        <td>@list.Description</td>
+                                        
+                                        @if (User.IsInRole("Admin"))
+                                        {
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action</button>
+                                                        <ul class="dropdown-menu">
 
+                                                            <li>
+                                                                <a type="button" class="dropdown-item btn text-info btn-xs mb-2" href="/course/edit?Id=@list.Id">
+                                                                    <i class="fa-regular fa-pen-to-square"></i> Edit
+                                                                </a>
+                                                            </li>
+                                                            <li class="">
+                                                                <a type="button" class="dropdown-item btn text-danger btn-xs " asp-controller="Course" asp-action="Delete" asp-route-Id="@list.Id" onclick="return confirm('Are you sure want to delete the record?')">
+                                                                    <i class="fa-regular fa-trash-can"></i> Delete
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a asp-controller="Batch" asp-action="Detail" asp-route-id="@list.Id" class="link-underline-primary link-underline-opacity-100-hover">Details>></a>
+                                            </td>
+                                        }
+                                    </tr>
+                                    index++;
+                                }
+                            </tbody>
 
-                    </tbody>
+                        </table>
 
-                </table>
+                    </div>
 
+                </div>
             </div>
-
-        </div>
+        }
     </div>
-</div>
+
 
 
 <script>

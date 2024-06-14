@@ -1,0 +1,52 @@
+﻿@model StudentViewModel
+<div class="container">
+
+    <div class="row">
+
+        <h1 class="h4 mb-3">Student List</h1>
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table id="adminTable" class="table table-bordred table-striped">
+
+                    <thead>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th>Phone</th>
+                        <th>DOB</th>
+                        <th>NRC</th>
+                        <th>Gender</th>
+                        <th>Father Name</th>
+
+                    </thead>
+                    <tbody>
+                        @{
+                            int index = 1;
+                        }
+
+
+                        <tr>
+                            <td>@index</td>
+                            <td>@Model.Name</td>
+                            <td>@Model.Email</td>
+                            <td>@Model.Address</td>
+                            <td>@Model.Phone</td>
+                            <td>@Model.DOB.ToString("dd-MM-yyyy")</td>
+                            <td>@Model.NRC</td>
+                            <td>@Model.Gender</td>
+                            <td>@Model.FatherName</td>
+                            <td>
+                                <a asp-controller="Batch" asp-action="StudentDetail" asp-route-id="@Model.Id" class="link-underline-primary link-underline-opacity-100-hover">Details>></a>
+                            </td>
+                            </td>
+                        </tr>
+
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

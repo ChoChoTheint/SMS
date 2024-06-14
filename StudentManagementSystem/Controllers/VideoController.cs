@@ -56,19 +56,19 @@ namespace StudentManagementSystem.Controllers
                 {
 
                     // Define the path to the uploads folder
-                    var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "videos");
+                    var uploadFolder = Path.Combine("wwwroot", "videos");
 
                     // Ensure the directory exists
-                    if (!Directory.Exists(uploadsFolder))
+                    if (!Directory.Exists(uploadFolder))
                     {
-                        Directory.CreateDirectory(uploadsFolder);
+                        Directory.CreateDirectory(uploadFolder);
                     }
 
                     // Generate a unique file name
                     var uniqueFileName = Guid.NewGuid().ToString() + "_" + ui.VideoFile.FileName;
 
                     // Define the full path to the file
-                    var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    var filePath = Path.Combine(uploadFolder, uniqueFileName);
 
                     // Save the uploaded file to the specified location
                     using (var fileStream = new FileStream(filePath, FileMode.Create))
@@ -84,7 +84,7 @@ namespace StudentManagementSystem.Controllers
                             IsInActive = true,
                             Name = ui.Name,
                             Description = ui.Description,
-                            URL = "/videos" + uniqueFileName,
+                            URL = uniqueFileName,
                             CourseId = ui.CourseId,
                             BatchId = ui.BatchId,
                         };

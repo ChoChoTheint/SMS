@@ -141,6 +141,71 @@ namespace StudentManagementSystem.Controllers
         }
 
         [Authorize]
+        public IActionResult Detail(string Id)
+        {
+         
+            IList<ChapterViewModel> chapterDetail = (from chapter in _dbContext.Chapters
+                                                     join batch in _dbContext.Batches
+                                                     on chapter.BatchId equals batch.Id
+                                                     join book in _dbContext.Books
+                                                     on chapter.BookId equals book.Id
+                                                     join video in _dbContext.Videos
+                                                     on chapter.VideoId equals video.Id
+                                                     join course in _dbContext.Courses
+                                                     on batch.CourseId equals course.Id
+
+                                                     where batch.CourseId == course.Id && chapter.BatchId == Id 
+
+                                                     select new ChapterViewModel
+                                                     {
+                                                         Id = chapter.Id,
+                                                         Name = chapter.Name,
+                                                         Description = chapter.Description,
+                                                         BatchId = batch.Name+"/ "+course.Name,
+                                                         BookId = book.URL,
+                                                         VideoId = video.URL,
+                                                     }).ToList();
+
+            
+                return View(chapterDetail);
+        }
+
+        [Authorize]
+        public IActionResult StudentDetail(string Id)
+        {
+
+            IList<ChapterViewModel> chapterDetail = (from chapter in _dbContext.Chapters
+                                                     join sb in _dbContext.StudentBatches
+                                                     on chapter.BatchId equals sb.BatchId
+                                                     join book in _dbContext.Books
+                                                     on chapter.BookId equals book.Id
+                                                     join video in _dbContext.Videos
+                                                     on chapter.VideoId equals video.Id
+                                                     join student in _dbContext.Students
+                                                     on sb.StudentId equals student.Id
+                                                     join batch in _dbContext.Batches
+                                                     on sb.BatchId equals batch.Id
+                                                     join course in _dbContext.Courses
+                                                     on batch.CourseId equals course.Id
+
+                                                     where sb.StudentId == student.Id && sb.BatchId == Id &&  batch.CourseId == course.Id && chapter.BatchId == Id
+
+                                                     select new ChapterViewModel
+                                                     {
+                                                         Id = chapter.Id,
+                                                         Name = chapter.Name,
+                                                         Description = chapter.Description,
+                                                         BatchId = batch.Name + "/ " + course.Name,
+                                                         BookId = book.URL,
+                                                         VideoId = video.URL,
+                                                     }).ToList();
+
+
+            return View(chapterDetail);
+        }
+
+
+        [Authorize]
         public IActionResult Delete(string Id)
         {
             try

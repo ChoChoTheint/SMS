@@ -24,10 +24,8 @@ namespace StudentManagementSystem.Models.ViewModels
         public string FatherName { get; set; }
         [Required(ErrorMessage = "Gender is requied")]
         public string Gender { get; set; }
-        [Required(ErrorMessage = "Batch Name is requied")]
-        public string BatchId { get; set; }
-        public string CourseId { get; set; }
         public string AspNetUsersId { get; set; }
+        
 
     }
 }

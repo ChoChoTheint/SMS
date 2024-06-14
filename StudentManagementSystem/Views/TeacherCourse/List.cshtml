@@ -20,27 +20,7 @@
     }
 }
     <div class="container">
-
-            <div class="row mt-5">
-                @foreach (var detail in Model)
-                {
-
-                    <div class="col-lg-4 mb-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h1 class="h5"><span class="fw-bold">Name: </span>@detail.TeacherId</h1>
-                                <div class="d-flex gap-4">
-
-                                    <p class="card-text"><span class="fw-bold">Course: </span>@detail.CourseId</p>
-                                    <p class="card-text"><span class="fw-bold">Batch: </span>@detail.BatchInfo</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                }
-                 <hr class="border border-danger my-4 w-75 mx-auto">
-            </div>
-
+        
             <div class="table-responsive">
                 <h1 class="h4 mb-3">Teacher Course List</h1>
                 <table id="teacherCourseTable" class="table table-bordred table-striped">
@@ -53,6 +33,7 @@
                             @if (User.IsInRole("Admin"))
                             {
                                 <th>Action</th>
+                                <th>Detail</th>
                             }
                         </tr>
                     </thead>
@@ -68,42 +49,30 @@
                                 <td>@list.CourseId</td>
                                 @if (User.IsInRole("Admin"))
                                 {
-
-                                    <td><p data-placement="top" data-toggle="tooltip" title="Edit"><a class="btn btn-primary btn-xs" data-title="Edit" href="/teachercourse/edit?Id=@list.Id"><span class="glyphicon glyphicon-pencil"></span></a></p></td>
                                     <td>
-                                        <p data-placement="top" data-toggle="tooltip" title="Delete">
-                                            <a class="btn btn-danger btn-xs" data-title="Delete" href="/teachercourse/delete?Id=@list.Id" onclick="return confirm('Are you sure to delete the record?')">Delete</a>
-                                        </p>
-                                    </td>
+                                        <div class="dropdown">
+                                            <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action</button>
+                                                <ul class="dropdown-menu">
 
-                                    <td class="dropdown">
-                                        <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action</button>
-                                        <ul class="dropdown-menu">
-                                            <li class="dropdown-item">
-                                                <a class="btn btn-primary btn-xs" data-title="Edit" href="/teachercourse/edit?Id=@list.Id"><span class="glyphicon glyphicon-pencil"></span></a>
-                                            </li>
-                                            <li class="dropdown-item">
-                                                <a class="btn btn-danger btn-xs" data-title="Delete" data-bs-toggle="offcanvas" data-bs-target="#delete"><span class="glyphicon glyphicon-trash"></span></a>
-                                            </li>
-                                        </ul>
-                                    </td>
-
-                                        <div class="offcanvas offcanvas-top mx-auto h-50" tabindex="-1" id="delete" aria-labelledby="offcanvasExampleLabel" style="width: 500px;">
-                                            <div class="offcanvas-header">
-                                                <h5 class="h2 text-warning offcanvas-title" id="offcanvasExampleLabel">Attention</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                                            </div>
-                                            <div class="offcanvas-body">
-                                                <p class="alert text-danger">Are You Sure Want To Delete The Data?</p>
-                                                <div class="offcanvasbottom ">
-                                                    <a asp-controller="TeacherCourse" asp-action="Delete" asp-route-id="@list.Id" class="btn btn-danger w-100">Yes</a>
-                                                    <a type="button" class="btn btn-secondary w-100 my-3" data-bs-dismiss="offcanvas" aria-label="Close">No</a>
-                                                </div>
-                                            </div>
+                                                    <li>
+                                                        <a type="button" class="dropdown-item btn text-info btn-xs mb-2" href="/teachercourse/edit?Id=@list.Id">
+                                                            <i class="fa-regular fa-pen-to-square"></i> Edit
+                                                        </a>
+                                                    </li>
+                                                    <li class="">
+                                                        <a type="button" class="dropdown-item btn text-danger btn-xs " asp-controller="TeacherCourse" asp-action="Delete" asp-route-Id="@list.Id" onclick="return confirm('Are you sure want to delete the record?')">
+                                                            <i class="fa-regular fa-trash-can"></i> Delete
+                                                        </a>
+                                                    </li>
+                                                </ul>
                                         </div>
-
+                                    </td>
+                                    <td>
+                                        <a asp-controller="Batch" asp-action="Detail" asp-route-id="@list.Id" class="link-underline-primary link-underline-opacity-100-hover">Details>></a>
+                                    </td>
                                 }
                             </tr>
+                            index++;    
                         }
 
 

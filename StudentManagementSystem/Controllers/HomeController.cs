@@ -25,24 +25,30 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            IList<AttendanceViewModel> attendanceList = (from attendance in _dbContext.Attendances
-                                                         join student in _dbContext.Students
-                                                         on attendance.StudentId equals student.Id
-                                                         join batch in _dbContext.Batches
-                                                         on student.BatchId equals batch.Id
-                                                         select new AttendanceViewModel
-                                                         {
-                                                             Id = attendance.Id,
-                                                             AttendanceDate = attendance.AttendanceDate,
-                                                             InTime = attendance.InTime,
-                                                             OutTime = attendance.OutTime,
-                                                             IsLeave = attendance.IsLeave,
-                                                             StudentId = student.Name + "/" + batch.Name,
+            IList<AdminViewModel> adminList = _dbContext.Admins.Select(s => new AdminViewModel
+            {
+                Id = s.Id,
+                Name = s.Name,
+                Email = s.Email,
+                Phone = s.Phone,
+                Address = s.Address,
+                DOB = s.DOB,
+                NRC = s.NRC,
+                FatherName = s.FatherName,
+                Gender = s.Gender,
+            }).ToList();
 
-                                                         }).ToList();
+            ViewBag.TeacherCount = _dbContext.TeacherCourses.Count();
+            ViewBag.StudentCount = _dbContext.Students.Count();
+            ViewBag.CourseCount = _dbContext.Courses.Count();
+            ViewBag.BatchCount = _dbContext.Batches.Count();
+            ViewBag.AttendanceCount = _dbContext.Attendances.Count();
+            ViewBag.AssignmentCount = _dbContext.Assignments.Count();
+            ViewBag.BookCount = _dbContext.Books.Count();
+            ViewBag.ExamCount = _dbContext.Exams.Count();
+            ViewBag.ExamResultCount = _dbContext.ExamResults.Count();
 
-
-            return User.IsInRole("Admin")? View() : View(attendanceList);
+            return User.IsInRole("Admin")?  View("Index", model: adminList) :  View();
         }
         
 

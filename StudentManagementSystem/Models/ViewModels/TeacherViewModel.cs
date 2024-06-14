@@ -28,7 +28,8 @@ namespace StudentManagementSystem.Models.ViewModels
         public string Gender { get; set; }
         public string AspNetUsersId { get; set; }
         //public string CourseInfo { get; set; }
-       // public string BatchInfo { get; set; }
+        [Required(ErrorMessage = "batch is required")]
+        public string BatchId { get; set; }
 
 
     }

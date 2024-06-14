@@ -10,6 +10,7 @@ namespace StudentManagementSystem.DAO
         public SMSDbContext(DbContextOptions<SMSDbContext> options) : base(options) { }
         public DbSet<AdminEntity> Admins { get; set; }
         public DbSet<StudentEntity> Students { get; set; }
+        public DbSet<StudentBatchEntity> StudentBatches { get; set; }
         public DbSet<TeacherEntity> Teachers { get; set; }
         public DbSet<AttendanceEntity> Attendances { get; set; }
         public DbSet<CourseEntity> Courses { get; set; }

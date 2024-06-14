@@ -23,6 +23,16 @@ namespace StudentManagementSystem.Controllers
 
             ViewBag.Id = Guid.NewGuid().ToString();
 
+            var batches = (from batch in _dbContext.Batches
+                           join course in _dbContext.Courses
+                           on batch.CourseId equals course.Id
+
+                           select new BatchViewModel
+                           {
+                               Id = batch.Id,
+                               Name = batch.Name + "/ " + course.Name
+                           }).OrderBy(o => o.Name).ToList();
+            ViewBag.Batch = batches;
 
             return View();
         }
@@ -66,6 +76,17 @@ namespace StudentManagementSystem.Controllers
 
                     ViewBag.Id = Guid.NewGuid().ToString();
 
+                    var batches = (from batch in _dbContext.Batches
+                                   join course in _dbContext.Courses
+                                   on batch.CourseId equals course.Id
+
+                                   select new BatchViewModel
+                                   {
+                                       Id = batch.Id,
+                                       Name = batch.Name + "/ " + course.Name
+                                   }).OrderBy(o => o.Name).ToList();
+                    ViewBag.Batch = batches;
+
                     return View(ui);
                 }
             }
@@ -73,13 +94,14 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while saving the record";
             }
+<<<<<<< HEAD
             return RedirectToAction("list");
+=======
+            return RedirectToAction("List");
+>>>>>>> origin/main
         }
 
-        public IActionResult Detail()
-        {
-            return View();
-        }
+        
         [Authorize]
         public IActionResult List()
         {
@@ -142,6 +164,18 @@ namespace StudentManagementSystem.Controllers
                 Gender = s.Gender,
                 AspNetUsersId = s.AspNetUsersId,
             }).FirstOrDefault();
+
+            var batches = (from batch in _dbContext.Batches
+                           join course in _dbContext.Courses
+                           on batch.CourseId equals course.Id
+
+                           select new BatchViewModel
+                           {
+                               Id = batch.Id,
+                               Name = batch.Name + "/ " + course.Name
+                           }).OrderBy(o => o.Name).ToList();
+            ViewBag.Batch = batches;
+
             return View(editTeacherData);
         }
 

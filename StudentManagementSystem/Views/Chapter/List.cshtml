@@ -11,13 +11,13 @@
 {
     @if (TempData["info"].ToString().Contains("delete"))
     {
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger mt-3" role="alert">
             @TempData["info"]
         </div>
     }
     else
     {
-        <div class="alert alert-success" role="alert">
+        <div class="alert alert-success mt-3" role="alert">
             @TempData["info"]
         </div>
     }
@@ -39,8 +39,7 @@
                     <th>Video</th>
                         @if (User.IsInRole("Admin"))
                         {
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th>Action</th>
                         }
                     </thead>
                     <tbody>
@@ -61,22 +60,35 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <video width="220" height="140" controls>
-                                        <source src="@list.VideoId" type="video/mp4">
+                                    <video width="220" height="80" controls>
+                                        <source src="/videos/@list.VideoId" type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video>
                                 </td>
                                 @if (User.IsInRole("Admin"))
                                 {
-                                    <td><p data-placement="top" data-toggle="tooltip" title="Edit"><a class="btn btn-primary btn-xs" data-title="Edit" href="/chapter/edit?Id=@list.Id"><span class="glyphicon glyphicon-pencil"></span></a></p></td>
                                     <td>
-                                        <p data-placement="top" data-toggle="tooltip" title="Delete">
-                                            <a class="btn btn-danger btn-xs" data-title="Delete" href="/chapter/delete?Id=@list.Id" onclick="return confirm('Are you sure to delete the record?')">Delete</a>
-                                        </p>
+                                        <div class="dropdown">
+                                            <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action</button>
+                                                <ul class="dropdown-menu">
+
+                                                    <li>
+                                                        <a type="button" class="dropdown-item btn text-info btn-xs mb-2" href="/chapter/edit?Id=@list.Id">
+                                                            <i class="fa-regular fa-pen-to-square"></i> Edit
+                                                        </a>
+                                                    </li>
+                                                    <li class="">
+                                                        <a type="button" class="dropdown-item btn text-danger btn-xs " asp-controller="Chapter" asp-action="Delete" asp-route-Id="@list.Id" onclick="return confirm('Are you sure want to delete the record?')">
+                                                            <i class="fa-regular fa-trash-can"></i> Delete
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                        </div>
                                     </td>
-                                    index++;
+
                                 }
                             </tr>
+                            index++;
                         }
 
 

@@ -23,8 +23,11 @@
         </div>
     }
 }
+
+@if(User.IsInRole("Admin"))
+{
     <h1 class="h4 mb-3">Admin List</h1>
-                <table id="adminTable" class="table table-responsive table-bordred table-striped">
+    <table id="adminTable" class="table table-responsive table-bordred table-striped">
 
                     <thead>
                         <tr>
@@ -39,8 +42,7 @@
                             <th>Father Name</th>
                             @if(User.IsInRole("Admin"))
                             {
-                                <th>Edit</th>
-                                <th>Delete</th>
+                                <th>Action</th>
                             }
                         </tr>
                     </thead>
@@ -64,21 +66,35 @@
                                 @if (User.IsInRole("Admin"))
                                 {
                                     <td>
-                                        <a href="/admin/edit?Id=@list.Id" role="button" class="btn btn-primary btn-xs" data-title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>
-                                    </td>
-                                    <td><p data-placement="top" data-toggle="tooltip" title="Delete">
-                                            <a class="btn btn-danger btn-xs" data-title="Delete" href="/admin/delete?Id=@list.Id" onclick="return confirm('Are you sure to delete the record?')">Delete</a>
-                                        </p>
+                                        <div class="dropdown">
+                                            <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action</button>
+                                                <ul class="dropdown-menu">
+
+                                                    <li>
+                                                        <a type="button" class="dropdown-item btn text-info btn-xs mb-2" href="/admin/edit?Id=@list.Id">
+                                                            <i class="fa-regular fa-pen-to-square"></i> Edit
+                                                        </a>
+                                                    </li>
+                                                    <li class="">
+                                                        <a type="button" class="dropdown-item btn text-danger btn-xs " asp-controller="Admin" asp-action="Delete" asp-route-Id="@list.Id" onclick="return confirm('Are you sure want to delete the record?')">
+                                                            <i class="fa-regular fa-trash-can"></i> Delete
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                        </div>
                                     </td>
 
-                    }
+
+                                }
+
                             </tr>
                             index++;
                         }
-                       
+
 
                     </tbody>
 
+<<<<<<< HEAD
                 </table>
 
 <<<<<<< HEAD
@@ -111,6 +127,11 @@
    
 
 
+=======
+     </table>
+}
+             
+>>>>>>> origin/main
 <script>
     $(document).ready(function () {
         $('#adminTable').DataTable();

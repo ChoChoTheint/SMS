@@ -16,6 +16,8 @@ namespace StudentManagementSystem.Controllers
         {
             _dbContext = dbContext;
         }
+
+      
         [Authorize]
         public IActionResult Entry()
         {
@@ -90,6 +92,7 @@ namespace StudentManagementSystem.Controllers
                 FatherName = s.FatherName,
                 Gender = s.Gender,
             }).ToList();
+
             return View(adminList);
         }
 

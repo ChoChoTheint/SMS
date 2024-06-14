@@ -74,6 +74,17 @@
             <span asp-validation-for="FatherName" class="text-danger"></span>
         </div>
         <div class="mb-3">
+            <label asp-for="BatchId" class="form-label">Batch</label>
+            <select asp-for="BatchId" class="form-select">
+                <option value="" selected>---choose option---</option>
+                @foreach (var batch in ViewBag.Batch)
+                {
+                    <option value="@batch.Id">@batch.Name</option>
+                }
+            </select>
+            <span asp-validation-for="BatchId" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
             <button class="btn btn-primary text-white" style="border-radius: 10px 0 10px 0;">Submit</button>
             <button class="btn btn-secondary text-white" style="border-radius: 10px 0 10px 0;" type="reset">Cancel</button>
         </div>
