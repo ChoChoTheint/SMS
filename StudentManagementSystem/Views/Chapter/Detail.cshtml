@@ -1,23 +1,27 @@
 ﻿@model IList<ChapterViewModel>
 <div class="container">
-    @if (User.IsInRole("Admin"))
+    
+    @if (User.IsInRole("Admin")||User.Identity.IsAuthenticated)
     {
         <h1 class="h4 mt-3">Chapters</h1>
         <div class="row my-3">
             @foreach (var detail in Model)
             {
-                
+                if (detail == null)
+                {
+                    <p class="alert alert-info" role="alert">No Chapter In Here!</p>
+                }
                 <div class="col-lg-4">
-                    <div class="card">
+                    <div class="card shadow">
                         <div class="card-body">
-                            <h1 class="h5"><span class="fw-bold">Batch: </span> @detail.Name</h1>
+                            <h1 class="h5"><span class="fw-bold">Chapter: </span> @detail.Name</h1>
                             <p class="card-text"><span class="fw-bold">Description: </span> @detail.Description</p>
                             <p class="card-text"><span class="fw-bold">Course: </span> @detail.BatchId</p>
                             <p class="card-text d-flex gap-4"><span class="fw-bold">Book: </span>
-                                    <a href="/assignment/DownloadFile?filePath=@detail.BookId">
+                                    <a asp-controller="Book" asp-action="DownloadFile" asp-route-id="@detail.BookId">
                                         <i class="fa-solid fa-download fa-xl"></i>
                                     </a>
-                                    <a href="/books/@detail.BookId">
+                                    <a asp-controller="Book" asp-action="ReadPDF" asp-route-id="@detail.BatchId">
                                         <span class="text-uppercase fw-bold">Read</span>
                                     </a>
                              </p>

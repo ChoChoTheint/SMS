@@ -1,0 +1,23 @@
+﻿@model IList<ExamViewModel>
+<div class="container">
+    @if (User.IsInRole("Admin") || User.Identity.IsAuthenticated)
+    {
+        <h1 class="h4 mt-3">Exam Results:</h1>
+        <div class="row">
+            @foreach (var detail in Model)
+            {
+                <div class="col-lg-4 mb-5">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h1 class="h5"><span class="fw-bold">Exam: </span> @detail.Name</h1>
+                            <p class="card-text"><span class="fw-bold">Exam Date: </span> @detail.ExamDate.ToString("dd-MM-yyyy")</p>
+
+                        </div>
+
+                    </div>
+                </div>
+            }
+
+        </div>
+    }
+</div>

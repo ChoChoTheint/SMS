@@ -76,6 +76,20 @@ namespace StudentManagementSystem.Controllers
         }
 
         [Authorize]
+        public IActionResult Detail()
+        {
+            IList<CourseViewModel> courseDetail = _dbContext.Courses.Select(s => new CourseViewModel
+            {
+                Id = s.Id,
+                Name = s.Name,
+                Description = s.Description,
+
+            }).ToList();
+
+            return View(courseDetail);
+        }
+
+        [Authorize]
         public IActionResult Delete(string Id)
         {
             try

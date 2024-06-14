@@ -65,7 +65,7 @@ namespace StudentManagementSystem.Controllers
                     }
 
                     // Generate a unique file name
-                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + ui.VideoFile;
+                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + ui.VideoFile.FileName;
 
                     // Define the full path to the file
                     var filePath = Path.Combine(uploadFolder, uniqueFileName);

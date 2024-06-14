@@ -21,77 +21,69 @@
         </div>
     }
 }
-    <div class="container">
-        @if (User.IsInRole("Admin"))
-        {
-            <div class="row">
-            
-                <h1 class="h4 mb-3">Book List</h1>
-                <div class="col-md-12">
-                    <div class="table-responsive">
-                        <table id="bookTable" class="table table-bordred table-striped">
+   
+<div class="container">
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="row">
+            <h1 class="h4 mb-5">Book List</h1>
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table id="bookTable" class="table table-bordred table-striped">
+                        <thead>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Book</th>
+                                <th>Course</th>
+                                <th>Batch</th>
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <th>Action</th>
+                                    }
+                        </thead>
+                        <tbody>
+                            @{
+                                var index = 1;
+                            }
+                            @foreach(var list in Model)
+                            {
 
-                            <thead>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Book</th>
-                            <th>Course</th>
-                            <th>Batch</th>
-                                @if (User.IsInRole("Admin"))
-                                {
-                                    <th>Edit</th>
-                                    <th>Delete</th>
-                                }
-                            </thead>
-                            <tbody>
-                                @{
-                                    var index = 1;
-                                }
-                                @foreach(var list in Model)
-                                {
-                                        <tr>
-                                            <td>@list.Name</td>
-                                            <td>@list.Description</td>
-                                            <td>
-                                                <a href="/Book/DownloadFile?filePath=@list.URL">
-                                                    <i class="fa-solid fa-download fa-xl"></i>
-                                                </a>
-                                            </td>
-                                            <td>@list.CourseId</td>
-                                            <td>@list.CourseId</td>
-                                            @if (User.IsInRole("Admin"))
-                                            {
-                                                <td class="dropdown">
-                                                    <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action</button>
+                                <tr>
+                                    <td>@list.Name</td>
+                                    <td>@list.Description</td>
+                                    <td>
+                                        <a href="/Book/DownloadFile?filePath=@list.URL">
+                                            <i class="fa-solid fa-download fa-xl"></i>
+                                        </a>
+                                    </td>
+                                    <td>@list.CourseId</td>
+                                    <td>@list.BatchId</td>
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action</button>
                                                     <ul class="dropdown-menu">
-                                                        <li class="dropdown-item">
-                                                            <a class="btn btn-primary btn-xs" data-title="Edit" href="/book/edit?Id=@list.Id"><span class="glyphicon glyphicon-pencil"></span></a>
+
+                                                        <li>
+                                                            <a type="button" class="dropdown-item btn text-info btn-xs mb-2" href="/book/edit?Id=@list.Id">
+                                                                <i class="fa-regular fa-pen-to-square"></i> Edit
+                                                            </a>
                                                         </li>
-                                                        <li class="dropdown-item">
-                                                            <a class="btn btn-danger btn-xs" data-title="Delete" data-bs-toggle="offcanvas" data-bs-target="#delete"><span class="glyphicon glyphicon-trash"></span></a>
+                                                        <li class="">
+                                                            <a type="button" class="dropdown-item btn text-danger btn-xs " asp-controller="Book" asp-action="Delete" asp-route-Id="@list.Id" onclick="return confirm('Are you sure want to delete the record?')">
+                                                                <i class="fa-regular fa-trash-can"></i> Delete
+                                                            </a>
                                                         </li>
                                                     </ul>
-                                                </td>
+                                            </div>
+                                        </td>
 
-                                                <div class="offcanvas offcanvas-top mx-auto h-50" tabindex="-1" id="delete" aria-labelledby="offcanvasExampleLabel" style="width: 500px;">
-                                                    <div class="offcanvas-header">
-                                                        <h5 class="h2 text-warning offcanvas-title" id="offcanvasExampleLabel">Attention</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="offcanvas-body">
-                                                        <p class="alert text-danger">Are You Sure Want To Delete The Data?</p>
-                                                        <div class="offcanvasbottom ">
-                                                            <a asp-controller="Book" asp-action="Delete" asp-route-id="@list.Id" class="btn btn-danger w-100">Yes</a>
-                                                            <a type="button" class="btn btn-secondary w-100 my-3" data-bs-dismiss="offcanvas" aria-label="Close">No</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            }
-                                        </tr>
-                                        index++;
-                                }
-                            </tbody>
-                        </table>
+
+                                    }
+                                </tr>
+                                index++;
+                            }
 
                     </div>
 

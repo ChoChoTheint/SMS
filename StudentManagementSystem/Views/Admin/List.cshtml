@@ -23,9 +23,6 @@
         </div>
     }
 }
-<<<<<<< HEAD
-
-
 
 @if(User.IsInRole("Admin"))
 {
@@ -68,15 +65,26 @@
                                 <td>@list.FatherName</td>
                                 @if (User.IsInRole("Admin"))
                                 {
-                        
                                     <td>
-                                        <a href="/admin/edit?Id=@list.Id" role="button" class="btn btn-primary btn-xs" data-title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>
+                                        <div class="dropdown">
+                                            <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action</button>
+                                                <ul class="dropdown-menu">
+
+                                                    <li>
+                                                        <a type="button" class="dropdown-item btn text-info btn-xs mb-2" href="/admin/edit?Id=@list.Id">
+                                                            <i class="fa-regular fa-pen-to-square"></i> Edit
+                                                        </a>
+                                                    </li>
+                                                    <li class="">
+                                                        <a type="button" class="dropdown-item btn text-danger btn-xs " asp-controller="Admin" asp-action="Delete" asp-route-Id="@list.Id" onclick="return confirm('Are you sure want to delete the record?')">
+                                                            <i class="fa-regular fa-trash-can"></i> Delete
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                        </div>
                                     </td>
-                                    <td>
-                                        <p data-placement="top" data-toggle="tooltip" title="Delete">
-                                            <a class="btn btn-danger btn-xs" data-title="Delete" href="/admin/delete?Id=@list.Id" onclick="return confirm('Are you sure to delete the record?')">Delete</a>
-                                        </p>
-                                    </td>
+
+
                                 }
 
                             </tr>
@@ -86,41 +94,9 @@
 
                     </tbody>
 
-                </table>
+     </table>
 }
-
-<<<<<<< HEAD
-=======
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-</div>
-=======
-=======
-
-
-
->>>>>>> Stashed changes
-               @* <div class="clearfix"></div>
-                <ul class="pagination pull-right">
-                    <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
-                    <li class="active"><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-    </ul>*@
->>>>>>> 1ac967215061b4265eef31e9423433e945bd1d94
-
-           
-
-       
-   
-<<<<<<< HEAD
-=======
-
->>>>>>> 1ac967215061b4265eef31e9423433e945bd1d94
-
+             
 <script>
     $(document).ready(function () {
         $('#adminTable').DataTable();

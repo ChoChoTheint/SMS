@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using StudentManagementSystem.DAO;
 using StudentManagementSystem.Models.DataModels;
 using StudentManagementSystem.Models.ViewModels;
+using StudentManagementSystem.Utilities;
+using System;
 
 namespace StudentManagementSystem.Controllers
 {
@@ -10,10 +12,12 @@ namespace StudentManagementSystem.Controllers
     {
         private readonly SMSDbContext _dbContext;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public BookController(SMSDbContext dbContext, IWebHostEnvironment webHostEnvironment)
+        private readonly PdfFileReader _pdfFileReader;
+        public BookController(SMSDbContext dbContext, IWebHostEnvironment webHostEnvironment, PdfFileReader pdfFileReader)
         {
             _dbContext = dbContext;
             _webHostEnvironment = webHostEnvironment;
+            _pdfFileReader = pdfFileReader;
         }
 
         [Authorize]
@@ -121,32 +125,40 @@ namespace StudentManagementSystem.Controllers
         }
 
         [Authorize]
-        public IActionResult DownloadFile(string filePath)
+        public IActionResult DownloadFile(string Id)
         {
-            string uploadFolder = Path.Combine("wwwroot", "books");
-
-            var memory = FilePath(filePath, uploadFolder);
-            return File(memory.ToArray(), "application/pdf", filePath);
+            var memory = FilePath(Id, "wwwroot//books");
+            return File(memory.ToArray(), "application/pdf", Id);
         }
 
         [Authorize]
         private MemoryStream FilePath(string fileName, string uploadFolder)
         {
+            string videoPath = Path.Combine(uploadFolder, fileName);
 
-            var path = Path.Combine(Directory.GetCurrentDirectory(), uploadFolder, fileName);
+            var path = Path.Combine(Directory.GetCurrentDirectory(), videoPath);
             var memeory = new MemoryStream();
 
             if (System.IO.File.Exists(path))
             {
                 var net = new System.Net.WebClient();
-                var data = net.DownloadData(fileName);
+                var data = net.DownloadData(path);
                 var content = new System.IO.MemoryStream(data);
                 memeory = content;
             }
             memeory.Position = 0;
             return memeory;
         }
-        
+
+        [Authorize]
+        public IActionResult ReadPDF(string Id)
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot//books", Id);
+            var pdfText = _pdfFileReader.ReadPDF(path);
+
+            return Content(pdfText);
+        }
+
 
         [Authorize]
         public IActionResult List()
@@ -154,9 +166,10 @@ namespace StudentManagementSystem.Controllers
             IList<BookViewModel> bookList = (from book in _dbContext.Books
                                              join course in _dbContext.Courses
                                              on book.CourseId equals course.Id
-                                             join video in _dbContext.Videos
-                                             on course.Id equals video.CourseId
+                                             join batch in _dbContext.Batches
+                                             on book.BatchId equals batch.Id
                                              
+                                             where book.CourseId == course.Id
 
                                              select new BookViewModel
                                              {
@@ -164,8 +177,8 @@ namespace StudentManagementSystem.Controllers
                                                  Name = book.Name,
                                                  Description = book.Description,
                                                  CourseId = course.Name,
+                                                 BatchId = batch.Name,
                                                  BookURL = book.URL,
-                                                 VideoURL = video.URL,
                                              }).ToList();
             return View(bookList);
         }

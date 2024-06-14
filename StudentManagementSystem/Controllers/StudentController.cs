@@ -22,16 +22,13 @@ namespace StudentManagementSystem.Controllers
 
             ViewBag.AspUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var batches = (from batch in _dbContext.Batches
-                                         join course in _dbContext.Courses
-                                         on batch.CourseId equals course.Id
 
-                                         select new BatchViewModel
-                                         {
-                                             Id = batch.Id,
-                                             Name = batch.Name + "/ " + course.Name
-                                         }).OrderBy(o => o.Name).ToList();
-            ViewBag.Batch = batches;
+            var courses = _dbContext.Courses.Select(s => new CourseViewModel
+            {
+                Id = s.Id,
+                Name = s.Name,
+            }).OrderBy(o => o.Name).ToList();
+            ViewBag.Course = courses;
 
             return View();
         }
@@ -60,7 +57,6 @@ namespace StudentManagementSystem.Controllers
                         DOB = ui.DOB,
                         FatherName = ui.FatherName,
                         Gender = ui.Gender,
-                        BatchId = ui.BatchId,
                         AspNetUsersId = ui.AspNetUsersId,
                     };
                     _dbContext.Students.Add(studentData);
@@ -75,16 +71,6 @@ namespace StudentManagementSystem.Controllers
 
                     ViewBag.AspUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                    var batches = (from batch in _dbContext.Batches
-                                   join course in _dbContext.Courses
-                                   on batch.CourseId equals course.Id
-
-                                   select new BatchViewModel
-                                   {
-                                       Id = batch.Id,
-                                       Name = batch.Name + "/ " + course.Name
-                                   }).OrderBy(o => o.Name).ToList();
-                    ViewBag.Batch = batches;
 
                     return View(ui);
                 }
@@ -96,37 +82,27 @@ namespace StudentManagementSystem.Controllers
             return RedirectToAction("list");
         }
 
+        
         [Authorize]
         public IActionResult List()
         {
-            IList<StudentViewModel> studentList = (from student in _dbContext.Students
-                                                   join batch in _dbContext.Batches
-                                                   on student.BatchId equals batch.Id
-                                                   join course in _dbContext.Courses
-                                                   on batch.CourseId equals course.Id
-                                                   
-                                                   where student.BatchId == batch.Id
-
-                                                   select new StudentViewModel
-                                                   {
-                                                       Id = student.Id,
-                                                       Name = student.Name,
-                                                       Email = student.Email,
-                                                       Phone = student.Phone,
-                                                       Address = student.Address,
-                                                       NRC = student.NRC,
-                                                       DOB = student.DOB,
-                                                       FatherName = student.FatherName,
-                                                       Gender = student.Gender,
-                                                       BatchId = batch.Name+"/ "+ course.Name,
-                                                       
-                                                   }).ToList();
-
-            
+            IList<StudentViewModel> studentList = _dbContext.Students.Select(s => new StudentViewModel
+            {
+                Id = s.Id,
+                Name = s.Name,
+                Email = s.Email,
+                Phone = s.Phone,
+                Address = s.Address,
+                NRC = s.NRC,
+                DOB = s.DOB,
+                FatherName = s.FatherName,
+                Gender = s.Gender,
+            }).ToList();
 
             return  View(studentList);
         }
 
+        
         [Authorize]
         public IActionResult Delete(string Id)
         {
@@ -162,30 +138,8 @@ namespace StudentManagementSystem.Controllers
                 DOB = s.DOB,
                 FatherName = s.FatherName,
                 Gender = s.Gender,
-                BatchId = s.BatchId
             }).FirstOrDefault();
 
-
-            //var batches = (from batch in _dbContext.Batches
-            //               join course in _dbContext.Courses
-            //               on batch.CourseId equals course.Id
-
-            //               select new BatchViewModel
-            //               {
-            //                   Id = batch.Id,
-            //                   Name = batch.Name + "/ " + course.Name
-            //               }).OrderBy(o => o.Name).ToList();
-            //ViewBag.Batch = batches;
-            var batches = (from batch in _dbContext.Batches
-                           join course in _dbContext.Courses
-                           on batch.CourseId equals course.Id
-
-                           select new BatchViewModel
-                           {
-                               Id = batch.Id,
-                               Name = batch.Name + "/ " + course.Name
-                           }).OrderBy(o => o.Name).ToList();
-            ViewBag.Batch = batches;
 
             return View(editStudentData);
         }
@@ -213,7 +167,6 @@ namespace StudentManagementSystem.Controllers
                         FatherName = ui.FatherName,
                         Gender = ui.Gender,
                         AspNetUsersId = ui.AspNetUsersId,
-                        BatchId = ui.BatchId,
                     };
 
                     _dbContext.Students.Update(updateStudentData);
@@ -222,26 +175,6 @@ namespace StudentManagementSystem.Controllers
                 }
                 else
                 {
-                    //var batches = (from batch in _dbContext.Batches
-                    //               join course in _dbContext.Courses
-                    //               on batch.CourseId equals course.Id
-
-                    //               select new BatchViewModel
-                    //               {
-                    //                   Id = batch.Id,
-                    //                   Name = batch.Name + "/ " + course.Name
-                    //               }).OrderBy(o => o.Name).ToList();
-                    //ViewBag.Batch = batches;
-                    var batches = (from batch in _dbContext.Batches
-                                   join course in _dbContext.Courses
-                                   on batch.CourseId equals course.Id
-
-                                   select new BatchViewModel
-                                   {
-                                       Id = batch.Id,
-                                       Name = batch.Name + "/ " + course.Name
-                                   }).OrderBy(o => o.Name).ToList();
-                    ViewBag.Batch = batches;
                     return View("Edit", model: ui);
                 }
             }

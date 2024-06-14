@@ -14,10 +14,12 @@ namespace StudentManagementSystem.Reports
         IList<AttendanceReportViewModel> IAttendanceReport.AttendanceDetailReport(string fromCode, string toCode)
         {
             IList<AttendanceReportViewModel> attendances = (from attendance in _dbContext.Attendances
+                                                            join sb in _dbContext.StudentBatches
+                                                            on attendance.StudentId equals sb.StudentId
                                                            join student in _dbContext.Students
                                                            on attendance.StudentId equals student.Id
                                                            join batch in _dbContext.Batches
-                                                           on student.BatchId equals batch.Id
+                                                           on sb.BatchId equals batch.Id
 
                                                            where attendance.Id.CompareTo(fromCode) >= 0 && attendance.Id.CompareTo(toCode) >= 0
                                                            select new AttendanceReportViewModel

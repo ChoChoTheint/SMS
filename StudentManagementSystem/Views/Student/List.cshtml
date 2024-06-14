@@ -26,28 +26,6 @@
 
 
 <div class="container">
-    @if (User.IsInRole("Admin")||User.IsInRole("Teacher"))
-    {
-        <h1 class="h3 fw-bold">Student: </h1>
-        <div class="row mt-5 border-bottom">
-            @foreach (var detail in Model)
-            {
-
-                <div class="col-lg-4 mb-5">
-                    <div class="card">
-                        <div class="card-body">
-                            <h1 class="h4 pb-2 border-bottom border-danger"><span class="fw-bold">Name: </span>  @detail.Name</h1>
-                            <div class="gap-4 border-bottom border-danger pb-3">
-                                <p class="card-text"><span class="fw-bold">Batch: </span>@detail.BatchId</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-           
-        </div>
-    }
-    
 
     @if (User.IsInRole("Admin"))
     {
@@ -60,21 +38,20 @@
                     <table id="adminTable" class="table table-bordred table-striped">
 
                         <thead>
-                        <th scope="col">ID</th>
-                        <th scope="col">Name</th>
-                        <th>Email</th>
-                        <th>Address</th>
-                        <th>Phone</th>
-                        <th>DOB</th>
-                        <th>NRC</th>
-                        <th>Gender</th>
-                        <th>Father Name</th>
-                        <th>Batch</th>
-                            @if (User.IsInRole("Admin"))
-                            {
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th>Email</th>
+                            <th>Address</th>
+                            <th>Phone</th>
+                            <th>DOB</th>
+                            <th>NRC</th>
+                            <th>Gender</th>
+                            <th>Father Name</th>
+                                @if (User.IsInRole("Admin"))
+                                {
                 
-                                <th>Action</th>
-                            }
+                                    <th>Action</th>
+                                }
                         </thead>
                         <tbody>
                             @{
@@ -97,22 +74,26 @@
                                     <td>@item.NRC</td>
                                     <td>@item.Gender</td>
                                     <td>@item.FatherName</td>
-                                    <td>@item.BatchId</td>
                                     @if (User.IsInRole("Admin"))
                                     {
-                                        <td class="dropdown">
-                                            <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action</button>
-                                            <ul class="dropdown-menu">
-                                                <li class="dropdown-item">
-                                                    <a class="btn btn-primary btn-xs" data-title="Edit" href="/student/edit?Id=@item.Id"><span class="glyphicon glyphicon-pencil"></span></a>
-                                                </li>
-                                                <li class="dropdown-item">
-                                                    <a class="btn btn-danger btn-xs" data-title="Delete" data-bs-toggle="offcanvas" data-bs-target="#delete" onclick="return confirm('Are you sure want to delete the record?')"><span class="glyphicon glyphicon-trash"></span></a>
-                                                </li>
-                                            </ul>
-                                        </td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="btn btn-white dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Action</button>
+                                                    <ul class="dropdown-menu">
 
-                                        
+                                                        <li>
+                                                            <a type="button" class="dropdown-item btn text-info btn-xs mb-2" href="/student/edit?Id=@item.Id">
+                                                                <i class="fa-regular fa-pen-to-square"></i> Edit
+                                                            </a>
+                                                        </li>
+                                                        <li class="">
+                                                            <a type="button" class="dropdown-item btn text-danger btn-xs " asp-controller="Student" asp-action="Delete" asp-route-Id="@item.Id" onclick="return confirm('Are you sure want to delete the record?')">
+                                                                <i class="fa-regular fa-trash-can"></i> Delete
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                            </div>
+                                        </td>
                                     }
                                 </tr>
                                 index++;

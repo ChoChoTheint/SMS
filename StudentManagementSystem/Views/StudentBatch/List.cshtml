@@ -1,0 +1,95 @@
+﻿@model IList<StudentBatchViewModel>
+@if (TempData["info"] != null)
+{
+    @if (TempData["info"].ToString().Contains("delete"))
+    {
+        <div class="alert alert-danger mt-3" role="alert">
+            @TempData["info"]
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-success mt-3" role="alert">
+            @TempData["info"]
+        </div>
+    }
+}
+
+
+<div class="container">
+
+    @if (User.IsInRole("Admin"))
+    {
+
+        <div class="row">
+            <h1 class="h4 my-3">Student Batch List</h1>
+
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table id="studentBatchTable" class="table table-bordred table-striped">
+
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Student</th>
+                                <th>Batch</th>
+                        
+                                    @if (User.IsInRole("Admin"))
+                                    {
+
+                                    <th>Action</th>
+                                    }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int index = 1;
+                            }
+                            
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@index</td>
+                                    <td>@item.StudentId</td>
+                                    <td>@item.BatchId</td>
+                                    
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action</button>
+                                                    <ul class="dropdown-menu">
+
+                                                        <li>
+                                                            <a type="button" class="dropdown-item btn text-info btn-xs mb-2" href="/studentbatch/edit?Id=@item.Id">
+                                                                <i class="fa-regular fa-pen-to-square"></i> Edit
+                                                            </a>
+                                                        </li>
+                                                        <li class="">
+                                                            <a type="button" class="dropdown-item btn text-danger btn-xs " asp-controller="StudentBatch" asp-action="Delete" asp-route-Id="@item.Id" onclick="return confirm('Are you sure want to delete the record?')">
+                                                                <i class="fa-regular fa-trash-can"></i> Delete
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                            </div>
+                                        </td>
+                                    }
+                                </tr>
+                                index++;
+                            }
+
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#studentBatchTable').DataTable();
+    });
+</script>

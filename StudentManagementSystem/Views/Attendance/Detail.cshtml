@@ -1,0 +1,31 @@
+﻿@model IList<AttendanceViewModel>
+<div class="container">
+
+    @if (User.IsInRole("Admin") || User.Identity.IsAuthenticated)
+    {
+        <h1 class="h4 mt-3">Attendances:</h1>
+        <div class="row">
+            @foreach (var detail in Model)
+            {
+                if (detail == null)
+                {
+                    <p class="alert alert-info" role="alert">No Chapter In Here!</p>
+                }
+                <div class="col-lg-4  mb-5">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h1 class="h5"><span class="fw-bold">Name: </span> @detail.StudentId</h1>
+                            <p class="card-text"><span class="fw-bold">Attendance Date: </span> @detail.AttendanceDate.ToString("dd-MM-yyyy")</p>
+                            <p class="card-text"><span class="fw-bold">In Time: </span> @detail.InTime.ToString("hh-mm-ss")</p>
+                            <p class="card-text"><span class="fw-bold">Out Time: </span> @detail.OutTime.ToString("hh-mm-ss")</p>
+                            <p class="card-text"><span class="fw-bold">Is Leave: </span> @detail.IsLeave</p>
+                            
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    }
+</div>

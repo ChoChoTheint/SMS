@@ -79,7 +79,7 @@ namespace StudentManagementSystem.Controllers
                 if (ModelState.IsValid)
                 {
                     // Define the path to the uploads folder
-                    var uploadsFolder = Path.Combine("wwwroot", "files");
+                    var uploadsFolder = Path.Combine("wwwroot", "assignments");
 
                     // Ensure the directory exists
                     if (!Directory.Exists(uploadsFolder))
@@ -157,26 +157,15 @@ namespace StudentManagementSystem.Controllers
         }
 
         [Authorize]
-        public IActionResult DownloadFile(string fileName)
+        public IActionResult DownloadFile()
         {
-            //string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
-            var memory = FilePath(fileName);
-            return File(memory.ToArray(), "application/pdf", $"{fileName}.pdf");
+            var memory = FilePath("d4ffd230-bd98-4d29-b446-f18e3bdaee64_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf", "wwwroot//assignments");
+            return File(memory.ToArray(), "application/pdf", "d4ffd230-bd98-4d29-b446-f18e3bdaee64_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf");
         }
-       
-        private MemoryStream FilePath(string fileName)
+
+        private MemoryStream FilePath(string fileName, string uploadFolder)
         {
-            string uploadFolder = Path.Combine("wwwroot", "files", $"{fileName}.pdf");
-            //string projectPath = Directory.GetCurrentDirectory();
-
-            //var path = Path.Combine(Directory.GetCurrentDirectory(), uploadFolder, fileName);
-
-
-            var path = Path.Combine(Directory.GetCurrentDirectory(), uploadFolder);
-
-          //  var path = Path.Combine(Directory.GetCurrentDirectory(), uploadFolder, fileName);
-
-
+            string path = Path.Combine("wwwroot", "assignments", "d4ffd230-bd98-4d29-b446-f18e3bdaee64_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf");
 
             var memeory = new MemoryStream();
 
@@ -192,6 +181,7 @@ namespace StudentManagementSystem.Controllers
         }
         
 
+        
 
        // public class VideoService
         //{
@@ -216,12 +206,14 @@ namespace StudentManagementSystem.Controllers
             
 
             IList<AssignmentViewModel> assignmentList = (from assignment in _dbContext.Assignments
+                                                         join sb in _dbContext.StudentBatches
+                                                         on assignment.BatchId equals sb.BatchId
                                                          join course in _dbContext.Courses
                                                          on assignment.CourseId equals course.Id
                                                          join batch in _dbContext.Batches
                                                          on assignment.BatchId equals batch.Id
                                                          join student in _dbContext.Students
-                                                         on batch.Id equals student.BatchId
+                                                         on sb.StudentId equals student.Id
 
                                                          select new AssignmentViewModel
                                                          {
@@ -233,6 +225,56 @@ namespace StudentManagementSystem.Controllers
                                                              BatchId = batch.Name+"/ "+course.Name,
                                                          }).ToList();
             return View(assignmentList);
+        }
+
+        [Authorize]
+        public IActionResult Detail()
+        {
+            IList<AssignmentViewModel> assignmentDetail = (from assignment in _dbContext.Assignments
+                                                         join sb in _dbContext.StudentBatches
+                                                         on assignment.BatchId equals sb.BatchId
+                                                         join course in _dbContext.Courses
+                                                         on assignment.CourseId equals course.Id
+                                                         join batch in _dbContext.Batches
+                                                         on assignment.BatchId equals batch.Id
+                                                         join student in _dbContext.Students
+                                                         on sb.StudentId equals student.Id
+
+                                                         select new AssignmentViewModel
+                                                         {
+                                                             Id = assignment.Id,
+                                                             Name = student.Name,
+                                                             Description = assignment.Description,
+                                                             URL = assignment.URL,
+                                                             CourseId = course.Name,
+                                                             BatchId = batch.Name + "/ " + course.Name,
+                                                         }).ToList();
+            return View(assignmentDetail);
+        }
+        [Authorize]
+        public IActionResult StudentDetail() 
+        {
+            AssignmentViewModel studentDetail = (from assignment in _dbContext.Assignments
+                                                 join sb in _dbContext.StudentBatches
+                                                 on assignment.BatchId equals sb.BatchId
+                                                 join course in _dbContext.Courses
+                                                 on assignment.CourseId equals course.Id
+                                                 join batch in _dbContext.Batches
+                                                 on assignment.BatchId equals batch.Id
+                                                 join student in _dbContext.Students
+                                                 on sb.StudentId equals student.Id
+                                                 where sb.StudentId == student.Id && sb.BatchId == batch.Id && batch.CourseId == course.Id && assignment.BatchId == batch.Id
+
+                                                 select new AssignmentViewModel
+                                                 {
+                                                     Id = assignment.Id,
+                                                     Name = student.Name,
+                                                     Description = assignment.Description,
+                                                     CourseId = course.Name,
+                                                     BatchId = batch.Name+"/ "+course.Name,
+                                                     URL = assignment.URL,
+                                                 }).FirstOrDefault();
+            return View(studentDetail);
         }
 
         [Authorize]
