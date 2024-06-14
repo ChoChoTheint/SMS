@@ -69,25 +69,6 @@ namespace StudentManagementSystem.Controllers
             return uniqueFileName;
         }
 
-        
-       // private string UploadedFile(AssignmentViewModel model)
-        //{
-          //  string uniqueFileName = null;
-
-           // if (model.File != null)
-            //{
-              //  string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
-              //  uniqueFileName = Guid.NewGuid().ToString() + "_" + model.File.FileName;
-              //  string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-              //  using (var fileStream = new FileStream(filePath, FileMode.Create))
-              //  {
-                //    model.File.CopyTo(fileStream);
-              //  }
-          //  }
-          //  return uniqueFileName;
-      //  }
-
-
 
         [HttpPost]
         [Authorize]
@@ -177,48 +158,16 @@ namespace StudentManagementSystem.Controllers
         }
 
         [Authorize]
-<<<<<<< HEAD
 
-
-
-
-        //public IActionResult DownloadFile(string fileName)
-
+        //public IActionResult DownloadFile()
         //{
-        //    string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
-
-        //    var memory = FilePath(filePath, uploadFolder);
-        //    return File(memory.ToArray(), "application/pdf", filePath);
+        //    var memory = FilePath("d4ffd230-bd98-4d29-b446-f18e3bdaee64_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf", "wwwroot//assignments");
+        //    return File(memory.ToArray(), "application/pdf", "d4ffd230-bd98-4d29-b446-f18e3bdaee64_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf");
         //}
 
-
-        //[Authorize]
-      
-        //private MemoryStream FilePath(string fileName)
-=======
-        public IActionResult DownloadFile()
-        {
-            var memory = FilePath("d4ffd230-bd98-4d29-b446-f18e3bdaee64_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf", "wwwroot//assignments");
-            return File(memory.ToArray(), "application/pdf", "d4ffd230-bd98-4d29-b446-f18e3bdaee64_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf");
-        }
-
-        private MemoryStream FilePath(string fileName, string uploadFolder)
-        {
-            string path = Path.Combine("wwwroot", "assignments", "d4ffd230-bd98-4d29-b446-f18e3bdaee64_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf");
->>>>>>> origin/main
-
+        //private MemoryStream FilePath(string fileName, string uploadFolder)
         //{
-
-<<<<<<< HEAD
-
-        //    var path = Path.Combine(Directory.GetCurrentDirectory(), uploadFolder, fileName);
-
-
-
-        //    var path = Path.Combine(Directory.GetCurrentDirectory(), videoPath);
-
-
-        //    var memeory = new MemoryStream();
+        //    string path = Path.Combine("wwwroot", "assignments", "d4ffd230-bd98-4d29-b446-f18e3bdaee64_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf");
 
         //    if (System.IO.File.Exists(path))
         //    {
@@ -229,38 +178,8 @@ namespace StudentManagementSystem.Controllers
         //    }
         //    memeory.Position = 0;
         //    return memeory;
-=======
-            if (System.IO.File.Exists(path))
-            {
-                var net = new System.Net.WebClient();
-                var data = net.DownloadData(fileName);
-                var content = new System.IO.MemoryStream(data);
-                memeory = content;
-            }
-            memeory.Position = 0;
-            return memeory;
-        }
-        
-
-        
-
-       // public class VideoService
-        //{
-          //  private readonly IWebHostEnvironment _env;
-
-            //public VideoService(IWebHostEnvironment env)
-            //{
-               /// _env = env;
-           // }
-
-           // public string GetVideoPath()
-            //{
-            //    string webRootPath = _env.WebRootPath; // wwwroot folder
-            //    string videoPath = Path.Combine(webRootPath, "video");
-            //   return videoPath;
-           // }
->>>>>>> origin/main
         //}
+        
 
         [Authorize]
         public IActionResult List()
