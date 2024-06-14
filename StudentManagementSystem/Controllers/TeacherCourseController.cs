@@ -96,17 +96,52 @@ namespace StudentManagementSystem.Controllers
                                                          on tc.TeacherId equals teacher.Id
                                                          join course in _dbContext.Courses
                                                          on tc.CourseId equals course.Id
-                                                         join batch in _dbContext.Batches
-                                                         on course.Id equals batch.CourseId
+                                                         
 
                                                          select new TeacherCourseViewModel
                                                          {
-                                                             Id = tc.Id,
+                                                             Id = tc.CourseId,
                                                              TeacherId = teacher.Name,
                                                              CourseId = course.Name,
-                                                             BatchInfo = batch.Name,
                                                          }).ToList();
             return View(teacherCourseList);
+        }
+
+        [Authorize]
+        public IActionResult Detail()
+        {
+            IList<TeacherCourseViewModel> teacherCourseList = (from tc in _dbContext.TeacherCourses
+                                                               join teacher in _dbContext.Teachers
+                                                               on tc.TeacherId equals teacher.Id
+                                                               join course in _dbContext.Courses
+                                                               on tc.CourseId equals course.Id
+
+
+                                                               select new TeacherCourseViewModel
+                                                               {
+                                                                   Id = tc.CourseId,
+                                                                   TeacherId = teacher.Name,
+                                                                   CourseId = course.Name,
+                                                               }).ToList();
+            return View(teacherCourseList);
+        }
+        [Authorize]
+        public IActionResult TeacherDetail()
+        {
+            IList<TeacherCourseViewModel> teacherDetail = (from tc in _dbContext.TeacherCourses
+                                                           join teacher in _dbContext.Teachers
+                                                           on tc.TeacherId equals teacher.Id
+                                                           join course in _dbContext.Courses
+                                                           on tc.CourseId equals course.Id
+                                                           where tc.TeacherId == teacher.Id && tc.CourseId == course.Id
+
+                                                           select new TeacherCourseViewModel
+                                                           {
+                                                               Id = tc.CourseId,
+                                                               TeacherId = teacher.Name,
+                                                               CourseId = course.Name,
+                                                           }).ToList();
+            return View(teacherDetail);
         }
 
         [Authorize]

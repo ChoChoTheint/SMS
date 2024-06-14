@@ -322,6 +322,22 @@
                             </li>
                             <li class="nav-item dropdown align-items-center gap-2 active">
                                 <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Teacher Course
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-white">
+                                    <a class="dropdown-item link-underline link-underline-opacity-0" aria-current="page" href="/teachercourse/entry">
+                                        <i class="fa-solid fa-plus fa-lg"></i>
+                                        Entry
+                                    </a>
+                                    <a class="dropdown-item link-underline link-underline-opacity-0" aria-current="page" href="/teachercourse/list">
+                                        <i class="fa-solid fa-list"></i>
+                                        List
+                                    </a>
+
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown align-items-center gap-2 active">
+                                <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                     Student
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-white">
@@ -330,6 +346,22 @@
                                         Entry
                                     </a>
                                     <a class="dropdown-item link-underline link-underline-opacity-0" aria-current="page" href="/student/list">
+                                        <i class="fa-solid fa-list"></i>
+                                        List
+                                    </a>
+
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown align-items-center gap-2 active">
+                                <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Student Batch
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-white">
+                                    <a class="dropdown-item link-underline link-underline-opacity-0" aria-current="page" asp-controller="StudentBatch" asp-action="Index">
+                                        <i class="fa-solid fa-plus fa-lg"></i>
+                                        Entry
+                                    </a>
+                                    <a class="dropdown-item link-underline link-underline-opacity-0" aria-current="page" asp-controller="StudentBatch" asp-action="List">
                                         <i class="fa-solid fa-list"></i>
                                         List
                                     </a>
@@ -484,36 +516,8 @@
 
                                 </ul>
                             </li>
-                            <li class="nav-item dropdown align-items-center gap-2 active">
-                                <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Teacher Course
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-white">
-                                    <a class="dropdown-item link-underline link-underline-opacity-0" aria-current="page" href="/teachercourse/entry">
-                                        <i class="fa-solid fa-plus fa-lg"></i>
-                                        Entry
-                                    </a>
-                                    <a class="dropdown-item link-underline link-underline-opacity-0" aria-current="page" href="/teachercourse/list">
-                                        <i class="fa-solid fa-list"></i>
-                                        List
-                                    </a>
-
-                                </ul>
-                            </li>
-                            @* <ul>
-                            <li class="nav-item">
-                            <a class="nav-link d-flex align-items-center gap-2 ms-4" href="/teachercourse/entry">
-                            <i class="fa-solid fa-square-poll-horizontal fa-xl" style="color: #000031;"></i>
-                            Teacher Course
-                            </a>
-                            </li>
-                            <li class="nav-item">
-                            <a class="nav-link d-flex align-items-center gap-2 ms-4" href="/teachercourse/entry">
-                            <i class="fa-solid fa-square-poll-horizontal fa-xl" style="color: #000031;"></i>
-                            list
-                            </a>
-                            </li>
-                            </ul> *@
+                            
+                            
                         </ul>
 
 

@@ -1,0 +1,42 @@
+﻿@model StudentManagementSystem.Models.ViewModels.StudentBatchViewModel
+<div class="container w-50 mx-auto mt-5 p-5 border-start border-end border-bottom rounded-start rounded-end shadow-sm" style="border-top: 12px solid #699BF7;">
+    <div class="d-flex justify-content-center align-items-center mb-4">
+        <div class="me-3">
+            <i class="fa-solid fa-book-open fa-2xl" style="color: #699BF7"></i>
+        </div>
+        <div class="text-center">
+            <span class="mate-sc text-uppercase fw-bold">Leadership</span>
+            <h1 class="h5 brand-space">Excellence</h1>
+        </div>
+    </div>
+    <h1 class="h4 mb-3 text-center">Student Batch Entry Form</h1>
+    <form asp-controller="StudentBatch" asp-action="Index" enctype="multipart/form-data">
+        <input asp-for="Id" value="@ViewBag.Id" type="hidden" />
+        <div class="mb-3">
+            <label asp-for="StudentId" class="form-label">Student</label>
+            <select asp-for="StudentId" class="form-select">
+                <option value="" selected>---choose student---</option>
+                @foreach (var student in ViewBag.Student)
+                {
+                    <option value="@student.Id">@student.Name</option>
+                }
+            </select>
+            <span asp-validation-for="StudentId" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="BatchId" class="form-label">Batch</label>
+            <select asp-for="BatchId" class="form-select">
+                <option value="" selected>---choose student---</option>
+                @foreach (var batch in ViewBag.Batch)
+                {
+                    <option value="@batch.Id">@batch.Name</option>
+                }
+            </select>
+            <span asp-validation-for="BatchId" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-primary" role="button" type="submit">Submit</button>
+            <button class="btn btn-secondary" role="button" type="reset">Cancel</button>
+        </div>
+    </form>
+</div>

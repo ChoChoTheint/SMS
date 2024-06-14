@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StudentManagementSystem.DAO;
 using StudentManagementSystem.Reports;
+using StudentManagementSystem.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,9 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 
 //injection the IAttendanceReport with AttendanceDetailReport
 builder.Services.AddScoped<IAttendanceReport, AttendanceDetailReport>();
+
+//for PDFReader
+builder.Services.AddTransient<PdfFileReader>();
 
 var app = builder.Build();
 

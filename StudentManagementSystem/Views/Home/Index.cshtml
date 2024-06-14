@@ -64,64 +64,63 @@ else if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                             </div>
                         </div>
                     </div>
-                    <div class="row mt-3 gap-lg-5">
+                    <div class="row my-5 gap-lg-5">
 
-                        <div class="col-lg-5 mb-3">
-                            <a asp-controller="TeacherCourse" asp-action="List" class="btn">
-                                <h1 class="h3">Teachers</h1>
-                            </a>
-                            <div class="border-none position-relative">
+                        <div class="col-lg-5">
+                            <div class="card position-relative shadow">
                                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@ViewBag.TeacherCount</span>
-                                 <div class="card-body ">
-                                        @* <canvas id="myTableChart" height="220"></canvas> *@
+                                <div class="card-body w-75">
+                                    <h1 class="h3">Teacher</h1>
+                                    <p class="card-text">In here, you can see all of Teacher's Info.</p>
                                  </div>
-                                
+                                <div class="card-footer">
+                                    <a asp-controller="TeacherCourse" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
+                                </div>
                             </div>
 
                         </div>
-                        <div class="col-lg-5 mb-3">
-                            <a asp-controller="Student" asp-action="List" class="btn">
-                                <h1 class="h3">Students</h1>
-                            </a>
-                            <div class="card position-relative">
+                        <div class="col-lg-5">
+                            <div class="card position-relative shadow">
                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@ViewBag.StudentCount</span>
-                                <div class="card-body ">
-                                    <canvas id="myStudentChart" height="220"></canvas>
+                                <div class="card-body">
+                                    <h1 class="h3">Student</h1>
+                                    <p class="card-text">In here, you can see all of the student's batches.</p>
                                 </div>
 
+                                <div class="card-footer">
+                                    <a asp-controller="StudentBatch" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
+                                </div>
                             </div>
-
                         </div>
-                        <div class="col-4 mb-3">
-                        </div>
+                        
                     </div>
-                    <div class="row gap-lg-5">
-                        <div class="col-lg-5 mb-3">
-                            <a asp-controller="Course" asp-action="List" class="btn">
-                                <h1 class="h3">Courses</h1>
-                            </a>
-                            <div class="card position-relative">
+                    <div class="row gap-lg-5 mb-5">
+                        <div class="col-lg-5">
+                            <div class="card position-relative shadow">
                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@ViewBag.CourseCount</span>
-                                <div class="card-body ">
-                                    <canvas id="myCourseChart" height="220"></canvas>
+                                <div class="card-body">
+                                    <h1 class="h3">Course</h1>
+                                    <p class="card-text">In here, you can see all of courses in this school.</p>
                                 </div>
 
+                                <div class="card-footer">
+                                    <a asp-controller="Course" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
+                                </div>
                             </div>
-
                         </div>
                         
                         <div class="col-lg-5">
-                            <a asp-controller="Batches" asp-action="List" class="btn">
-                                <h1 class="h3">Batch</h1>
-                            </a>
-                            <div class="card position-relative">
+                            <div class="card position-relative shadow">
                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@ViewBag.BatchCount</span>
-                                <div class="card-body ">
-                                    <canvas id="myBatchChart" height="220"></canvas>
+                                <div class="card-body">
+                                    <h1 class="h3">Batch</h1>
+                                    <p class="card-text">In here, you can see all of batches in this school.</p>
                                 </div>
 
+                                <div class="card-footer">
+                                    <a asp-controller="Batch" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
+                                </div>
                             </div>
-
                         </div>
                         
                         
@@ -135,6 +134,7 @@ else if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
 
         </div>
     </div>
+
     
 }
 else if (User.Identity.IsAuthenticated && User.IsInRole("Teacher"))
@@ -142,89 +142,82 @@ else if (User.Identity.IsAuthenticated && User.IsInRole("Teacher"))
     // Layout = "_LayoutTeacher";
     
     <div class="container mt-3">
-        <div class="row">
-            <div class="col-lg-4 mb-3">
-                <h1 class="h3">Course</h1>
-                <div class="card position-relative">
-                    <div class="card-title ms-2 mt-2">Course</div>
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@ViewBag.CourseCount</span>
+        <div class="row mb-5">
+            <div class="col-lg-4">
+                <div class="card position-relative shadow">
                     <div class="card-body">
+                        <h1 class="h3">Course</h1>
                         <p>In here, you can see all of the courses in this school.</p>
                     </div>
                     <div class="card-footer">
-                        <a asp-controller="Course" asp-action="List" class="btn btn-primary float-end">Details</a>
+                        <a asp-controller="Course" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
                     </div>
                 </div>
 
             </div>
-            <div class="col-lg-4 mb-3">
-                <h1 class="h3">Batch</h1>
-                <div class="card position-relative">
-                    <div class="card-title ms-2 mt-2">Batch</div>
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@ViewBag.BatchCount</span>
+            <div class="col-lg-4">
+
+                <div class="card shadow">
                     <div class="card-body">
-                        <p>In here, you can see all of the batches in this school.</p>
+                        <h1 class="h3">Batch</h1>
+                        <p>In here, you can see all of your batches in this school.</p>
                     </div>
                     <div class="card-footer">
-                        <a asp-controller="Batch" asp-action="List" class="btn btn-primary float-end">Details</a>
+                        <a asp-controller="TeacherCourse" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
                     </div>
                 </div>
 
             </div>
-            <div class="col-lg-4 mb-3">
-                <h1 class="h3">Attendance</h1>
-                <div class="card position-relative">
-                    <div class="card-title ms-2 mt-2">Attendance</div>
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@ViewBag.AttendanceCount</span>
+            <div class="col-lg-4">
+
+                <div class="card shadow">
                     <div class="card-body">
+                        <h1 class="h3">Attendance</h1>
                         <p>In here, you can see all of your student's attendance.</p>
                     </div>
                     <div class="card-footer">
-                        <a asp-controller="Attendance" asp-action="List" class="btn btn-primary float-end">Details</a>
+                        <a asp-controller="Attendance" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
                     </div>
                 </div>
 
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-4 mb-3">
-                <h1 class="h3">Assignment</h1>
-                <div class="card position-relative">
-                    <div class="card-title ms-2 mt-2">Assignment</div>
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@ViewBag.AssignmentCount</span>
+        <div class="row mb-5">
+            <div class="col-lg-4">
+
+                <div class="card shadow">
                     <div class="card-body">
+                        <h1 class="h3">Assignment</h1>
                         <p>In here, you can see all of your student's assignment.</p>
                     </div>
                     <div class="card-footer">
-                        <a asp-controller="Assignment" asp-action="List" class="btn btn-primary float-end">Details</a>
+                        <a asp-controller="Assignment" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
                     </div>
                 </div>
 
             </div>
-            <div class="col-lg-4 mb-3">
-                <h1 class="h3 position-relative">Exam Result</h1>
-                <div class="card">
-                    <div class="card-title ms-2 mt-2">Exam Result</div>
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@ViewBag.ExamResultCount</span>
+            <div class="col-lg-4">
+
+                <div class="card shadow">
                     <div class="card-body">
+                        <h1 class="h3">Exam Result</h1>
                         <p>In here, you can see all of the exam results in this school.</p>
                     </div>
                     <div class="card-footer">
-                        <a asp-controller="ExamResult" asp-action="List" class="btn btn-primary float-end">Details</a>
+                        <a asp-controller="ExamResult" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
                     </div>
                 </div>
 
             </div>
-            <div class="col-lg-4 mb-3">
-                <h1 class="h3">Exam</h1>
-                <div class="card position-relative">
-                    <div class="card-title ms-2 mt-2">Exam</div>
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@ViewBag.ExamCount</span>
+            <div class="col-lg-4">
+
+                <div class="card shadow">
                     <div class="card-body">
+                        <h1 class="h3">Exam</h1>
                         <p>In here, you can see all of the exams in this school.</p>
                     </div>
                     <div class="card-footer">
-                        <a asp-controller="Exam" asp-action="List" class="btn btn-primary float-end">Details</a>
+                        <a asp-controller="Exam" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
                     </div>
                 </div>
 
@@ -238,95 +231,78 @@ else if (User.Identity.IsAuthenticated && User.IsInRole("Teacher"))
 else if(User.Identity.IsAuthenticated)
 {
         <div class="container mt-3">
-            <div class="row">
-                <div class="col-lg-4 mb-3">
-                    <h1 class="h3">Course</h1>
-                    <div class="card position-relative">
-                        <div class="card-title ms-2 mt-2">Course</div>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@ViewBag.CourseCount</span>
+        <div class="row mb-5">
+                <div class="col-lg-5 ">
+                    <div class="card shadow">
                         <div class="card-body">
-                            <p>In here, you can see courses.</p>
+                            <h1 class="h3">Courses</h1>
+                            <p class="">In here, you can see all of courses.</p>
+                        </div>
+
+                        <div class="card-footer">
+                        <a asp-controller="Course" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h1 class="h3">Batch</h1>
+                            <p>In here, you can see all of your batches.</p>
+                            
                         </div>
                         <div class="card-footer">
-                            <a asp-controller="Course" asp-action="List" class="btn btn-primary float-end">Details</a>
+                            <a asp-controller="Batch" asp-action="StudentDetail" class="btn btn-primary float-end">Details>></a>
                         </div>
                     </div>
 
                 </div>
-                <div class="col-lg-4 mb-3">
-                    <h1 class="h3">Batch</h1>
-                    <div class="card position-relative">
-                        <div class="card-title ms-2 mt-2">Batch</div>
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@ViewBag.BatchCount</span>
+                
+        </div>
+        <div class="row mb-5">
+                <div class="col-lg-5">
+                    <div class="card shadow">
                         <div class="card-body">
-                            <p>In here, you can see all of batchs.</p>
+                            <h1 class="h3">Assignments</h1>
+                            <p>In here, you can see all of your assignments.</p>
                         </div>
                         <div class="card-footer">
-                            <a asp-controller="Batch" asp-action="List" class="btn btn-primary float-end">Details</a>
+                            <a asp-controller="Assignment" asp-action="StudentDetail" class="btn btn-primary float-end">Details>></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-5">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h1 class="h3">Attendance</h1>
+                            <p>In here, you can see all of your attendance.</p>
+                        </div>
+                        <div class="card-footer">
+                            <a asp-controller="Attendance" asp-action="List" class="btn btn-primary float-end">Details>></a>
                         </div>
                     </div>
 
                 </div>
-                <div class="col-lg-4 mb-3">
-                <h1 class="h3">Book</h1>
-                <div class="card position-relative">
-                        <div class="card-title ms-2 mt-2">Book</div>
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@ViewBag.BookCount</span>
-                        <div class="card-body">
-                            <p>In here, you can see all of your book.</p>
-                        </div>
-                        <div class="card-footer">
-                            <a asp-controller="Book" asp-action="List" class="btn btn-primary float-end">Details</a>
-                        </div>
-                    </div>
-
-                </div>
+                
             </div>
-            <div class="row">
-                <div class="col-lg-4 mb-3">
-                <h1 class="h3">Assignment</h1>
-                    <div class="card position-relative">
-                        <div class="card-title ms-2 mt-2">Assignment</div>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@ViewBag.AssignmentCount</span>
+            <div class="row mb-3">
+                <div class="col-lg-5">
+                    <div class="card shadow">
                         <div class="card-body">
-                            <p>In here, you can see all of your assignment.</p>
-                        </div>
-                        <div class="card-footer">
-                            <a asp-controller="Assignment" asp-action="List" class="btn btn-primary float-end">Details</a>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-lg-4 mb-3">
-                    <h1 class="h3">Exam Result</h1>
-                    <div class="card">
-                        <div class="card-title ms-2 mt-2">Exam Result</div>
-                        <div class="card-body">
+                            <h1 class="h3">Exam Results</h1>
                             <p>In here, you can see your exam result.</p>
                         </div>
                         <div class="card-footer">
-                            <a asp-controller="ExamResult" asp-action="List" class="btn btn-primary float-end">Details</a>
+                            <a asp-controller="ExamResult" asp-action="List" class="btn btn-primary float-end">Details>></a>
                         </div>
                     </div>
 
                 </div>
-            <div class="col-lg-4 mb-3">
-                <h1 class="h3">Attendance</h1>
-                <div class="card position-relative">
-                    <div class="card-title ms-2 mt-2">Attendance</div>
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@ViewBag.AttendanceCount</span>
-                    <div class="card-body">
-                        <p>In here, you can see all of your attendance.</p>
-                    </div>
-                    <div class="card-footer">
-                        <a asp-controller="Attendance" asp-action="List" class="btn btn-primary float-end">Details</a>
-                    </div>
-                </div>
-
-            </div>
-                
             </div>
     </div>
+
+    
 }
 else
 {
@@ -334,151 +310,3 @@ else
 }
 
 
-<script>
-    $(document).ready(function () {
-        $("#attendanceTable").DataTable();
-    })
-
-
-    const CourseCtx = document.getElementById('myCourseChart').getContext('2d');
-    const BatchCtx = document.getElementById('myBatchChart').getContext('2d');
-    const StudentCtx = document.getElementById('myStudentChart').getContext('2d');
-
-    const myCourseChart = new Chart(CourseCtx, {
-        type: 'pie',
-        data: {
-            datasets: [{
-                label: 'Courses',
-                data: [65, 59, 80, 81, 56, 55, 40],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
-                    'rgba(255, 205, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(201, 203, 207, 0.2)'
-                ],
-                borderColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(255, 159, 64)',
-                    'rgb(255, 205, 86)',
-                    'rgb(75, 192, 192)',
-                    'rgb(54, 162, 235)',
-                    'rgb(153, 102, 255)',
-                    'rgb(201, 203, 207)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-
-    const myBatchChart = new Chart(BatchCtx, {
-        type: 'pie',
-        data: {
-            datasets: [{
-                label: 'School Management System',
-                data: [65, 59, 80, 81, 56, 55, 40],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
-                    'rgba(255, 205, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(201, 203, 207, 0.2)'
-                ],
-                borderColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(255, 159, 64)',
-                    'rgb(255, 205, 86)',
-                    'rgb(75, 192, 192)',
-                    'rgb(54, 162, 235)',
-                    'rgb(153, 102, 255)',
-                    'rgb(201, 203, 207)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-
-    const myStudentChart = new Chart(StudentCtx, {
-        type: 'pie',
-        data: {
-            datasets: [{
-                label: 'School Management System',
-                data: [65, 59, 80, 81, 56, 55, 40],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
-                    'rgba(255, 205, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(201, 203, 207, 0.2)'
-                ],
-                borderColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(255, 159, 64)',
-                    'rgb(255, 205, 86)',
-                    'rgb(75, 192, 192)',
-                    'rgb(54, 162, 235)',
-                    'rgb(153, 102, 255)',
-                    'rgb(201, 203, 207)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-
-
-    
-    const bubbleCtx = document.getElementById('myBubbleChart').getContext('2d');
-    const myBubbleChart = new Chart(bubbleCtx, {
-        type: 'bubble',
-        data: {
-            labels: ['Student', 'Exam Result'],
-            datasets: [{
-                label: 'School Management System',
-                data: [{
-                    x: 20,
-                    y: 30,
-                    r: 15
-                }, {
-                    x: 40,
-                    y: 10,
-                    r: 10
-                }],
-                backgroundColor: 'rgb(255, 99, 132)'
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-</script>

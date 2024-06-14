@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using StudentManagementSystem.DAO;
 using StudentManagementSystem.Models.DataModels;
 using StudentManagementSystem.Models.ViewModels;
+using System.Security.Claims;
 
 namespace StudentManagementSystem.Controllers
 {
@@ -85,8 +86,6 @@ namespace StudentManagementSystem.Controllers
             IList<BatchViewModel> batchList = (from batch in _dbContext.Batches
                                                join course in _dbContext.Courses
                                                on batch.CourseId equals course.Id
-                                               
-                                               
 
                                                select new BatchViewModel
                                                {
@@ -102,14 +101,15 @@ namespace StudentManagementSystem.Controllers
             
             return View(batchList);
         }
-
+        
         [Authorize]
-        public IActionResult Detail(string Id)
+        public IActionResult Detail()
         {
             IList<BatchViewModel> batchDetail = (from batch in _dbContext.Batches
                                                  join course in _dbContext.Courses
                                                  on batch.CourseId equals course.Id
-                                                 where batch.CourseId == Id
+                                                 
+                                                 where batch.CourseId == course.Id 
 
                                                  select new BatchViewModel
                                                  {
@@ -124,6 +124,54 @@ namespace StudentManagementSystem.Controllers
             return View(batchDetail);
         }
 
+        [Authorize]
+        public IActionResult TeacherDetail(string Id)
+        {
+            IList<BatchViewModel> teacherBatchDetail = (from batch in _dbContext.Batches
+                                                 join course in _dbContext.Courses
+                                                 on batch.CourseId equals course.Id
+
+                                                 where batch.CourseId == Id
+
+                                                 select new BatchViewModel
+                                                 {
+                                                     Id = batch.Id,
+                                                     Name = batch.Name,
+                                                     Description = batch.Description,
+                                                     CourseId = course.Name,
+                                                     OpeningDate = batch.OpeningDate,
+                                                     DurationInHour = batch.DurationInHour,
+                                                     DurationInMonth = batch.DurationInMonth,
+                                                 }).ToList();
+            return View(teacherBatchDetail);
+        }
+
+        [Authorize]
+        public IActionResult StudentDetail(string Id)
+        {
+
+            IList<BatchViewModel> studentBatchDetail = (from batch in _dbContext.Batches
+                                                   join sb in _dbContext.StudentBatches
+                                                   on batch.Id equals sb.BatchId
+                                                    join student in _dbContext.Students
+                                                    on sb.StudentId equals student.Id
+                                                    join course in _dbContext.Courses
+                                                    on batch.CourseId equals course.Id
+
+                                                    where sb.BatchId == Id
+
+                                                   select new BatchViewModel
+                                            {
+                                                Id = sb.BatchId,
+                                                Name = batch.Name,
+                                                Description = batch.Description,
+                                                CourseId = course.Name+"/ "+batch.Name,
+                                                OpeningDate = batch.OpeningDate,
+                                                DurationInHour = batch.DurationInHour,
+                                                DurationInMonth = batch.DurationInMonth,
+                                            }).ToList();
+            return View(studentBatchDetail);
+        }
         [Authorize]
         public IActionResult Delete(string Id)
         {

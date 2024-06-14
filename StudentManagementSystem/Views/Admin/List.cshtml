@@ -68,24 +68,25 @@
                                 @if (User.IsInRole("Admin"))
                                 {
                                     <td>
-                                        <a href="/admin/edit?Id=@list.Id" role="button" class="btn btn-primary btn-xs" data-title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>
-                                    </td>
-                                    <td>
-                                        <p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-bs-toggle="offcanvas" data-bs-target="#delete"><span class="glyphicon glyphicon-trash"></span></button></p>
+                                        <div class="dropdown">
+                                            <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action</button>
+                                                <ul class="dropdown-menu">
 
-                                        <div class="offcanvas offcanvas-top mx-auto h-50" tabindex="-1" id="delete" aria-labelledby="offcanvasExampleLabel" style="width: 500px;">
-                                            <div class="offcanvas-header">
-                                                <h5 class="h3 text-warning offcanvas-title" id="offcanvasExampleLabel">Attention</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                                            </div>
-                                            <p class="alert text-danger">Are You Sure Want To Delete The Data?</p>
-                                            <div class="offcanvasbottom ">
-                                                <a href="/admin/delete?Id=@list.Id" class="btn btn-danger w-100">Yes</a>
-                                                <button type="button" class="btn btn-secondary w-100 my-3" data-bs-dismiss="offcanvas" aria-label="Close">No</button>
-                                            </div>
+                                                    <li>
+                                                        <a type="button" class="dropdown-item btn text-info btn-xs mb-2" href="/admin/edit?Id=@list.Id">
+                                                            <i class="fa-regular fa-pen-to-square"></i> Edit
+                                                        </a>
+                                                    </li>
+                                                    <li class="">
+                                                        <a type="button" class="dropdown-item btn text-danger btn-xs " asp-controller="Admin" asp-action="Delete" asp-route-Id="@list.Id" onclick="return confirm('Are you sure want to delete the record?')">
+                                                            <i class="fa-regular fa-trash-can"></i> Delete
+                                                        </a>
+                                                    </li>
+                                                </ul>
                                         </div>
-                                        
                                     </td>
+
+
                                 }
                             </tr>
                             index++;

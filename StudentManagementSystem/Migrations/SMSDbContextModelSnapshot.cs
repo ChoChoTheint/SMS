@@ -548,6 +548,33 @@ namespace StudentManagementSystem.Migrations
                     b.ToTable("ExamResult");
                 });
 
+            modelBuilder.Entity("StudentManagementSystem.Models.DataModels.StudentBatchEntity", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("BatchId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsInActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("StudentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StudentBatch");
+                });
+
             modelBuilder.Entity("StudentManagementSystem.Models.DataModels.StudentEntity", b =>
                 {
                     b.Property<string>("Id")

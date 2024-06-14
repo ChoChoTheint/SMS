@@ -20,8 +20,10 @@ namespace StudentManagementSystem.Controllers
             ViewBag.Id = Guid.NewGuid().ToString();
 
             var students = (from student in _dbContext.Students
+                            join sb in _dbContext.StudentBatches
+                            on student.Id equals sb.StudentId
                             join batch in _dbContext.Batches
-                            on student.BatchId equals batch.Id
+                            on sb.BatchId equals batch.Id
                             join course in _dbContext.Courses
                             on batch.CourseId equals course.Id
 
@@ -63,8 +65,10 @@ namespace StudentManagementSystem.Controllers
                     ViewBag.Id = Guid.NewGuid().ToString();
 
                     var students = (from student in _dbContext.Students
+                                    join sb in _dbContext.StudentBatches
+                                    on student.Id equals sb.StudentId
                                     join batch in _dbContext.Batches
-                                    on student.BatchId equals batch.Id
+                                    on sb.BatchId equals batch.Id
                                     join course in _dbContext.Courses
                                     on batch.CourseId equals course.Id
 
@@ -89,14 +93,16 @@ namespace StudentManagementSystem.Controllers
         public IActionResult List()
         {
             IList<ExamResultViewModel> examResultList = (from examResult in _dbContext.ExamResults
+                                                      join sb in _dbContext.StudentBatches
+                                                      on examResult.StudentId equals sb.StudentId
                                                       join student in _dbContext.Students
                                                       on examResult.StudentId equals student.Id
                                                       join batch in _dbContext.Batches
-                                                      on student.BatchId equals batch.Id
+                                                      on sb.BatchId equals batch.Id
                                                       join course in _dbContext.Courses
                                                       on batch.CourseId equals course.Id
                                                          
-                                                         where examResult.StudentId == student.Id
+                                                         where examResult.StudentId == sb.StudentId
 
                                                       select new ExamResultViewModel
                                                       {
@@ -105,6 +111,30 @@ namespace StudentManagementSystem.Controllers
                                                           StudentId = student.Name+"/ "+batch.Name+"/ "+course.Name,
                                                       }).ToList();
             return View(examResultList);
+        }
+
+        [Authorize]
+        public IActionResult Detail()
+        {
+            IList<ExamResultViewModel> examResultDetail = (from examResult in _dbContext.ExamResults
+                                                         join sb in _dbContext.StudentBatches
+                                                         on examResult.StudentId equals sb.StudentId
+                                                         join student in _dbContext.Students
+                                                         on examResult.StudentId equals student.Id
+                                                         join batch in _dbContext.Batches
+                                                         on sb.BatchId equals batch.Id
+                                                         join course in _dbContext.Courses
+                                                         on batch.CourseId equals course.Id
+
+                                                         where examResult.StudentId == sb.StudentId
+
+                                                         select new ExamResultViewModel
+                                                         {
+                                                             Id = examResult.Id,
+                                                             Mark = examResult.Mark,
+                                                             StudentId = student.Name + "/ " + batch.Name + "/ " + course.Name,
+                                                         }).ToList();
+            return View(examResultDetail);
         }
 
         [Authorize]
@@ -138,8 +168,10 @@ namespace StudentManagementSystem.Controllers
             }).FirstOrDefault();
 
             var students = (from student in _dbContext.Students
+                            join sb in _dbContext.StudentBatches
+                            on student.Id equals sb.StudentId
                             join batch in _dbContext.Batches
-                            on student.BatchId equals batch.Id
+                            on sb.BatchId equals batch.Id
                             join course in _dbContext.Courses
                             on batch.CourseId equals course.Id
 
@@ -178,8 +210,10 @@ namespace StudentManagementSystem.Controllers
                 else
                 {
                     var students = (from student in _dbContext.Students
+                                    join sb in _dbContext.StudentBatches
+                                    on student.Id equals sb.StudentId
                                     join batch in _dbContext.Batches
-                                    on student.BatchId equals batch.Id
+                                    on sb.BatchId equals batch.Id
                                     join course in _dbContext.Courses
                                     on batch.CourseId equals course.Id
 

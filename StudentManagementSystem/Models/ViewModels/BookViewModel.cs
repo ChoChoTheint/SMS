@@ -20,6 +20,5 @@ namespace StudentManagementSystem.Models.ViewModels
         
         public string BookURL { get; set; }
         
-        public string VideoURL { get; set; }
     }
 }

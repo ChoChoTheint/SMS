@@ -127,6 +127,9 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
+    <!--ChartJS-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <!--Mate SC Font Link-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -285,17 +288,37 @@
                             <hr class="my-3">
                             <li class="nav-item dropdown align-items-center gap-2 active">
                                 <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Action
+                                    Assignment
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-white">
-                                    <a class="d-flex dropdown-item align-items-center gap-2" aria-current="page" href="/attendance/entry">
-                                        <i class="fa-solid fa-plus fa-lg"></i>
-                                        Attendance
-                                    </a>
-                                    <a class="d-flex dropdown-item align-items-center gap-2" aria-current="page" href="/assignment/entry">
-                                        <i class="fa-solid fa-plus fa-lg"></i>
-                                        Assignment
-                                    </a>
+                                    <li>
+                                        <a class="d-flex dropdown-item align-items-center gap-2" aria-current="page" href="/assignment/entry">
+                                            <i class="fa-solid fa-plus fa-lg"></i>
+                                            Assignment
+                                        </a>
+                                        <a class="d-flex dropdown-item align-items-center gap-2" aria-current="page" href="/assignment/list">
+                                            <i class="fa-solid fa-plus fa-lg"></i>
+                                            List
+                                        </a>
+                                    </li>
+                                    
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown align-items-center gap-2 active">
+                                <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Attendance
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-white">
+                                    <li>
+                                        <a class="d-flex dropdown-item align-items-center gap-2" aria-current="page" href="/attendance/entry">
+                                            <i class="fa-solid fa-plus fa-lg"></i>
+                                            Attendance
+                                        </a>
+                                        <a class="d-flex dropdown-item align-items-center gap-2" aria-current="page" href="/attendance/list">
+                                            <i class="fa-solid fa-plus fa-lg"></i>
+                                            List
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>

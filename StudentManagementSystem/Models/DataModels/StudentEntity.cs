@@ -14,9 +14,6 @@ namespace StudentManagementSystem.Models.DataModels
         public string FatherName { get; set; }
         public string Gender { get; set; }
 
-        [ForeignKey(nameof(BatchId))]
-        public string BatchId { get; set; }
-
         [ForeignKey(nameof(AspNetUsersId))]
         public string AspNetUsersId { get; set; }
     }
