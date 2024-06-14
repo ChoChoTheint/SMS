@@ -68,7 +68,7 @@ namespace StudentManagementSystem.Controllers
             }
             return uniqueFileName;
         }
-      
+
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Entry(AssignmentViewModel ui)
@@ -181,25 +181,7 @@ namespace StudentManagementSystem.Controllers
         }
         
 
-        
-
-       // public class VideoService
-        //{
-          //  private readonly IWebHostEnvironment _env;
-
-            //public VideoService(IWebHostEnvironment env)
-            //{
-               /// _env = env;
-           // }
-
-           // public string GetVideoPath()
-            //{
-            //    string webRootPath = _env.WebRootPath; // wwwroot folder
-            //    string videoPath = Path.Combine(webRootPath, "video");
-            //   return videoPath;
-           // }
-        //}
-
+     
         [Authorize]
         public IActionResult List()
         {

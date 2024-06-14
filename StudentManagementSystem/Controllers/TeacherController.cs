@@ -94,7 +94,9 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while saving the record";
             }
+
             return RedirectToAction("List");
+
         }
 
         
