@@ -68,27 +68,27 @@
                                 <td>@item.NRC</td>
                                 <td>@item.Position</td>
                                 <td>@item.FatherName</td>
-                                @if (User.IsInRole("Admin"))
+                                @if (User.IsInRole("Admin") || User.IsInRole("Teacher"))
                                 {
 
-                                    <td><p data-placement="top" data-toggle="tooltip" title="Edit"><a href="/teacher/edit?Id=@item.Id"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit"><span class="glyphicon glyphicon-pencil"></span></button></a></p></td>
-
+                                    @* <td><p data-placement="top" data-toggle="tooltip" title="Edit"><a href="/teacher/edit?Id=@item.Id"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit"><span class="glyphicon glyphicon-pencil"></span></button></a></p></td> *@
                                     <td>
                                         <div class="dropdown">
-                                            <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action</button>
-                                                <ul class="dropdown-menu">
+                                            <button class="btn btn-white dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Action</button>
+                                            <ul class="dropdown-menu">
 
-                                                    <li>
-                                                        <a type="button" class="dropdown-item btn text-info btn-xs mb-2" href="/teacher/edit?Id=@item.Id">
-                                                            <i class="fa-regular fa-pen-to-square"></i> Edit
-                                                        </a>
-                                                    </li>
-                                                    <li class="">
-                                                        <a type="button" class="dropdown-item btn text-danger btn-xs " asp-controller="Teacher" asp-action="Delete" asp-route-Id="@item.Id" onclick="return confirm('Are you sure want to delete the record?')">
-                                                            <i class="fa-regular fa-trash-can"></i> Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
+                                                <li>
+                                                    <a type="button" class="dropdown-item btn text-info btn-xs mb-2" href="/teacher/edit?Id=@item.Id">
+                                                        <i class="fa-regular fa-pen-to-square"></i> Edit
+                                                    </a>
+                                                </li>
+
+                                                <li class="">
+                                                    <a type="button" class="dropdown-item btn text-danger btn-xs " asp-controller="Teacher" asp-action="Delete" asp-route-Id="@item.Id" onclick="return confirm('Are you sure want to delete the record?')">
+                                                        <i class="fa-regular fa-trash-can"></i> Delete
+                                                    </a>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </td>
                                 }

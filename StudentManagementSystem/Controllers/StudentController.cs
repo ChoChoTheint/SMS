@@ -138,6 +138,7 @@ namespace StudentManagementSystem.Controllers
                 DOB = s.DOB,
                 FatherName = s.FatherName,
                 Gender = s.Gender,
+
             }).FirstOrDefault();
 
 
@@ -150,7 +151,7 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
 
                     StudentEntity updateStudentData = new StudentEntity()
@@ -167,6 +168,7 @@ namespace StudentManagementSystem.Controllers
                         FatherName = ui.FatherName,
                         Gender = ui.Gender,
                         AspNetUsersId = ui.AspNetUsersId,
+
                     };
 
                     _dbContext.Students.Update(updateStudentData);
@@ -182,7 +184,15 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while updating data";
             }
-            return RedirectToAction("list");
+            if (User.IsInRole("admin"))
+            {
+                return RedirectToAction("list");
+            }
+            else
+            {
+                 return View("~/Views/Home/StudentIndex.cshtml");
+            }
+            
         }
     }
 }

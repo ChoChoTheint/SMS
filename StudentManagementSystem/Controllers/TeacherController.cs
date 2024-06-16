@@ -102,10 +102,9 @@ namespace StudentManagementSystem.Controllers
         public IActionResult List()
         {
             IList<TeacherViewModel> teacherList = (from t in _dbContext.Teachers
-                                                  
-
                                                    select new TeacherViewModel
                                                    {
+                                                       Id = t.Id,
                                                        Name = t.Name,
                                                        Email = t.Email,
                                                        Phone = t.Phone,
@@ -173,14 +172,14 @@ namespace StudentManagementSystem.Controllers
 
             return View(editTeacherData);
         }
-
+        [HttpPost]
         [Authorize]
         public IActionResult Update(TeacherViewModel ui)
         {
 
             try
             {
-                if (ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
 
                     TeacherEntity updateTeacherData = new TeacherEntity()
@@ -188,7 +187,6 @@ namespace StudentManagementSystem.Controllers
                         Id = ui.Id,
                         CreatedAt = DateTime.UtcNow,
                         ModifiedAt = DateTime.UtcNow,
-                        IsInActive = true,
                         Name = ui.Name,
                         Email = ui.Email,
                         Phone = ui.Phone,
@@ -198,7 +196,7 @@ namespace StudentManagementSystem.Controllers
                         FatherName = ui.FatherName,
                         Position = ui.Position,
                         Gender = ui.Gender,
-                        AspNetUsersId = ui.AspNetUsersId,
+                        AspNetUsersId = ui.AspNetUsersId
                     };
 
                     _dbContext.Teachers.Update(updateTeacherData);
@@ -214,7 +212,15 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while updating the record";
             }
-            return RedirectToAction("List");
+
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("list"); 
+            }
+            else
+            {
+                return View("~/Views/Home/TeacherIndex.cshtml");
+            }
         }
     }
 }

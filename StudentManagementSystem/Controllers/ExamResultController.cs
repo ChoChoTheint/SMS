@@ -102,7 +102,7 @@ namespace StudentManagementSystem.Controllers
                                                       join course in _dbContext.Courses
                                                       on batch.CourseId equals course.Id
                                                          
-                                                         where examResult.StudentId == sb.StudentId
+                                                      where examResult.StudentId == sb.StudentId
 
                                                       select new ExamResultViewModel
                                                       {

@@ -24,6 +24,7 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
+
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
 
@@ -272,7 +273,7 @@
                             @* <li class="nav-item">
                             <a class="col-md-3 col-lg-2 me-0 px-3 fs-4 text-decoration-none fw-bold" href="#"><span class="text-dark">Leadership</span> <span class="text-primary">Excellence</span></a>
                             </li> *@
-                            <li class="nav-item">
+                           @*  <li class="nav-item">
                                 <a class="nav-link text-center active my-4" aria-current="page" href="#">
                                     <div class="mb-3">
                                         <i class="fa-regular fa-circle-user fa-2xl fs-1"></i>
@@ -282,7 +283,7 @@
                                         <span>@UserManager.GetUserName(User)!</span>
                                     }
                                 </a>
-                            </li>
+                            </li> *@
                             <hr class="my-3">
                             <li class="nav-item dropdown align-items-center gap-2 active">
                                 <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -297,20 +298,34 @@
                             </li>
                         </ul>
 
+                       @*  <div class="col bg-white sticky-top">
+                            <div class="ps-4 pt-2 d-flex align-items-center border-primary border-bottom" style="height: 70px;">
+                                <div>
+                                    <h1 class="h5">Admin</h1>
+                                    @if (SignInManager.IsSignedIn(User))
+                                    {
+                                        <span style="color: #999999;">@UserManager.GetUserName(User)!</span>
+                                    }
+                                </div>
 
-                        <hr class="my-3">
+                                        <ul>
+                                            <li class="dropdown-item d-flex align-items-center">
 
-                        <ul class="nav flex-column mx-auto mb-auto">
-                            <li class="nav-item">
-                                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                                    <button id="logout" type="submit" class="nav-link btn btn-link border-0">
-                                        <i class="fa-solid fa-right-from-bracket me-2"></i>
-                                        Sign out
-                                    </button>
-                                </form>
-                            </li>
-                        </ul>
+                                                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                                    <button id="logout" type="submit" class="nav-link btn btn-link border-0">
+                                                        <i class="fa-solid fa-right-from-bracket me-2"></i>
+                                                        Sign out
+                                                    </button>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                   
+                                </div>
+                            </div>
+                        </div> *@
                     </div>
+                    
+
                 </div>
             </div>
 
