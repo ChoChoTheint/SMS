@@ -19,8 +19,6 @@ namespace StudentManagementSystem.Controllers
         public IActionResult Entry()
         {
             ViewBag.Id = Guid.NewGuid().ToString();
-
-
             var students = (from student in _dbContext.Students
                             join sb in _dbContext.StudentBatches
                            on student.Id equals sb.StudentId
@@ -35,9 +33,6 @@ namespace StudentManagementSystem.Controllers
                                Name = student.Name + "/ " + batch.Name+"/ "+course.Name
                            }).OrderBy(o => o.Name).ToList();
             ViewBag.Student = students;
-
-            
-
             return View();
         }
 
@@ -47,9 +42,8 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
-
                     AttendanceEntity attendanceData = new AttendanceEntity()
                     {
                         Id = ui.Id,
@@ -63,14 +57,12 @@ namespace StudentManagementSystem.Controllers
                     };
                     _dbContext.Attendances.Add(attendanceData);
                     _dbContext.SaveChanges();
-                    TempData["info"] = "save successfully the record";
+                    TempData["info"] = "save successfully data";
                 }
                 else
                 {
-                    //Reload students to populate the dropdown again
 
                     ViewBag.Id = Guid.NewGuid().ToString();
-
                     var students = (from student in _dbContext.Students
                                     join sb in _dbContext.StudentBatches
                                    on student.Id equals sb.StudentId
@@ -85,7 +77,6 @@ namespace StudentManagementSystem.Controllers
                                         Name = student.Name + "/ " + batch.Name + "/ " + course.Name
                                     }).OrderBy(o => o.Name).ToList();
                     ViewBag.Student = students;
-
                     return View(ui);
                 }
             }
@@ -209,7 +200,7 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
 
                     AttendanceEntity updateAttendanceData = new AttendanceEntity()

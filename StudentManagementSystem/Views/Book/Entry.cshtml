@@ -15,18 +15,18 @@
         <input asp-for="Id" value="@ViewBag.Id" hidden />
         <div class="mb-3">
             <label asp-for="Name" class="form-label">Name</label>
-            <input asp-for="Name" class="form-control" placeholder="enter name..." />
+            <input asp-for="Name" class="form-control" placeholder="Enter Book Name..." />
             <span asp-validation-for="Name" class="text-danger"></span>
         </div>    
         
         <div class="mb-3">
             <label asp-for="Description" class="form-label">Description</label>
-            <input asp-for="Description" class="form-control" placeholder="enter description..." />
+            <input asp-for="Description" class="form-control" placeholder="Enter Description..." />
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="File" class="form-label">Book</label>
-            <input type="file" asp-for="File" class="form-control" placeholder="enter description..." />
+            <input type="file" asp-for="File" class="form-control"/>
             <input asp-for="URL" value="URL" hidden />
             <span asp-validation-for="File" class="text-danger"></span>
         </div>

@@ -23,16 +23,7 @@ namespace StudentManagementSystem.Controllers
 
             ViewBag.Id = Guid.NewGuid().ToString();
 
-            var batches = (from batch in _dbContext.Batches
-                           join course in _dbContext.Courses
-                           on batch.CourseId equals course.Id
-
-                           select new BatchViewModel
-                           {
-                               Id = batch.Id,
-                               Name = batch.Name + "/ " + course.Name
-                           }).OrderBy(o => o.Name).ToList();
-            ViewBag.Batch = batches;
+            
 
             return View();
         }
@@ -76,16 +67,7 @@ namespace StudentManagementSystem.Controllers
 
                     ViewBag.Id = Guid.NewGuid().ToString();
 
-                    var batches = (from batch in _dbContext.Batches
-                                   join course in _dbContext.Courses
-                                   on batch.CourseId equals course.Id
-
-                                   select new BatchViewModel
-                                   {
-                                       Id = batch.Id,
-                                       Name = batch.Name + "/ " + course.Name
-                                   }).OrderBy(o => o.Name).ToList();
-                    ViewBag.Batch = batches;
+                   
 
                     return View(ui);
                 }
@@ -94,7 +76,8 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while saving the record";
             }
-            return RedirectToAction("List");
+
+            return RedirectToAction("list");
         }
 
         
@@ -106,6 +89,7 @@ namespace StudentManagementSystem.Controllers
 
                                                    select new TeacherViewModel
                                                    {
+                                                       Id = t.Id,
                                                        Name = t.Name,
                                                        Email = t.Email,
                                                        Phone = t.Phone,
@@ -115,8 +99,6 @@ namespace StudentManagementSystem.Controllers
                                                        FatherName = t.Name,
                                                        Position = t.Position,
                                                        Gender = t.Gender,
-                                                       //CourseInfo = c.Name,
-                                                       //BatchInfo = b.Name,
                                                    }).ToList();
             return View(teacherList);
         }
@@ -126,10 +108,10 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                var deleteTeacherData = _dbContext.Teachers.Where(w => w.Id == Id).FirstOrDefault();
-                if(deleteTeacherData is not null)
+                var deleteData = _dbContext.Teachers.Where(w => w.Id == Id).FirstOrDefault();
+                if (deleteData is not null)
                 {
-                    _dbContext.Teachers.Remove(deleteTeacherData);
+                    _dbContext.Teachers.Remove(deleteData);
                     _dbContext.SaveChanges();
                 }
                 TempData["info"] = "delete successfully the record";
@@ -160,16 +142,7 @@ namespace StudentManagementSystem.Controllers
                 AspNetUsersId = s.AspNetUsersId,
             }).FirstOrDefault();
 
-            var batches = (from batch in _dbContext.Batches
-                           join course in _dbContext.Courses
-                           on batch.CourseId equals course.Id
-
-                           select new BatchViewModel
-                           {
-                               Id = batch.Id,
-                               Name = batch.Name + "/ " + course.Name
-                           }).OrderBy(o => o.Name).ToList();
-            ViewBag.Batch = batches;
+            
 
             return View(editTeacherData);
         }

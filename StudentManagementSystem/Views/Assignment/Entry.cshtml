@@ -14,18 +14,18 @@
         <input asp-for="Id" value="@ViewBag.Id" hidden/>
         <div class="mb-3">
             <label asp-for="Name" class="form-label">Name</label>
-            <input asp-for="Name" class="form-control" placeholder="enter name..." />
+            <input asp-for="Name" class="form-control" placeholder="Enter Name..." />
             <span asp-validation-for="Name" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
             <label asp-for="Description" class="form-label">Description</label>
-            <input asp-for="Description" class="form-control" placeholder="enter description..." />
+            <input asp-for="Description" class="form-control" placeholder="Enter Description..." />
             <span asp-validation-for="Description" class="text-sm text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="File" class="form-label">File</label>
-            <input type="file" asp-for="File" class="form-control" placeholder="enter file..."/>
+            <input type="file" asp-for="File" class="form-control" placeholder="Choose File..."/>
             <input asp-for="URL" value="URL" hidden />
             <span asp-validation-for="File" class="text-sm text-danger"></span>
         </div>
@@ -33,9 +33,12 @@
             <label asp-for="CourseId" class="form-label">Course</label>
             <select asp-for="CourseId" class="form-select">
                 <option value="" selected>---select option---</option>
-                @foreach (var course in ViewBag.Course)
+                @if (ViewBag.Course != null)
                 {
-                    <option value="@course.Id">@course.Name</option>
+                    foreach (var course in ViewBag.Course)
+                    {
+                        <option value="@course.Id">@course.Name</option>
+                    }
                 }
             </select>
             <span asp-validation-for="CourseId" class="text-sm text-danger"></span>
@@ -44,13 +47,18 @@
             <label asp-for="BatchId" class="form-label">Batch</label>
             <select asp-for="BatchId" class="form-select">
                 <option value="" selected>---choose option---</option>
-                @foreach (var batch in ViewBag.Batch)
+                @if (ViewBag.Batch != null)
                 {
-                    <option value="@batch.Id">@batch.Name</option>
+                    foreach (var batch in ViewBag.Batch)
+                    {
+                        <option value="@batch.Id">@batch.Name</option>
+                    }
                 }
             </select>
             <span asp-validation-for="BatchId" class="text-sm text-danger"></span>
         </div>
+
+       
         <div class="mb-3">
             <button class="btn btn-primary text-white" style="border-radius: 10px 0 10px 0;">Submit</button>
             <button class="btn btn-secondary text-white" style="border-radius: 10px 0 10px 0;" type="reset">Cancel</button>

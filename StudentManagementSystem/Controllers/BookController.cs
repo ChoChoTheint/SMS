@@ -211,6 +211,7 @@ namespace StudentManagementSystem.Controllers
                                           Id = s.Id,
                                           Name = s.Name,
                                           Description = s.Description,
+                                          URL = s.URL,
                                           CourseId = s.CourseId,
                                           BatchId = s.BatchId,
                                       }).FirstOrDefault();
@@ -304,12 +305,15 @@ namespace StudentManagementSystem.Controllers
 
                     return View("Edit", model: ui);
                 }
+
             }
             catch (Exception e)
             {
                 TempData["info"] = "error while updating the record";
             }
-            return RedirectToAction("List");
+            return RedirectToAction("list");
         }
+
+        
     }
 }

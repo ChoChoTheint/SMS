@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authorization;
 using System;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 
 namespace StudentManagementSystem.Controllers
@@ -56,7 +57,7 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                
+               
                 if (ModelState.IsValid)
                 {
                     // Define the path to the uploads folder
@@ -134,7 +135,7 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while saving the record";
             }
-            return RedirectToAction("List");
+            return RedirectToAction("list");
         }
 
         [Authorize]
@@ -165,27 +166,35 @@ namespace StudentManagementSystem.Controllers
 
 
 
-        // public class VideoService
-        //{
-        //  private readonly IWebHostEnvironment _env;
+            // public class VideoService
+            //{
+            //  private readonly IWebHostEnvironment _env;
 
-        //public VideoService(IWebHostEnvironment env)
-        //{
-        /// _env = env;
-        // }
+            //public VideoService(IWebHostEnvironment env)
+            //{
+            /// _env = env;
+            // }
 
-        // public string GetVideoPath()
-        //{
-        //    string webRootPath = _env.WebRootPath; // wwwroot folder
-        //    string videoPath = Path.Combine(webRootPath, "video");
-        //   return videoPath;
-        // }
-        //}
-        [Authorize]
+            // public string GetVideoPath()
+            //{
+            //    string webRootPath = _env.WebRootPath; // wwwroot folder
+            //    string videoPath = Path.Combine(webRootPath, "video");
+            //   return videoPath;
+            // }
+            //{
+            //    string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
+
+            //    var memory = FilePath(filePath, uploadFolder);
+            //    return File(memory.ToArray(), "application/pdf", filePath);
+            //}
+
+
+
+
+
+            [Authorize]
         public IActionResult List()
         {
-            
-
             IList<AssignmentViewModel> assignmentList = (from assignment in _dbContext.Assignments
                                                          join sb in _dbContext.StudentBatches
                                                          on assignment.BatchId equals sb.BatchId
@@ -263,19 +272,21 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                var deleteAssignmentData = _dbContext.Assignments.Where(w => w.Id == Id).FirstOrDefault();
-                if(deleteAssignmentData is not null)
+                var deleteAssignmentData = _dbContext.Assignments.Find(Id);
+
+                if (deleteAssignmentData is not null)
                 {
-                    _dbContext.Assignments.Remove(deleteAssignmentData);
+                    _dbContext.Remove(deleteAssignmentData);
                     _dbContext.SaveChanges();
                 }
-                TempData["info"] = "delete successfully the record";
+                TempData["info"] = "delete successfully the data";
             }
             catch (Exception e)
             {
-                TempData["info"] = "error while deleting the record";
+                TempData["info"] = "error while deleting the data";
             }
             return RedirectToAction("List");
+            
         }
 
         [Authorize]
@@ -320,10 +331,10 @@ namespace StudentManagementSystem.Controllers
             try
             {
                 if (ModelState.IsValid)
-                {
+                { 
 
                     // Define the path to the uploads folder
-                    var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
+                    var uploadsFolder = Path.Combine("wwwroot", "assignments");
 
                     // Ensure the directory exists
                     if (!Directory.Exists(uploadsFolder))
@@ -381,12 +392,13 @@ namespace StudentManagementSystem.Controllers
 
                     return View("Edit", model: ui);
                 }
+                
             }
             catch (Exception e)
             {
                 TempData["info"] = "error while updating the record";
             }
-            return RedirectToAction("List");
+            return RedirectToAction("list");
         }
     }
 }

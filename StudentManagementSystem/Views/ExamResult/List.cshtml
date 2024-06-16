@@ -23,7 +23,7 @@
 }
 <div class="container">
     
-    @if (User.IsInRole("Admin"))
+    @if (User.IsInRole("Admin") || User.IsInRole("Teacher"))
     {
         
         <div class="row">
@@ -36,7 +36,7 @@
                         <thead>
                         <th>Mark</th>
                         <th>Student</th>
-                            @if (User.IsInRole("Admin"))
+                            @if (User.IsInRole("Admin")||User.IsInRole("Teacher"))
                             {
                                 <th>Action</th>
                             }
@@ -51,7 +51,7 @@
                                 <tr>
                                     <td>@list.Mark marks</td>
                                     <td>@list.StudentId</td>
-                                    @if (User.IsInRole("Admin"))
+                                    @if (User.IsInRole("Admin") || User.IsInRole("Teacher"))
                                     {
                                         <td>
                                             <div class="dropdown">
@@ -63,11 +63,14 @@
                                                                 <i class="fa-regular fa-pen-to-square"></i> Edit
                                                             </a>
                                                         </li>
+                                                    @if (User.IsInRole("Admin"))
+                                                    {
                                                         <li class="">
                                                             <a type="button" class="dropdown-item btn text-danger btn-xs " asp-controller="ExamResult" asp-action="Delete" asp-route-Id="@list.Id" onclick="return confirm('Are you sure want to delete the record?')">
                                                                 <i class="fa-regular fa-trash-can"></i> Delete
                                                             </a>
                                                         </li>
+                                                    }
                                                     </ul>
                                             </div>
                                         </td>
@@ -75,8 +78,6 @@
                                 </tr>
                                 index++;
                             }
-
-
                         </tbody>
 
                     </table>

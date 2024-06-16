@@ -38,6 +38,7 @@
                                 @if (User.IsInRole("Admin"))
                                 {
                                     <th>Action</th>
+
                                 }
                         </thead>
                         <tbody>
@@ -51,7 +52,7 @@
                                     <td>@list.Name</td>
                                     <td>@list.Description</td>
                                     <td>
-                                        <a href="/Book/DownloadFile?filePath=@list.URL">
+                                        <a asp-controller="Book" asp-action="DownloadFile" asp-route-id="@list.BookURL">
                                             <i class="fa-solid fa-download fa-xl"></i>
                                         </a>
                                     </td>

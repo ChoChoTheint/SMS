@@ -12,24 +12,22 @@
 {
     @if (TempData["info"].ToString().Contains("delete"))
     {
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger mt-3" role="alert">
             @TempData["info"]
         </div>
     }
     else
     {
-        <div class="alert alert-success" role="alert">
+        <div class="alert alert-success mt-3" role="alert">
             @TempData["info"]
         </div>
     }
 }
 
-
-
 @if (User.IsInRole("Admin"))
 {
     <h1 class="h4 mb-3">Admin List</h1>
-    <table id="adminTable" class="table table-responsive table-bordred table-striped">
+        <table id="adminTable" class="table table-responsive table-bordred table-striped">
 
                     <thead>
                         <tr>
@@ -88,6 +86,7 @@
 
 
                                 }
+
                             </tr>
                             index++;
                         }
@@ -95,11 +94,12 @@
 
                     </tbody>
 
-                </table>
+        </table>
 }
 
 
               
+
 
 <script>
     $(document).ready(function () {

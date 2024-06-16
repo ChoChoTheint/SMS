@@ -34,11 +34,9 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult Entry(AdminViewModel ui)
         {
-            
-
             try
             {
-                if (ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
 
                     AdminEntity adminData = new AdminEntity()
@@ -62,8 +60,6 @@ namespace StudentManagementSystem.Controllers
                 }
                 else
                 {
-                    //Reload AspUserId and Id to populate the dropdown again
-
                     var aspUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                     ViewBag.AspUserId = aspUserId;
 
@@ -149,7 +145,7 @@ namespace StudentManagementSystem.Controllers
 
             try
             {
-                if (ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
 
                     AdminEntity updateAdminData = new AdminEntity()

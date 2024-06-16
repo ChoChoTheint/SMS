@@ -118,13 +118,14 @@ namespace StudentManagementSystem.Controllers
 
                     return View(ui);
                 }
+                        
                 
             }
             catch (Exception e)
             {
-                TempData["info"] = "error while saving the record";
+                TempData["info"] = "Error while saving the record";
             }
-            return RedirectToAction("List");
+            return RedirectToAction("list");
         }
 
         [Authorize]
@@ -164,7 +165,7 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["inof"] = "error while deleting the record";
             }
-            return RedirectToAction("List");
+            return RedirectToAction("list");
         }
 
         [Authorize]
@@ -204,12 +205,32 @@ namespace StudentManagementSystem.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Update(VideoViewModel ui)
+        public async Task<IActionResult> Update(VideoViewModel ui)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    // Define the path to the uploads folder
+                    var uploadFolder = Path.Combine("wwwroot", "videos");
+
+                    // Ensure the directory exists
+                    if (!Directory.Exists(uploadFolder))
+                    {
+                        Directory.CreateDirectory(uploadFolder);
+                    }
+
+                    // Generate a unique file name
+                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + ui.VideoFile.FileName;
+
+                    // Define the full path to the file
+                    var filePath = Path.Combine(uploadFolder, uniqueFileName);
+
+                    // Save the uploaded file to the specified location
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await ui.VideoFile.CopyToAsync(fileStream);
+                    }
 
                     VideoEntity updateVideoData = new VideoEntity()
                     {
@@ -219,7 +240,7 @@ namespace StudentManagementSystem.Controllers
                         IsInActive = true,
                         Name = ui.Name,
                         Description = ui.Description,
-                        URL = ui.URL,
+                        URL = uniqueFileName,
                         CourseId = ui.CourseId,
                         BatchId = ui.BatchId,
                     };
@@ -248,12 +269,13 @@ namespace StudentManagementSystem.Controllers
 
                     return View("Edit", model: ui);
                 }
+               
             }
             catch (Exception e)
             {
                 TempData["info"] = "error while updating the record";
             }
-            return RedirectToAction("List");
+            return RedirectToAction("list");
         }
     }
 }

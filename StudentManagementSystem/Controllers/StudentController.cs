@@ -141,8 +141,6 @@ namespace StudentManagementSystem.Controllers
             }).FirstOrDefault();
 
 
-            
-
             return View(editStudentData);
         }
 
@@ -160,6 +158,7 @@ namespace StudentManagementSystem.Controllers
                         Id = ui.Id,
                         CreatedAt = DateTime.UtcNow,
                         ModifiedAt = DateTime.UtcNow,
+                        IsInActive = true,
                         Name = ui.Name,
                         Email = ui.Email,
                         Phone = ui.Phone,
@@ -177,7 +176,7 @@ namespace StudentManagementSystem.Controllers
                 }
                 else
                 {
-
+                    
                     return View("Edit", model: ui);
                 }
             }

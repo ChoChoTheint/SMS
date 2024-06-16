@@ -21,9 +21,6 @@
 }
 else if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
 {
-    <div class="">
-
-
         <div class="">
             <div class="mx-auto">
 
@@ -69,9 +66,9 @@ else if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         <div class="col-lg-5">
                             <div class="card position-relative shadow">
                                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@ViewBag.TeacherCount</span>
-                                <div class="card-body w-75">
+                                <div class="card-body">
                                     <h1 class="h3">Teacher</h1>
-                                    <p class="card-text">In here, you can see all of Teacher's Info.</p>
+                                    <p>In here, you can see all of Teacher's Info.</p>
                                  </div>
                                 <div class="card-footer">
                                     <a asp-controller="TeacherCourse" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
@@ -84,15 +81,15 @@ else if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@ViewBag.StudentCount</span>
                                 <div class="card-body">
                                     <h1 class="h3">Student</h1>
-                                    <p class="card-text">In here, you can see all of the student's batches.</p>
+                                    <p>In here, you can see all of the student's batches.</p>
                                 </div>
 
                                 <div class="card-footer">
                                     <a asp-controller="StudentBatch" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
                                 </div>
                             </div>
-                        </div>
                         
+                        </div>
                     </div>
                     <div class="row gap-lg-5 mb-5">
                         <div class="col-lg-5">
@@ -100,7 +97,7 @@ else if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@ViewBag.CourseCount</span>
                                 <div class="card-body">
                                     <h1 class="h3">Course</h1>
-                                    <p class="card-text">In here, you can see all of courses in this school.</p>
+                                    <p>In here, you can see all of courses in this school.</p>
                                 </div>
 
                                 <div class="card-footer">
@@ -108,13 +105,12 @@ else if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                                 </div>
                             </div>
                         </div>
-                        
                         <div class="col-lg-5">
                             <div class="card position-relative shadow">
                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@ViewBag.BatchCount</span>
                                 <div class="card-body">
                                     <h1 class="h3">Batch</h1>
-                                    <p class="card-text">In here, you can see all of batches in this school.</p>
+                                    <p>In here, you can see all of batches in this school.</p>
                                 </div>
 
                                 <div class="card-footer">
@@ -122,25 +118,15 @@ else if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                                 </div>
                             </div>
                         </div>
-                        
-                        
+
 
                     </div>
-                    
-
-
-                </div>
-            </div>
-
-        </div>
+              </div>
+        </div>  
     </div>
-
-    
 }
 else if (User.Identity.IsAuthenticated && User.IsInRole("Teacher"))
 {
-    // Layout = "_LayoutTeacher";
-    
     <div class="container mt-3">
         <div class="row mb-5">
             <div class="col-lg-4">
@@ -207,7 +193,6 @@ else if (User.Identity.IsAuthenticated && User.IsInRole("Teacher"))
                         <a asp-controller="ExamResult" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
                     </div>
                 </div>
-
             </div>
             <div class="col-lg-4">
 
@@ -220,18 +205,16 @@ else if (User.Identity.IsAuthenticated && User.IsInRole("Teacher"))
                         <a asp-controller="Exam" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
                     </div>
                 </div>
-
             </div>
-        </div>
     </div>
-
+</div>
    
     
 }
 else if(User.Identity.IsAuthenticated)
 {
         <div class="container mt-3">
-        <div class="row mb-5">
+            <div class="row mb-5">
                 <div class="col-lg-4">
                     <div class="card shadow">
                         <div class="card-body">
@@ -268,55 +251,53 @@ else if(User.Identity.IsAuthenticated)
                         </div>
                     </div>
 
-                </div>
-        </div>
-        <div class="row mb-5">
-                <div class="col-lg-4">
-                    <div class="card shadow">
-                        <div class="card-body">
-                            <h1 class="h3">Assignments</h1>
-                            <p>In here, you can see all of your assignments.</p>
-                        </div>
-                        <div class="card-footer">
-                        <a asp-controller="Assignment" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4">
-
-                    <div class="card shadow">
-                        <div class="card-body">
-                            <h1 class="h3">Exam</h1>
-                            <p>In here, you can see all of the exams.</p>
-                        </div>
-                        <div class="card-footer">
-                            <a asp-controller="Exam" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
-                        </div>
-                    </div>
-
-                </div>  
-                <div class="col-lg-4">
-                    <div class="card shadow">
-                        <div class="card-body">
-                            <h1 class="h3">Exam Results</h1>
-                            <p>In here, you can see your exam result.</p>
-                        </div>
-                        <div class="card-footer">
-                            <a asp-controller="ExamResult" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
-                        </div>
-                    </div>
 
                 </div>
             </div>
+            <div class="row mb-5">
+                    <div class="col-lg-4">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <h1 class="h3">Assignments</h1>
+                                <p>In here, you can see all of your assignments.</p>
+                            </div>
+                            <div class="card-footer">
+                            <a asp-controller="Assignment" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <h1 class="h3">Exam</h1>
+                                <p>In here, you can see all of the exams.</p>
+                            </div>
+                            <div class="card-footer">
+                                <a asp-controller="Exam" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
+                            </div>
+                        </div>
+
+                    </div>  
+                    <div class="col-lg-4">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <h1 class="h3">Exam Results</h1>
+                                <p>In here, you can see your exam result.</p>
+                            </div>
+                            <div class="card-footer">
+                                <a asp-controller="ExamResult" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
+                            </div>
+                        </div>
+
+                    </div>
+            </div>
            
-    </div>
+        </div>
 
     
 }
-else
-{
-    Layout = "_Layout";
-}
+
 
 
