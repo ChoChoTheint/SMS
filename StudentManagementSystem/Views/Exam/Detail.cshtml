@@ -2,7 +2,7 @@
 <div class="container">
     @if (User.IsInRole("Admin") || User.Identity.IsAuthenticated)
     {
-        <h1 class="h4 mt-3">Exam Results:</h1>
+        <h1 class="h4 mt-3">Exams:</h1>
         <div class="row">
             @foreach (var detail in Model)
             {

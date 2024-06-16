@@ -232,11 +232,11 @@ else if(User.Identity.IsAuthenticated)
 {
         <div class="container mt-3">
         <div class="row mb-5">
-                <div class="col-lg-5 ">
+                <div class="col-lg-4">
                     <div class="card shadow">
                         <div class="card-body">
                             <h1 class="h3">Courses</h1>
-                            <p class="">In here, you can see all of courses.</p>
+                            <p class="">In here, you can see all of the courses.</p>
                         </div>
 
                         <div class="card-footer">
@@ -244,7 +244,7 @@ else if(User.Identity.IsAuthenticated)
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-5">
+                <div class="col-lg-4">
                     <div class="card shadow">
                         <div class="card-body">
                             <h1 class="h3">Batch</h1>
@@ -257,49 +257,59 @@ else if(User.Identity.IsAuthenticated)
                     </div>
 
                 </div>
-                
-        </div>
-        <div class="row mb-5">
-                <div class="col-lg-5">
-                    <div class="card shadow">
-                        <div class="card-body">
-                            <h1 class="h3">Assignments</h1>
-                            <p>In here, you can see all of your assignments.</p>
-                        </div>
-                        <div class="card-footer">
-                            <a asp-controller="Assignment" asp-action="StudentDetail" class="btn btn-primary float-end">Details>></a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-lg-5">
+                <div class="col-lg-4">
                     <div class="card shadow">
                         <div class="card-body">
                             <h1 class="h3">Attendance</h1>
                             <p>In here, you can see all of your attendance.</p>
                         </div>
                         <div class="card-footer">
-                            <a asp-controller="Attendance" asp-action="List" class="btn btn-primary float-end">Details>></a>
+                            <a asp-controller="Attendance" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
                         </div>
                     </div>
 
                 </div>
-                
-            </div>
-            <div class="row mb-3">
-                <div class="col-lg-5">
+        </div>
+        <div class="row mb-5">
+                <div class="col-lg-4">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h1 class="h3">Assignments</h1>
+                            <p>In here, you can see all of your assignments.</p>
+                        </div>
+                        <div class="card-footer">
+                        <a asp-controller="Assignment" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h1 class="h3">Exam</h1>
+                            <p>In here, you can see all of the exams.</p>
+                        </div>
+                        <div class="card-footer">
+                            <a asp-controller="Exam" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
+                        </div>
+                    </div>
+
+                </div>  
+                <div class="col-lg-4">
                     <div class="card shadow">
                         <div class="card-body">
                             <h1 class="h3">Exam Results</h1>
                             <p>In here, you can see your exam result.</p>
                         </div>
                         <div class="card-footer">
-                            <a asp-controller="ExamResult" asp-action="List" class="btn btn-primary float-end">Details>></a>
+                            <a asp-controller="ExamResult" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
                         </div>
                     </div>
 
                 </div>
             </div>
+           
     </div>
 
     

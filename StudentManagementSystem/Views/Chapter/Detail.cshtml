@@ -21,10 +21,10 @@
                                     <a asp-controller="Book" asp-action="DownloadFile" asp-route-id="@detail.BookId">
                                         <i class="fa-solid fa-download fa-xl"></i>
                                     </a>
-                                    <a asp-controller="Book" asp-action="ReadPDF" asp-route-id="@detail.BatchId">
+                                    <a asp-controller="Book" asp-action="ReadPDF" asp-route-id="@detail.BookId">
                                         <span class="text-uppercase fw-bold">Read</span>
                                     </a>
-                             </p>
+                            </p>
                             <p class="card-text d-flex"><span class="fw-bold me-5">Video: </span>
                                     <video width="220" height="80" controls>
                                         <source src="/videos/@detail.VideoId" type="video/mp4">

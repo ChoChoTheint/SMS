@@ -153,7 +153,7 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult ReadPDF(string Id)
         {
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot//books", Id);
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\books", Id);
             var pdfText = _pdfFileReader.ReadPDF(path);
 
             return Content(pdfText);

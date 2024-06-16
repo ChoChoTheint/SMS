@@ -1,6 +1,6 @@
 ﻿@model IList<BatchViewModel>
 <div class="container">
-    @if (User.IsInRole("Teacher"))
+    @if (User.IsInRole("Admin") || User.IsInRole("Teacher"))
     {
         <h1 class="h4 mt-3">Batches:</h1>
         <div class="row my-3">

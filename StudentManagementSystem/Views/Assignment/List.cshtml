@@ -58,7 +58,7 @@
                                     <td>@list.Name</td>
                                     <td>@list.Description</td>
                                     <td>
-                                        <a href="/assignment/DownloadFile?fileName=@list.URL">
+                                        <a asp-controller="Assignment" asp-action="DownloadFile" asp-route-id="@list.URL">
                                             <i class="fa-solid fa-download fa-xl"></i>
                                         </a>
                                     </td>

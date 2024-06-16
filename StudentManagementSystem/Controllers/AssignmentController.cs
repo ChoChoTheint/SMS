@@ -60,19 +60,19 @@ namespace StudentManagementSystem.Controllers
                 if (ModelState.IsValid)
                 {
                     // Define the path to the uploads folder
-                    var uploadsFolder = Path.Combine("wwwroot", "assignments");
+                    var uploadFolder = Path.Combine("wwwroot", "assignments");
 
                     // Ensure the directory exists
-                    if (!Directory.Exists(uploadsFolder))
+                    if (!Directory.Exists(uploadFolder))
                     {
-                        Directory.CreateDirectory(uploadsFolder);
+                        Directory.CreateDirectory(uploadFolder);
                     }
 
                     // Generate a unique file name
                     var uniqueFileName = Guid.NewGuid().ToString() + "_" + ui.File.FileName;
 
                     // Define the full path to the file
-                    var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    var filePath = Path.Combine(uploadFolder, uniqueFileName);
 
                     // Save the uploaded file to the specified location
                     using (var fileStream = new FileStream(filePath, FileMode.Create))
@@ -138,16 +138,18 @@ namespace StudentManagementSystem.Controllers
         }
 
         [Authorize]
-        public IActionResult DownloadFile()
+        public IActionResult DownloadFile(string Id)
         {
-            var memory = FilePath("d4ffd230-bd98-4d29-b446-f18e3bdaee64_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf", "wwwroot//assignments");
-            return File(memory.ToArray(), "application/pdf", "d4ffd230-bd98-4d29-b446-f18e3bdaee64_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf");
+            var memory = FilePath(Id, "wwwroot\\assignments");
+            return File(memory.ToArray(), "application/pdf", Id);
         }
+
+        [Authorize]
         private MemoryStream FilePath(string fileName, string uploadFolder)
         {
-            string videoPath = Path.Combine("wwwroot", "assignments", "d4ffd230-bd98-4d29-b446-f18e3bdaee64_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf");
+            string filePath = Path.Combine(uploadFolder, fileName);
 
-            var path = Path.Combine(Directory.GetCurrentDirectory(), videoPath);
+            var path = Path.Combine(Directory.GetCurrentDirectory(), filePath);
             var memeory = new MemoryStream();
 
             if (System.IO.File.Exists(path))
@@ -161,23 +163,23 @@ namespace StudentManagementSystem.Controllers
             return memeory;
         }
 
-        
 
-       // public class VideoService
+
+        // public class VideoService
         //{
-          //  private readonly IWebHostEnvironment _env;
+        //  private readonly IWebHostEnvironment _env;
 
-            //public VideoService(IWebHostEnvironment env)
-            //{
-               /// _env = env;
-           // }
+        //public VideoService(IWebHostEnvironment env)
+        //{
+        /// _env = env;
+        // }
 
-           // public string GetVideoPath()
-            //{
-            //    string webRootPath = _env.WebRootPath; // wwwroot folder
-            //    string videoPath = Path.Combine(webRootPath, "video");
-            //   return videoPath;
-           // }
+        // public string GetVideoPath()
+        //{
+        //    string webRootPath = _env.WebRootPath; // wwwroot folder
+        //    string videoPath = Path.Combine(webRootPath, "video");
+        //   return videoPath;
+        // }
         //}
         [Authorize]
         public IActionResult List()
