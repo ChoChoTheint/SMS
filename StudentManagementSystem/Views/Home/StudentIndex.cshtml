@@ -6,6 +6,7 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 @model CompositeViewModel
+@* @model StudentViewModel *@
 @if (!User.Identity.IsAuthenticated)
 {
     <div class="text-center my-5">
@@ -36,15 +37,33 @@ else if (User.IsInRole("Student"))
                         <i class="fa-regular fa-circle-user fa-2xl"></i>
                     </button>
                     <ul class="dropdown-menu">
-                        @foreach (var list in Model.Students)
+                        @if (Model != null && Model.Students != null)
                         {
-                            if (@list.Email == UserManager.GetEmailAsync(UserManager.GetUserAsync(User).Result).Result)
+                            @foreach (var list in Model.Students)
+                            {
+                                if (list.Email == UserManager.GetEmailAsync(UserManager.GetUserAsync(User).Result).Result)
+                                {
+                                    <li class="dropdown-item">
+                                        <a href="/student/edit?Id=@list.Id" class="link-secondary link-underline link-underline-opacity-0">Setting</a>
+                                    </li>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <li class="dropdown-item">
+                                <a href="" class="link-secondary link-underline link-underline-opacity-0">Setting</a>
+                            </li>
+                        }
+                        @* @foreach (var list in Model.Students)
+                        { 
+                            if (list.Email == UserManager.GetEmailAsync(UserManager.GetUserAsync(User).Result).Result)
                             {
                                 <li class="dropdown-item">
                                     <a href="/student/edit?Id=@list.Id" class="link-secondary link-underline link-underline-opacity-0">Setting</a>
                                 </li>
                             }
-                        }
+                        } *@
 
                         <li class="dropdown-item d-flex align-items-center">
 

@@ -184,7 +184,7 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while updating data";
             }
-            if (User.IsInRole("admin"))
+            if (User.IsInRole("Admin"))
             {
                 return RedirectToAction("list");
             }

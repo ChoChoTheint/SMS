@@ -41,7 +41,6 @@ else if(User.IsInRole("Admin"))
                                 <ul class="dropdown-menu">
                                     @foreach(var list in Model.Admins)
                                     {
-                                        
                                         <li class="dropdown-item">
                                             <i class="fa-solid fa-gear me-2"></i>
                                             <a href="/admin/edit?Id=@list.Id" class="link-secondary link-underline link-underline-opacity-0">Setting</a>
