@@ -42,7 +42,7 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     AttendanceEntity attendanceData = new AttendanceEntity()
                     {
@@ -57,7 +57,8 @@ namespace StudentManagementSystem.Controllers
                     };
                     _dbContext.Attendances.Add(attendanceData);
                     _dbContext.SaveChanges();
-                    TempData["info"] = "save successfully data";
+
+                    TempData["info"] = "add successfully your attendance";
                 }
                 else
                 {
@@ -84,7 +85,14 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while saving the record";
             }
-            return RedirectToAction("List");
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("List");
+            }
+            else
+            {
+                return Redirect("/Home/StudentIndex.cshtml");
+            }
         }
 
         [Authorize]
@@ -112,8 +120,7 @@ namespace StudentManagementSystem.Controllers
                                                              StudentId = student.Name+"/ "+ batch.Name+"/ "+course.Name, 
                                                          }).ToList();
 
-            
-            return View(attendanceList);
+                return View(attendanceList);
         }
 
         [Authorize]
@@ -140,7 +147,66 @@ namespace StudentManagementSystem.Controllers
                                                              IsLeave = attendance.IsLeave,
                                                              StudentId = student.Name + "/ " + batch.Name + "/ " + course.Name,
                                                          }).ToList();
-            return View(attendanceDetail);
+            return  View(attendanceDetail);
+        }
+
+        [Authorize]
+        public IActionResult TeacherDetail(string Id)
+        {
+            IList<AttendanceViewModel> teacherAttendanceDetail = (from attendance in _dbContext.Attendances
+                                                           join student in _dbContext.Students
+                                                           on attendance.StudentId equals student.Id
+                                                           join sb in _dbContext.StudentBatches
+                                                           on student.Id equals sb.StudentId
+                                                           join batch in _dbContext.Batches
+                                                           on sb.BatchId equals batch.Id
+                                                           join course in _dbContext.Courses
+                                                           on batch.CourseId equals course.Id
+                                                           join tc in _dbContext.TeacherCourses
+                                                           on course.Id equals tc.CourseId
+                                                           join teacher in _dbContext.Teachers
+                                                           on tc.TeacherId equals teacher.Id
+
+                                                           where teacher.Email == Id
+
+                                                           select new AttendanceViewModel
+                                                           {
+                                                               Id = attendance.Id,
+                                                               AttendanceDate = attendance.AttendanceDate,
+                                                               InTime = attendance.InTime,
+                                                               OutTime = attendance.OutTime,
+                                                               IsLeave = attendance.IsLeave,
+                                                               StudentId = student.Name + "/ " + batch.Name + "/ " + course.Name,
+                                                           }).ToList();
+            return  View(teacherAttendanceDetail);
+        }
+
+        [Authorize]
+        public IActionResult StudentDetail(string Id)
+        {
+            IList<AttendanceViewModel> studentAttendanceDetail = (from attendance in _dbContext.Attendances
+                                                           join sb in _dbContext.StudentBatches
+                                                           on attendance.StudentId equals sb.StudentId
+                                                           join student in _dbContext.Students
+                                                           on sb.StudentId equals student.Id
+                                                           join batch in _dbContext.Batches
+                                                           on sb.BatchId equals batch.Id
+                                                           join course in _dbContext.Courses
+                                                           on batch.CourseId equals course.Id
+
+                                                           where student.Email == Id
+
+                                                           select new AttendanceViewModel
+                                                           {
+                                                               Id = attendance.Id,
+                                                               AttendanceDate = attendance.AttendanceDate,
+                                                               InTime = attendance.InTime,
+                                                               OutTime = attendance.OutTime,
+                                                               IsLeave = attendance.IsLeave,
+                                                               StudentId = student.Name + "/ " + batch.Name + "/ " + course.Name,
+                                                           }).ToList();
+
+            return View(studentAttendanceDetail);
         }
 
         [Authorize]
@@ -162,7 +228,7 @@ namespace StudentManagementSystem.Controllers
             }
             return RedirectToAction("List");
         }
-
+        
         [Authorize]
         public IActionResult Edit(string Id)
         {

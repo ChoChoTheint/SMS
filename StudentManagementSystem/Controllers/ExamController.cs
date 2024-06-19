@@ -55,7 +55,14 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while saving the record";
             }
-            return RedirectToAction("List");
+            if (User.IsInRole("Admin"))
+            {
+                return Redirect("/Home/Index.cshtml");
+            }
+            else
+            {
+                return Redirect("/Home/TeacherIndex.cshtml");
+            }
         }
 
         [Authorize]

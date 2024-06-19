@@ -14,18 +14,18 @@
                 <div class="col-lg-5">
                     <div class="card shadow">
                         <div class="card-body">
-                            <h1 class="h5"><span class="fw-bold">Chapter: </span> @detail.Name</h1>
+                            <h1 class="h5"><span class="fw-bold">Name: </span> @detail.Name</h1>
                             <p class="card-text"><span class="fw-bold">Description: </span> @detail.Description</p>
                             <p class="card-text"><span class="fw-bold">Course: </span> @detail.CourseId</p>
                             <p class="card-text"><span class="fw-bold">Batch: </span> @detail.BatchId</p>
                             <p class="card-text d-flex gap-4">
-                                <span class="fw-bold">Assignment: </span>
+                                <span class="fw-bold me-3">Assignment: </span>
                                 <a asp-controller="Assignment" asp-action="DownloadFile" asp-route-id="@detail.URL">
                                     <i class="fa-solid fa-download fa-xl"></i>
                                 </a>
-                                <a asp-controller="Assignment" asp-action="ReadPDF" asp-route-id="@detail.URL">
+                                @* <a asp-controller="Assignment" asp-action="ReadPDF" asp-route-id="@detail.URL">
                                     <span class="text-uppercase fw-bold">Read</span>
-                                </a>
+                                </a> *@
                             </p>
                             
                         </div>

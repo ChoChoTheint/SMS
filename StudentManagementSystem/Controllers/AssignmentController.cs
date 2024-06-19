@@ -95,7 +95,7 @@ namespace StudentManagementSystem.Controllers
                         };
                         _dbContext.Assignments.Add(assignmentData);
                         _dbContext.SaveChanges();
-                        TempData["info"] = "save successfully the record";
+                        TempData["info"] = "added successfully the assignment";
                 }
                 else
                 {
@@ -135,7 +135,15 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while saving the record";
             }
-            return RedirectToAction("list");
+
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("list");
+            }
+            else
+            {
+                return Redirect("/Home/StudentIndex.cshtml");
+            }
         }
 
         [Authorize]
@@ -192,7 +200,7 @@ namespace StudentManagementSystem.Controllers
 
 
 
-            [Authorize]
+        [Authorize]
         public IActionResult List()
         {
             IList<AssignmentViewModel> assignmentList = (from assignment in _dbContext.Assignments
@@ -241,10 +249,42 @@ namespace StudentManagementSystem.Controllers
                                                          }).ToList();
             return View(assignmentDetail);
         }
+
         [Authorize]
-        public IActionResult StudentDetail() 
+        public IActionResult TeacherDetail(string Id)
         {
-            AssignmentViewModel studentDetail = (from assignment in _dbContext.Assignments
+            IList<AssignmentViewModel> teacherAssignmentDetail = (from assignment in _dbContext.Assignments
+                                                           join sb in _dbContext.StudentBatches
+                                                           on assignment.BatchId equals sb.BatchId
+                                                           join course in _dbContext.Courses
+                                                           on assignment.CourseId equals course.Id
+                                                           join batch in _dbContext.Batches
+                                                           on assignment.BatchId equals batch.Id
+                                                           join student in _dbContext.Students
+                                                           on sb.StudentId equals student.Id
+                                                           join tc in _dbContext.TeacherCourses
+                                                           on course.Id equals tc.CourseId
+                                                           join teacher in _dbContext.Teachers
+                                                           on tc.TeacherId equals teacher.Id
+
+                                                           where teacher.Email == Id
+
+                                                           select new AssignmentViewModel
+                                                           {
+                                                               Id = assignment.Id,
+                                                               Name = student.Name,
+                                                               Description = assignment.Description,
+                                                               URL = assignment.URL,
+                                                               CourseId = course.Name,
+                                                               BatchId = batch.Name + "/ " + course.Name,
+                                                           }).ToList();
+            return View(teacherAssignmentDetail);
+        }
+
+        [Authorize]
+        public IActionResult StudentDetail(string Id) 
+        {
+           IList<AssignmentViewModel> studentDetail = (from assignment in _dbContext.Assignments
                                                  join sb in _dbContext.StudentBatches
                                                  on assignment.BatchId equals sb.BatchId
                                                  join course in _dbContext.Courses
@@ -253,7 +293,7 @@ namespace StudentManagementSystem.Controllers
                                                  on assignment.BatchId equals batch.Id
                                                  join student in _dbContext.Students
                                                  on sb.StudentId equals student.Id
-                                                 where sb.StudentId == student.Id && sb.BatchId == batch.Id && batch.CourseId == course.Id && assignment.BatchId == batch.Id
+                                                 where student.Email == Id && sb.BatchId == batch.Id && batch.CourseId == course.Id && assignment.BatchId == batch.Id
 
                                                  select new AssignmentViewModel
                                                  {
@@ -263,7 +303,7 @@ namespace StudentManagementSystem.Controllers
                                                      CourseId = course.Name,
                                                      BatchId = batch.Name+"/ "+course.Name,
                                                      URL = assignment.URL,
-                                                 }).FirstOrDefault();
+                                                 }).ToList();
             return View(studentDetail);
         }
 

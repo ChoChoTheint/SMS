@@ -1,26 +1,30 @@
-﻿@model AssignmentViewModel
+﻿@model IList<AssignmentViewModel>
 
 @if(Model == null)
 {
     <h1 class="h3">No Assignments In Here!</h1>
 }
 <div class="container">
-    <h1 class="h3">Assignments:</h1>
+    <h1 class="h4 mt-3">Assignments:</h1>
     <div class="row ">
-        <div class="col-lg-5">
-            <div class="card">
-                <div class="card-body">
-                    <p class="card-text"><span class="fw-bold">Name: </span>@Model.Name</p>
-                    <p class="card-text"><span class="fw-bold">Description: </span>@Model.Description</p>
-                    <p class="card-text"><span class="fw-bold">Course: </span>@Model.CourseId</p>
-                    <p class="card-text"><span class="fw-bold">Batch: </span>@Model.BatchId</p>
-                    <p class="card-text"><span class="fw-bold">Assignment: </span>
-                        <a href="/assignment/DownloadFile?filePath=@Model.URL">
-                            <i class="fa-solid fa-download fa-xl"></i>
-                        </a>
-                    </p>
+        @foreach(var detail in Model)
+        {
+            
+            <div class="col-lg-5 mb-4">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <p class="card-text"><span class="fw-bold">Name: </span>@detail.Name</p>
+                        <p class="card-text"><span class="fw-bold">Description: </span>@detail.Description</p>
+                        <p class="card-text"><span class="fw-bold">Course: </span>@detail.CourseId</p>
+                        <p class="card-text"><span class="fw-bold">Batch: </span>@detail.BatchId</p>
+                        <p class="card-text"><span class="fw-bold me-3">Assignment: </span>
+                            <a asp-controller="Assignment" asp-action="DownloadFile" asp-route-id="@detail.URL">
+                                <i class="fa-solid fa-download fa-xl"></i>
+                            </a>
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
     </div>
 </div>

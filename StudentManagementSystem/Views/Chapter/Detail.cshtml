@@ -3,7 +3,7 @@
     
     @if (User.IsInRole("Admin")||User.Identity.IsAuthenticated)
     {
-        <h1 class="h4 mt-3">Chapters</h1>
+        <h1 class="h4 mt-3">Chapters:</h1>
         <div class="row my-3">
             @foreach (var detail in Model)
             {
@@ -21,11 +21,11 @@
                                     <a asp-controller="Book" asp-action="DownloadFile" asp-route-id="@detail.BookId">
                                         <i class="fa-solid fa-download fa-xl"></i>
                                     </a>
-                                    <a asp-controller="Book" asp-action="ReadPDF" asp-route-id="@detail.BookId">
+                                   @*  <a asp-controller="Book" asp-action="ReadPDF" asp-route-id="@detail.BookId">
                                         <span class="text-uppercase fw-bold">Read</span>
-                                    </a>
+                                    </a> *@
                             </p>
-                            <p class="card-text d-flex"><span class="fw-bold me-5">Video: </span>
+                            <p class="card-text d-flex"><span class="fw-bold me-3">Video: </span>
                                     <video width="220" height="80" controls>
                                         <source src="/videos/@detail.VideoId" type="video/mp4">
                                         Your browser does not support the video tag.

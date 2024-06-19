@@ -187,7 +187,32 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while updating the record";
             }
-            return RedirectToAction("List");
+
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("List");
+            }
+            else
+            {
+                var teacherList = _dbContext.Teachers.Select(s => new TeacherViewModel
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    Email = s.Email,
+                    Phone = s.Phone,
+                    Address = s.Address,
+                    DOB = s.DOB,
+                    NRC = s.NRC,
+                    FatherName = s.FatherName,
+                    Gender = s.Gender,
+                }).ToList();
+
+                var compositeModel = new CompositeViewModel
+                {
+                    Teachers = teacherList,
+                };
+                return View("~/Views/Home/TeacherIndex.cshtml", model: compositeModel);
+            }
         }
     }
 }

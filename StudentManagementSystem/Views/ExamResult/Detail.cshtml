@@ -1,6 +1,6 @@
 ﻿@model IList<ExamResultViewModel>
 <div class="container">
-    @if (User.IsInRole("Admin") || User.Identity.IsAuthenticated)
+    @if (User.IsInRole("Admin"))
     {
         <h1 class="h4 mt-3">Exam Results:</h1>
         <div class="row">

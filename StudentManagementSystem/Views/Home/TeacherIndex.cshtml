@@ -1,0 +1,197 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@model CompositeViewModel
+
+@if (!User.Identity.IsAuthenticated)
+{
+    <div class="text-center my-5">
+        <h1 class="display-4">Welcome</h1>
+        <h1 class="display-6">To</h1>
+        <h1 class="display-4">School Management System</h1>
+    </div>
+
+    <div class="d-flex justify-content-center gap-5">
+        <a class="btn btn-primary btn-lg" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        <a class="btn btn-secondary btn-lg" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    </div>
+}
+else if (User.IsInRole("Teacher"))
+{
+    <div class="container">
+        <div class="col bg-white sticky-top">
+            <div class="ps-4 pt-2 d-flex align-items-center border-primary border-bottom" style="height: 70px;">
+                <div>
+                    <h1 class="h5">Teacher</h1>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <span style="color: #999999;">@UserManager.GetUserName(User)!</span>
+                    }
+                </div>
+                <div class="ms-auto me-3 dropdown">
+                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-regular fa-circle-user fa-2xl"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        @* teacher list all *@
+                         @foreach (var list in Model.Teachers)
+                        {
+                            if (@list.Email == UserManager.GetEmailAsync(UserManager.GetUserAsync(User).Result).Result)
+                            {
+                                <li class="dropdown-item">
+                                    
+                                    <a href="/teacher/edit?Id=@list.Id" class="link-secondary link-underline link-underline-opacity-0">
+                                        <i class="fa-solid fa-gear me-2"></i>Setting
+                                    </a>
+                                </li>
+                            }
+                        }
+                        <li class="dropdown-item d-flex align-items-center">
+
+                            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                <button id="logout" type="submit" class="nav-link btn btn-link border-0">
+                                    <i class="fa-solid fa-right-from-bracket me-2"></i>
+                                    Sign out
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        @if (TempData["info"] != null)
+        {
+            @if (TempData["info"].ToString().Contains("delete"))
+            {
+                <div class="alert alert-danger mt-3" role="alert">
+                    @TempData["info"]
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-success mt-3" role="alert">
+                    @TempData["info"]
+                </div>
+            }
+        }
+        <div class="row mt-3 mb-5">
+            <div class="col-lg-4">
+                <div class="card position-relative shadow">
+                    <div class="card-body">
+                        <h1 class="h3">Course</h1>
+                        <p>In here, you can see all of the courses in this school.</p>
+                    </div>
+                    <div class="card-footer">
+                         @foreach (var list in Model.Teachers)
+                        {
+                            if (@list.Email == UserManager.GetEmailAsync(UserManager.GetUserAsync(User).Result).Result)
+                            {
+                                <a asp-controller="Course" asp-action="TeacherDetail" asp-route-id="@list.Email" class="btn btn-primary float-end">Details>></a>
+                            }
+                        }
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-4">
+
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h1 class="h3">Batch</h1>
+                        <p>In here, you can see all of your batches in this school.</p>
+                    </div>
+                    <div class="card-footer">
+                         @foreach (var list in Model.Teachers)
+                        {
+                            if (@list.Email == UserManager.GetEmailAsync(UserManager.GetUserAsync(User).Result).Result)
+                            {
+                                
+                                <a asp-controller="Batch" asp-action="TeacherDetail" asp-route-id="@list.Email" class="btn btn-primary float-end">Details>></a>
+                            }
+                        }
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-4">
+
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h1 class="h3">Attendance</h1>
+                        <p>In here, you can see all of your student's attendance.</p>
+                    </div>
+                    <div class="card-footer">
+                         @foreach (var list in Model.Teachers)
+                        {
+                            if (@list.Email == UserManager.GetEmailAsync(UserManager.GetUserAsync(User).Result).Result)
+                            {
+                                <a asp-controller="Attendance" asp-action="TeacherDetail" asp-route-id="@list.Email" class="btn btn-primary float-end">Details>></a>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-lg-4">
+
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h1 class="h3">Assignment</h1>
+                        <p>In here, you can see all of your student's assignment.</p>
+                    </div>
+                    <div class="card-footer">
+                        @foreach (var list in Model.Teachers)
+                        {
+                            if (@list.Email == UserManager.GetEmailAsync(UserManager.GetUserAsync(User).Result).Result)
+                            {
+                                <a asp-controller="Assignment" asp-action="TeacherDetail" asp-route-id="@list.Email" class="btn btn-primary float-end">Details>></a>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h1 class="h3">Exam Result</h1>
+                        <p>In here, you can see all of the exam results in this school.</p>
+                    </div>
+                    <div class="card-footer">
+                        @foreach (var list in Model.Teachers)
+                        {
+                            if (@list.Email == UserManager.GetEmailAsync(UserManager.GetUserAsync(User).Result).Result)
+                            {
+                                <a asp-controller="ExamResult" asp-action="TeacherDetail" asp-route-id="@list.Email" class="btn btn-primary float-end">Details>></a>
+                            }
+                        }
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-4">
+
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h1 class="h3">Exam</h1>
+                        <p>In here, you can see all of the exams in this school.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a asp-controller="Exam" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    Layout = "_Layout";
+}
+
+

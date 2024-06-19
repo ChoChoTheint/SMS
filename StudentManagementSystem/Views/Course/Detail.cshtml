@@ -1,8 +1,8 @@
 ﻿@model IList<CourseViewModel>
 <div class="container">
-    @if (User.IsInRole("Admin")||User.Identity.IsAuthenticated)
+    @if (User.IsInRole("Admin"))
     {
-        <h1 class="h4 mt-3">Courses</h1>
+        <h1 class="h4 mt-3">Courses:</h1>
         <div class="row">
             @foreach (var detail in Model)
             {
@@ -16,7 +16,7 @@
                         @if (User.IsInRole("Admin"))
                         {
                             <div class="card-footer">
-                                <a asp-controller="Batch" asp-action="Detail" asp-route-id="@detail.Id" class="btn btn-primary float-end">Details >></a>
+                                <a asp-controller="Batch" asp-action="AdminDetail" asp-route-id="@detail.Id" class="btn btn-primary float-end">Details >></a>
                             </div>
                         }
                     </div>
