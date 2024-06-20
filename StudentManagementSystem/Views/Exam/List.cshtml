@@ -10,13 +10,13 @@
 {
     @if (TempData["info"].ToString().Contains("delete"))
     {
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger mt-3" role="alert">
             @TempData["info"]
         </div>
     }
     else
     {
-        <div class="alert alert-success" role="alert">
+        <div class="alert alert-success mt-3" role="alert">
             @TempData["info"]
         </div>
     }
@@ -33,12 +33,13 @@
                 <div class="table-responsive">
                     <table id="examTable" class="table table-bordred table-striped">
                         <thead>
-                        <th>ExamName</th>
-                        <th>ExamDate</th>
-                            @if (User.IsInRole("Admin"))
-                            {
-                                <th>Action</th>
-                            }
+                                <th>ExamName</th>
+                                <th>Course</th>
+                                <th>ExamDate</th>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <th>Action</th>
+                                }
                         </thead>
                         <tbody>
                             @{
@@ -48,6 +49,7 @@
                             {
                                 <tr>
                                     <td>@list.Name</td>
+                                    <td>@list.CourseId</td>
                                     <td>@list.ExamDate.ToString("dd-MM-yyyy")</td>
                                     @if (User.IsInRole("Admin"))
                                     {

@@ -163,7 +163,13 @@ else if(User.Identity.IsAuthenticated)
                         <p>In here, you can see all of the exams.</p>
                     </div>
                     <div class="card-footer">
-                        <a asp-controller="Exam" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
+                        @foreach (var list in Model.Students)
+                            {
+                                if (list.Email == UserManager.GetEmailAsync(UserManager.GetUserAsync(User).Result).Result)
+                                {
+                                    <a asp-controller="Exam" asp-action="StudentDetail" asp-route-id="@list.Email" class="btn btn-primary float-end">Details>></a>
+                                }
+                            }
                     </div>
                 </div>
 

@@ -18,6 +18,14 @@ namespace StudentManagementSystem.Controllers
         public IActionResult Entry()
         {
             ViewBag.Id = Guid.NewGuid().ToString();
+
+            var courses = _dbContext.Courses.Select(s => new CourseViewModel
+            {
+                Id = s.Id,
+                Name = s.Name,
+            }).OrderBy(o => o.Name).ToList();
+            ViewBag.Course = courses;
+
             return View();
         }
 
@@ -36,6 +44,7 @@ namespace StudentManagementSystem.Controllers
                         CreatedAt = DateTime.UtcNow,
                         IsInActive = true,
                         Name = ui.Name,
+                        CourseId = ui.CourseId,
                         ExamDate = ui.ExamDate,
                     };
                     _dbContext.Exams.Add(examData);
@@ -48,6 +57,13 @@ namespace StudentManagementSystem.Controllers
                     
                     ViewBag.Id = Guid.NewGuid().ToString();
 
+                    var courses = _dbContext.Courses.Select(s => new CourseViewModel
+                    {
+                        Id = s.Id,
+                        Name = s.Name,
+                    }).OrderBy(o => o.Name).ToList();
+                    ViewBag.Course = courses;
+
                     return View(ui);
                 }
             }
@@ -57,7 +73,7 @@ namespace StudentManagementSystem.Controllers
             }
             if (User.IsInRole("Admin"))
             {
-                return Redirect("/Home/Index.cshtml");
+                return RedirectToAction("list");
             }
             else
             {
@@ -68,11 +84,15 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult List()
         {
-            IList<ExamViewModel> examList = _dbContext.Exams.Select(s => new ExamViewModel
+            IList<ExamViewModel> examList = (from exam in _dbContext.Exams
+                                             join course in _dbContext.Courses
+                                             on exam.CourseId equals course.Id
+             select new ExamViewModel
             {
-                Id = s.Id,
-                Name = s.Name,
-                ExamDate = s.ExamDate,
+                Id = exam.Id,
+                Name = exam.Name,
+                CourseId = course.Name,
+                ExamDate = exam.ExamDate,
             }).ToList();
 
             return View(examList);
@@ -89,6 +109,57 @@ namespace StudentManagementSystem.Controllers
                                             }).ToList();
             return View(examDetail);
         }
+
+        [Authorize]
+        public IActionResult TeacherDetail(string Id)
+        {
+            IList<ExamViewModel> examDetail = (from exam in _dbContext.Exams
+                                               join course in _dbContext.Courses
+                                               on exam.CourseId equals course.Id
+                                               join tc in _dbContext.TeacherCourses
+                                               on course.Id equals tc.CourseId
+                                               join teacher in _dbContext.Teachers
+                                               on tc.TeacherId equals teacher.Id
+                                               join batch in _dbContext.Batches
+                                               on course.Id equals batch.CourseId
+
+                                               where teacher.Email==Id
+
+                                               select new ExamViewModel
+            {
+                Id = exam.Id,
+                Name = exam.Name,
+                CourseId = course.Name+"/ "+batch.Name,
+                ExamDate = exam.ExamDate,
+            }).ToList();
+            return View(examDetail);
+        }
+
+        [Authorize]
+        public IActionResult StudentDetail(string Id)
+        {
+            IList<ExamViewModel> examDetail = (from exam in _dbContext.Exams
+                                               join course in _dbContext.Courses
+                                               on exam.CourseId equals course.Id
+                                               join batch in _dbContext.Batches
+                                               on course.Id equals batch.CourseId
+                                               join sb in _dbContext.StudentBatches
+                                               on batch.Id equals sb.BatchId
+                                               join student in _dbContext.Students
+                                               on sb.StudentId equals student.Id
+
+                                               where student.Email == Id
+
+                                               select new ExamViewModel
+                                               {
+                                                   Id = exam.Id,
+                                                   Name = exam.Name,
+                                                   CourseId = course.Name + "/ " + batch.Name,
+                                                   ExamDate = exam.ExamDate,
+                                               }).ToList();
+            return View(examDetail);
+        }
+
         [Authorize]
         public IActionResult Delete(string Id)
         {
@@ -116,8 +187,17 @@ namespace StudentManagementSystem.Controllers
             {
                 Id = s.Id,
                 Name = s.Name,
+                CourseId = s.CourseId,
                 ExamDate = s.ExamDate,
             }).FirstOrDefault();
+
+            var courses = _dbContext.Courses.Select(s => new CourseViewModel
+            {
+                Id = s.Id,
+                Name = s.Name,
+            }).OrderBy(o => o.Name).ToList();
+            ViewBag.Course = courses;
+
             return View(editExamData);
         }
 
@@ -137,6 +217,7 @@ namespace StudentManagementSystem.Controllers
                         IsInActive = true,
                         ModifiedAt = DateTime.UtcNow,
                         Name = ui.Name,
+                        CourseId = ui.CourseId,
                         ExamDate = ui.ExamDate,
                     };
                     _dbContext.Exams.Update(updateExamData);
@@ -145,6 +226,14 @@ namespace StudentManagementSystem.Controllers
                 }
                 else
                 {
+                    //Reload exam to populate the dropdown again.
+                    var courses = _dbContext.Courses.Select(s => new CourseViewModel
+                    {
+                        Id = s.Id,
+                        Name = s.Name,
+                    }).OrderBy(o => o.Name).ToList();
+                    ViewBag.Course = courses;
+
                     return View("Edit", model: ui);
                 }
             }

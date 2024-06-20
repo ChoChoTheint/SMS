@@ -155,6 +155,25 @@ else if (User.IsInRole("Teacher"))
                     </div>
                 </div>
             </div>
+            
+            <div class="col-lg-4">
+
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h1 class="h3">Exam</h1>
+                        <p>In here, you can see all of the exams in this school.</p>
+                    </div>
+                    <div class="card-footer">
+                        @foreach (var list in Model.Teachers)
+                        {
+                            if (@list.Email == UserManager.GetEmailAsync(UserManager.GetUserAsync(User).Result).Result)
+                            {
+                                <a asp-controller="Exam" asp-action="TeacherDetail" asp-route-id="@list.Email" class="btn btn-primary float-end">Details>></a>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
             <div class="col-lg-4">
 
                 <div class="card shadow">
@@ -173,18 +192,6 @@ else if (User.IsInRole("Teacher"))
                     </div>
                 </div>
 
-            </div>
-            <div class="col-lg-4">
-
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h1 class="h3">Exam</h1>
-                        <p>In here, you can see all of the exams in this school.</p>
-                    </div>
-                    <div class="card-footer">
-                        <a asp-controller="Exam" asp-action="Detail" class="btn btn-primary float-end">Details>></a>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

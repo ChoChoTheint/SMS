@@ -93,7 +93,7 @@ namespace StudentManagementSystem.Controllers
             }
             else
             {
-                return Redirect("/Home/TeacherIndex.cshtml");
+                return Redirect("/Home/Index");
             }
         }
 

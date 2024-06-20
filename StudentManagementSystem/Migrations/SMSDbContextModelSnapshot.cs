@@ -501,6 +501,10 @@ namespace StudentManagementSystem.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("CourseId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -585,10 +589,6 @@ namespace StudentManagementSystem.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AspNetUsersId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BatchId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
