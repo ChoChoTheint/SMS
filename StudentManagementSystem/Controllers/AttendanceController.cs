@@ -312,5 +312,19 @@ namespace StudentManagementSystem.Controllers
             }
             return RedirectToAction("List");
         }
+
+        [Authorize]
+        public IActionResult Cancle(AttendanceViewModel ui)
+        {
+            AttendanceEntity attendance = new AttendanceEntity()
+            {
+                AttendanceDate = DateTime.Now,
+                InTime = DateTime.Now,
+                OutTime = DateTime.Now,
+                IsLeave = "",
+                StudentId = ""
+            };
+            return RedirectToAction("entry");
+        }
     }
 }

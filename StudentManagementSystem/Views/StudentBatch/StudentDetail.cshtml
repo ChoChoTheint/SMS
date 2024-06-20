@@ -1,6 +1,11 @@
 ﻿@model IList<StudentBatchViewModel>
 <div class="container">
-
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/home/index">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Student</li>
+        </ol>
+    </nav>
     @if (User.IsInRole("Admin") || User.Identity.IsAuthenticated)
     {
         <h1 class="h4 mt-3">Batch: </h1>

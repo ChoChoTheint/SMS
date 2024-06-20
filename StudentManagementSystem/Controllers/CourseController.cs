@@ -205,5 +205,16 @@ namespace StudentManagementSystem.Controllers
             }
             return RedirectToAction("List");
         }
+
+        [Authorize]
+        public IActionResult Cancle(CourseViewModel ui)
+        {
+            CourseEntity course = new CourseEntity()
+            {
+                Name = "",
+                Description = "",
+            };
+            return RedirectToAction("entry");
+        }
     }
 }

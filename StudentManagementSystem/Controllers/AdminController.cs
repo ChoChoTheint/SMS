@@ -78,6 +78,24 @@ namespace StudentManagementSystem.Controllers
         }
 
         [Authorize]
+        public IActionResult Cancle(AdminViewModel ui)
+        {
+            AdminEntity adminData = new AdminEntity()
+            {
+
+                Name = "",
+                Email = "",
+                Phone = "",
+                Address = "",
+                NRC = "",
+                DOB = DateTime.Now,
+                FatherName = "",
+                Gender = ""
+            };
+            return RedirectToAction("entry");
+        }
+
+        [Authorize]
         public IActionResult List()
         {
             IList<AdminViewModel> adminList = _dbContext.Admins.Select(s => new AdminViewModel

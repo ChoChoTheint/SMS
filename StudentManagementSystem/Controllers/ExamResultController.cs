@@ -294,5 +294,17 @@ namespace StudentManagementSystem.Controllers
             }
             return RedirectToAction("List");
         }
+
+        [Authorize]
+        public IActionResult Cancle(ExamResultViewModel ui)
+        {
+            ExamResultEntity examResult = new ExamResultEntity()
+            {
+                Mark = 0,
+                StudentId = ""
+
+            };
+            return RedirectToAction("entry");
+        }
     }
 }

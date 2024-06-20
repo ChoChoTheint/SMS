@@ -210,5 +210,22 @@ namespace StudentManagementSystem.Controllers
                 return View("~/Views/Home/StudentIndex.cshtml", model: compositeModel);
             }
         }
+
+        [Authorize]
+        public IActionResult Cancle(StudentViewModel ui)
+        {
+            StudentEntity student = new StudentEntity()
+            {
+                Name = "",
+                Email = "",
+                Phone = "",
+                Address = "",
+                NRC = "",
+                DOB = DateTime.Now,
+                FatherName = "",
+                Gender = "",
+            };
+            return RedirectToAction("entry");
+        }
     }
 }

@@ -289,5 +289,20 @@ namespace StudentManagementSystem.Controllers
             }
             return RedirectToAction("List");
         }
+
+        [Authorize]
+        public IActionResult Cancle(BatchViewModel ui)
+        {
+            BatchEntity batch = new BatchEntity()
+            {
+                Name = "",
+                Description = "",
+                CourseId = "",
+                OpeningDate = DateTime.Now,
+                DurationInHour = "",
+                DurationInMonth = "",
+            };
+            return RedirectToAction("entry");
+        }
     }
 }

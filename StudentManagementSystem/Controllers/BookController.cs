@@ -314,6 +314,18 @@ namespace StudentManagementSystem.Controllers
             return RedirectToAction("list");
         }
 
-        
+        [Authorize]
+        public IActionResult Cancle(BookViewModel ui)
+        {
+            BookEntity book = new BookEntity()
+            {
+                Name = "",
+                Description = "",
+                CourseId = "",
+                BatchId = "",
+                URL = "",
+            };
+            return RedirectToAction("entry");
+        }
     }
 }

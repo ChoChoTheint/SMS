@@ -214,5 +214,22 @@ namespace StudentManagementSystem.Controllers
                 return View("~/Views/Home/TeacherIndex.cshtml", model: compositeModel);
             }
         }
+
+        [Authorize]
+        public IActionResult Cancle(TeacherViewModel ui)
+        {
+            TeacherEntity teacher = new TeacherEntity()
+            {
+                Name = "",
+                Email = "",
+                Phone = "",
+                Address = "",
+                NRC = "",
+                DOB = DateTime.Now,
+                FatherName = "",
+                Gender = "",
+            };
+            return RedirectToAction("entry");
+        }
     }
 }

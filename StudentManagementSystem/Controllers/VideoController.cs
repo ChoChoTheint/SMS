@@ -277,5 +277,19 @@ namespace StudentManagementSystem.Controllers
             }
             return RedirectToAction("list");
         }
+
+        [Authorize]
+        public IActionResult Cancle(VideoViewModel ui)
+        {
+            VideoEntity video = new VideoEntity()
+            {
+                Name = "",
+                Description = "",
+                URL = "",
+                CourseId = "",
+                BatchId = "",
+            };
+            return RedirectToAction("entry");
+        }
     }
 }

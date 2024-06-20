@@ -243,5 +243,16 @@ namespace StudentManagementSystem.Controllers
             }
             return RedirectToAction("List");
         }
+
+        [Authorize]
+        public IActionResult Cancle(ExamViewModel ui)
+        {
+            ExamEntity exam = new ExamEntity()
+            {
+                Name = "",
+                ExamDate = DateTime.UtcNow,
+            };
+            return RedirectToAction("entry");
+        }
     }
 }

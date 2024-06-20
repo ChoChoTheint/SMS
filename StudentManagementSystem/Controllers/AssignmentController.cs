@@ -441,5 +441,20 @@ namespace StudentManagementSystem.Controllers
             }
             return RedirectToAction("list");
         }
+
+        [Authorize]
+        public IActionResult Cancle(AssignmentViewModel ui)
+        {
+            AssignmentEntity assignmentData = new AssignmentEntity()
+            {
+
+                Name = "",
+                Description = "",
+                URL = "",
+                CourseId = "",
+                BatchId = "",
+            };
+            return RedirectToAction("entry");
+        }
     }
 }
