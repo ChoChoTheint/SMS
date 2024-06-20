@@ -56,7 +56,7 @@ namespace StudentManagementSystem.Controllers
                     };
                     _dbContext.ExamResults.Add(examResultData);
                     _dbContext.SaveChanges();
-                    TempData["info"] = "save successfully the record";
+                    TempData["info"] = "Added successfully the exam result";
                 }
                 else
                 {
@@ -86,7 +86,15 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while saving the record";
             }
-            return RedirectToAction("List");
+
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("List");
+            }
+            else
+            {
+                return Redirect("/Home/Index");
+            }
         }
 
         [Authorize]
@@ -134,6 +142,59 @@ namespace StudentManagementSystem.Controllers
                                                              Mark = examResult.Mark,
                                                              StudentId = student.Name + "/ " + batch.Name + "/ " + course.Name,
                                                          }).ToList();
+            return View(examResultDetail);
+        }
+
+        [Authorize]
+        public IActionResult TeacherDetail(string Id)
+        {
+            IList<ExamResultViewModel> examResultDetail = (from examResult in _dbContext.ExamResults
+                                                           join sb in _dbContext.StudentBatches
+                                                           on examResult.StudentId equals sb.StudentId
+                                                           join student in _dbContext.Students
+                                                           on examResult.StudentId equals student.Id
+                                                           join batch in _dbContext.Batches
+                                                           on sb.BatchId equals batch.Id
+                                                           join course in _dbContext.Courses
+                                                           on batch.CourseId equals course.Id
+                                                           join tc in _dbContext.TeacherCourses
+                                                           on course.Id equals tc.CourseId
+                                                           join teacher in _dbContext.Teachers
+                                                           on tc.TeacherId equals teacher.Id
+
+                                                           where teacher.Email == Id
+
+                                                           select new ExamResultViewModel
+                                                           {
+                                                               Id = examResult.Id,
+                                                               Mark = examResult.Mark,
+                                                               StudentId = student.Name + "/ " + batch.Name + "/ " + course.Name,
+                                                           }).ToList();
+            return View(examResultDetail);
+        }
+
+        [Authorize]
+        public IActionResult StudentDetail(string Id)
+        {
+            IList<ExamResultViewModel> examResultDetail = (from examResult in _dbContext.ExamResults
+                                                           join sb in _dbContext.StudentBatches
+                                                           on examResult.StudentId equals sb.StudentId
+                                                           join student in _dbContext.Students
+                                                           on examResult.StudentId equals student.Id
+                                                           join batch in _dbContext.Batches
+                                                           on sb.BatchId equals batch.Id
+                                                           join course in _dbContext.Courses
+                                                           on batch.CourseId equals course.Id
+                                                           
+
+                                                           where student.Email == Id
+
+                                                           select new ExamResultViewModel
+                                                           {
+                                                               Id = examResult.Id,
+                                                               Mark = examResult.Mark,
+                                                               StudentId = student.Name + "/ " + batch.Name + "/ " + course.Name,
+                                                           }).ToList();
             return View(examResultDetail);
         }
 
@@ -232,6 +293,18 @@ namespace StudentManagementSystem.Controllers
                 TempData["info"] = "error while updating the record";
             }
             return RedirectToAction("List");
+        }
+
+        [Authorize]
+        public IActionResult Cancle(ExamResultViewModel ui)
+        {
+            ExamResultEntity examResult = new ExamResultEntity()
+            {
+                Mark = 0,
+                StudentId = ""
+
+            };
+            return RedirectToAction("entry");
         }
     }
 }

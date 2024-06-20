@@ -1,10 +1,4 @@
-﻿<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+﻿
 @model IList<AssignmentViewModel>
 @if (TempData["info"] != null)
 {
@@ -22,9 +16,14 @@
     }
 }
 <div class="container">
-    
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/home/index">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">List</li>
+        </ol>
+    </nav>
 
-    @if (User.IsInRole("Admin")||User.Identity.IsAuthenticated)
+    @if (User.IsInRole("Admin"))
     {
         
         <div class="row">
@@ -58,7 +57,7 @@
                                     <td>@list.Name</td>
                                     <td>@list.Description</td>
                                     <td>
-                                        <a href="/assignment/DownloadFile?fileName=@list.URL">
+                                        <a asp-controller="Assignment" asp-action="DownloadFile" asp-route-id="@list.URL">
                                             <i class="fa-solid fa-download fa-xl"></i>
                                         </a>
                                     </td>
@@ -95,6 +94,7 @@
                                 </tr>
                                 index++;
                             }
+
                         </tbody>
 
                     </table>

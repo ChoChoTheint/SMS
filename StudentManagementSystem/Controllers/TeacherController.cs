@@ -23,16 +23,7 @@ namespace StudentManagementSystem.Controllers
 
             ViewBag.Id = Guid.NewGuid().ToString();
 
-            var batches = (from batch in _dbContext.Batches
-                           join course in _dbContext.Courses
-                           on batch.CourseId equals course.Id
-
-                           select new BatchViewModel
-                           {
-                               Id = batch.Id,
-                               Name = batch.Name + "/ " + course.Name
-                           }).OrderBy(o => o.Name).ToList();
-            ViewBag.Batch = batches;
+            
 
             return View();
         }
@@ -76,16 +67,7 @@ namespace StudentManagementSystem.Controllers
 
                     ViewBag.Id = Guid.NewGuid().ToString();
 
-                    var batches = (from batch in _dbContext.Batches
-                                   join course in _dbContext.Courses
-                                   on batch.CourseId equals course.Id
-
-                                   select new BatchViewModel
-                                   {
-                                       Id = batch.Id,
-                                       Name = batch.Name + "/ " + course.Name
-                                   }).OrderBy(o => o.Name).ToList();
-                    ViewBag.Batch = batches;
+                   
 
                     return View(ui);
                 }
@@ -117,8 +99,6 @@ namespace StudentManagementSystem.Controllers
                                                        FatherName = t.Name,
                                                        Position = t.Position,
                                                        Gender = t.Gender,
-                                                       //CourseInfo = c.Name,
-                                                       //BatchInfo = b.Name,
                                                    }).ToList();
             return View(teacherList);
         }
@@ -162,16 +142,7 @@ namespace StudentManagementSystem.Controllers
                 AspNetUsersId = s.AspNetUsersId,
             }).FirstOrDefault();
 
-            var batches = (from batch in _dbContext.Batches
-                           join course in _dbContext.Courses
-                           on batch.CourseId equals course.Id
-
-                           select new BatchViewModel
-                           {
-                               Id = batch.Id,
-                               Name = batch.Name + "/ " + course.Name
-                           }).OrderBy(o => o.Name).ToList();
-            ViewBag.Batch = batches;
+            
 
             return View(editTeacherData);
         }
@@ -216,7 +187,49 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while updating the record";
             }
-            return RedirectToAction("List");
+
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("List");
+            }
+            else
+            {
+                var teacherList = _dbContext.Teachers.Select(s => new TeacherViewModel
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    Email = s.Email,
+                    Phone = s.Phone,
+                    Address = s.Address,
+                    DOB = s.DOB,
+                    NRC = s.NRC,
+                    FatherName = s.FatherName,
+                    Gender = s.Gender,
+                }).ToList();
+
+                var compositeModel = new CompositeViewModel
+                {
+                    Teachers = teacherList,
+                };
+                return View("~/Views/Home/TeacherIndex.cshtml", model: compositeModel);
+            }
+        }
+
+        [Authorize]
+        public IActionResult Cancle(TeacherViewModel ui)
+        {
+            TeacherEntity teacher = new TeacherEntity()
+            {
+                Name = "",
+                Email = "",
+                Phone = "",
+                Address = "",
+                NRC = "",
+                DOB = DateTime.Now,
+                FatherName = "",
+                Gender = "",
+            };
+            return RedirectToAction("entry");
         }
     }
 }

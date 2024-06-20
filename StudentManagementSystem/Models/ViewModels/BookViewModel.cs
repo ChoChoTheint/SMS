@@ -9,7 +9,7 @@ namespace StudentManagementSystem.Models.ViewModels
         [Required(ErrorMessage ="Name is required")]
         public string Name { get; set; }
         public string URL { get; set; } 
-        [Required(ErrorMessage = "Video is required")]
+        [Required(ErrorMessage = "Book is required")]
         public IFormFile File { get; set; }
         [Required(ErrorMessage = "Description is required")]
         public string Description { get; set; }

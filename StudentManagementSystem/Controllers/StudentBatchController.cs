@@ -252,5 +252,16 @@ namespace StudentManagementSystem.Controllers
             }
             return RedirectToAction("List");
         }
+
+        [Authorize]
+        public IActionResult Cancle(StudentBatchViewModel ui)
+        {
+            StudentBatchViewModel studentBatch = new StudentBatchViewModel()
+            {
+                StudentId = "",
+                BatchId = ""
+            };
+            return RedirectToAction("index");
+        }
     }
 }

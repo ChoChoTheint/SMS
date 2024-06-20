@@ -11,7 +11,7 @@ namespace StudentManagementSystem.Models.ViewModels
         [Required(ErrorMessage = "Description is required")]
         public string Description { get; set; }
         public string URL { get; set; }
-        [Required(ErrorMessage = "File is required")]
+        [Required(ErrorMessage = "Assignment is required")]
         public IFormFile File { get; set; }
         [Required(ErrorMessage = "Course is required")]
         public string CourseId { get; set; }

@@ -90,6 +90,51 @@ namespace StudentManagementSystem.Controllers
         }
 
         [Authorize]
+        public IActionResult TeacherDetail(string Id)
+        {
+            IList<CourseViewModel> courseDetail = (from course in _dbContext.Courses
+                                                   join tc in _dbContext.TeacherCourses
+                                                   on course.Id equals tc.CourseId
+                                                   join teacher in _dbContext.Teachers
+                                                   on tc.TeacherId equals teacher.Id
+
+                                                   where teacher.Email==Id
+             select new CourseViewModel
+            {
+                Id = course.Id,
+                Name = course.Name,
+                Description = course.Description,
+
+            }).ToList();
+
+            return View(courseDetail);
+        }
+
+        [Authorize]
+        public IActionResult StudentDetail(string Id)
+        {
+            IList<CourseViewModel> courseDetail = (from course in _dbContext.Courses
+                                                   join batch in _dbContext.Batches
+                                                   on course.Id equals batch.CourseId
+                                                   join sb in _dbContext.StudentBatches
+                                                   on batch.Id equals sb.BatchId
+                                                   join student in _dbContext.Students
+                                                   on sb.StudentId equals student.Id
+
+                                                   where student.Email == Id
+                                                   select new CourseViewModel
+                                                   {
+                                                       Id = course.Id,
+                                                       Name = course.Name,
+                                                       Description = course.Description,
+
+                                                   }).ToList();
+
+            return View(courseDetail);
+        }
+
+
+        [Authorize]
         public IActionResult Delete(string Id)
         {
             try
@@ -159,6 +204,17 @@ namespace StudentManagementSystem.Controllers
                 TempData["info"] = "error while updating the record";
             }
             return RedirectToAction("List");
+        }
+
+        [Authorize]
+        public IActionResult Cancle(CourseViewModel ui)
+        {
+            CourseEntity course = new CourseEntity()
+            {
+                Name = "",
+                Description = "",
+            };
+            return RedirectToAction("entry");
         }
     }
 }

@@ -125,13 +125,39 @@ namespace StudentManagementSystem.Controllers
         }
 
         [Authorize]
+        public IActionResult AdminDetail(string Id)
+        {
+            IList<BatchViewModel> batchDetail = (from batch in _dbContext.Batches
+                                                 join course in _dbContext.Courses
+                                                 on batch.CourseId equals course.Id
+
+                                                 where batch.CourseId == Id
+
+                                                 select new BatchViewModel
+                                                 {
+                                                     Id = batch.Id,
+                                                     Name = batch.Name,
+                                                     Description = batch.Description,
+                                                     CourseId = course.Name,
+                                                     OpeningDate = batch.OpeningDate,
+                                                     DurationInHour = batch.DurationInHour,
+                                                     DurationInMonth = batch.DurationInMonth,
+                                                 }).ToList();
+            return View(batchDetail);
+        }
+
+        [Authorize]
         public IActionResult TeacherDetail(string Id)
         {
             IList<BatchViewModel> teacherBatchDetail = (from batch in _dbContext.Batches
                                                  join course in _dbContext.Courses
                                                  on batch.CourseId equals course.Id
+                                                 join tc in _dbContext.TeacherCourses
+                                                 on course.Id equals tc.CourseId
+                                                 join teacher in _dbContext.Teachers
+                                                 on tc.TeacherId equals teacher.Id
 
-                                                 where batch.CourseId == Id
+                                                 where teacher.Email == Id || tc.CourseId==Id
 
                                                  select new BatchViewModel
                                                  {
@@ -158,7 +184,7 @@ namespace StudentManagementSystem.Controllers
                                                     join course in _dbContext.Courses
                                                     on batch.CourseId equals course.Id
 
-                                                    where sb.BatchId == Id
+                                                    where student.Email == Id || sb.BatchId == Id || batch.CourseId==Id
 
                                                    select new BatchViewModel
                                             {
@@ -262,6 +288,21 @@ namespace StudentManagementSystem.Controllers
                 TempData["info"] = "error while updating the record";
             }
             return RedirectToAction("List");
+        }
+
+        [Authorize]
+        public IActionResult Cancle(BatchViewModel ui)
+        {
+            BatchEntity batch = new BatchEntity()
+            {
+                Name = "",
+                Description = "",
+                CourseId = "",
+                OpeningDate = DateTime.Now,
+                DurationInHour = "",
+                DurationInMonth = "",
+            };
+            return RedirectToAction("entry");
         }
     }
 }

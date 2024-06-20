@@ -1,4 +1,10 @@
 ﻿@model StudentManagementSystem.Models.ViewModels.AssignmentViewModel
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/home/index">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Edit</li>
+    </ol>
+</nav>
 <div class="container w-50 mx-auto mt-5 p-5 border-start border-end border-bottom rounded-start rounded-end shadow-sm" style="border-top: 12px solid #699BF7">
     <div class="d-flex justify-content-center align-items-center mb-4">
         <div class="me-3">
@@ -24,7 +30,7 @@
             <span asp-validation-for="Description" class="text-sm text-danger"></span>
         </div>
         <div class="mb-3">
-            <label asp-for="File" class="form-label">File</label>
+            <label asp-for="File" class="form-label">Assignment</label>
             <input type="file" asp-for="File" class="form-control" />
             <input asp-for="URL" value="URL" hidden />
             <span asp-validation-for="File" class="text-sm text-danger"></span>
@@ -77,7 +83,9 @@
         </div>
         <div class="mb-3">
             <button class="btn btn-primary text-white" style="border-radius: 10px 0 10px 0;">Update</button>
-            <button class="btn btn-secondary text-white" style="border-radius: 10px 0 10px 0;" type="reset">Cancel</button>
+            <a href="/assignment/cancle" class="btn btn-danger" style="border-radius: 10px 0 10px 0;">
+                Cancel
+            </a>
         </div>
     </form>
 </div>

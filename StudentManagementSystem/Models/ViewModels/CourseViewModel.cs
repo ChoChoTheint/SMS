@@ -9,6 +9,6 @@ namespace StudentManagementSystem.Models.ViewModels
         public string Name { get; set; }
         [Required(ErrorMessage = "Description is required")]
         public string Description { get; set; }
-        
+
     }
 }

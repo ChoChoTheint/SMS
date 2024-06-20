@@ -1,0 +1,29 @@
+﻿@model IList<ExamResultViewModel>
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/home/index">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">ExamResult</li>
+        </ol>
+    </nav>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <h1 class="h4 mt-3">Exam Results:</h1>
+        <div class="row">
+            @foreach (var detail in Model)
+            {
+                <div class="col-lg-5 mb-5">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h1 class="h5"><span class="fw-bold">Student: </span> @detail.StudentId</h1>
+                            <p class="card-text"><span class="fw-bold">Mark: </span> @detail.Mark</p>
+
+                        </div>
+
+                    </div>
+                </div>
+            }
+
+        </div>
+    }
+</div>

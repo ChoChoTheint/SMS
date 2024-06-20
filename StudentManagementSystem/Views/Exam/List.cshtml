@@ -1,27 +1,22 @@
-﻿<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+﻿
 @model IList<ExamViewModel>
 @if (TempData["info"] != null)
 {
     @if (TempData["info"].ToString().Contains("delete"))
     {
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger mt-3" role="alert">
             @TempData["info"]
         </div>
     }
     else
     {
-        <div class="alert alert-success" role="alert">
+        <div class="alert alert-success mt-3" role="alert">
             @TempData["info"]
         </div>
     }
 }
 <div class="container">
+<<<<<<< HEAD
 <<<<<<< HEAD
     @if (User.IsInRole("Admin") || User.IsInRole("Teacher") || User.Identity.IsAuthenticated)
     {
@@ -49,6 +44,13 @@
 =======
     
 >>>>>>> yairyint
+=======
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/home/index">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">List</li>
+        </ol>
+    </nav>
     @if (User.IsInRole("Admin"))
     {
         
@@ -60,12 +62,13 @@
                     <table id="examTable" class="table table-bordred table-striped">
 
                         <thead>
-                        <th>ExamName</th>
-                        <th>ExamDate</th>
-                            @if (User.IsInRole("Admin"))
-                            {
-                                <th>Action</th>
-                            }
+                                <th>ExamName</th>
+                                <th>Course</th>
+                                <th>ExamDate</th>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <th>Action</th>
+                                }
                         </thead>
                         <tbody>
                             @{
@@ -75,6 +78,7 @@
                             {
                                 <tr>
                                     <td>@list.Name</td>
+                                    <td>@list.CourseId</td>
                                     <td>@list.ExamDate.ToString("dd-MM-yyyy")</td>
                                     @if (User.IsInRole("Admin"))
                                     {
@@ -98,6 +102,7 @@
                                         </td>
                                     }
                                 </tr>
+                                index++;
                             }
 
                         </tbody>

@@ -134,9 +134,9 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         private MemoryStream FilePath(string fileName, string uploadFolder)
         {
-            string videoPath = Path.Combine(uploadFolder, fileName);
+            string filePath = Path.Combine(uploadFolder, fileName);
 
-            var path = Path.Combine(Directory.GetCurrentDirectory(), videoPath);
+            var path = Path.Combine(Directory.GetCurrentDirectory(), filePath);
             var memeory = new MemoryStream();
 
             if (System.IO.File.Exists(path))
@@ -153,7 +153,7 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult ReadPDF(string Id)
         {
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot//books", Id);
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\books", Id);
             var pdfText = _pdfFileReader.ReadPDF(path);
 
             return Content(pdfText);
@@ -314,6 +314,18 @@ namespace StudentManagementSystem.Controllers
             return RedirectToAction("list");
         }
 
-        
+        [Authorize]
+        public IActionResult Cancle(BookViewModel ui)
+        {
+            BookEntity book = new BookEntity()
+            {
+                Name = "",
+                Description = "",
+                CourseId = "",
+                BatchId = "",
+                URL = "",
+            };
+            return RedirectToAction("entry");
+        }
     }
 }

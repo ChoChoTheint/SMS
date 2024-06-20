@@ -240,5 +240,15 @@ namespace StudentManagementSystem.Controllers
             return RedirectToAction("List");
         }
 
+        [Authorize]
+        public IActionResult Cancle(TeacherCourseViewModel ui)
+        {
+            TeacherCourseEntity teacherCourse = new TeacherCourseEntity()
+            {
+                TeacherId = "",
+                CourseId = ""
+            };
+            return RedirectToAction("entry");
+        }
     }
 }

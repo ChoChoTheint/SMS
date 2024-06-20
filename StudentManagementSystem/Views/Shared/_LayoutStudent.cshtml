@@ -135,11 +135,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Mate+SC&display=swap" rel="stylesheet">
 
+    <!--FontAwsome-->
+    <script src="https://kit.fontawesome.com/e1dd7d5abe.js" crossorigin="anonymous"></script>
+
     <!-- Custom styles for this template -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="~/css/dashboard.css" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/e1dd7d5abe.js" crossorigin="anonymous"></script>
+    
 </head>
 
 <body>
@@ -250,7 +253,7 @@
 
     <div class="fluid-container">
         <div class="row">
-            <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary overflow-auto" style="height: 150vh;">
+            <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary overflow-auto" style="height: 240vh;">
                 <div class="offcanvas-md offcanvas-end bg-body-tertiary" tabindex="-1" id="sidebarMenu"
                      aria-labelledby="sidebarMenuLabel">
                     <div class="offcanvas-header">
@@ -271,20 +274,7 @@
                             </div>
                         </a>
                         <ul class="nav flex-column text-center">
-                            @* <li class="nav-item">
-                            <a class="col-md-3 col-lg-2 me-0 px-3 fs-4 text-decoration-none fw-bold" href="#"><span class="text-dark">Leadership</span> <span class="text-primary">Excellence</span></a>
-                            </li> *@
-                            <li class="nav-item">
-                                <a class="nav-link text-center active my-4" aria-current="page" href="#">
-                                    <div class="mb-3">
-                                        <i class="fa-regular fa-circle-user fa-2xl fs-1"></i>
-                                    </div>
-                                    @if (SignInManager.IsSignedIn(User))
-                                    {
-                                        <span>@UserManager.GetUserName(User)!</span>
-                                    }
-                                </a>
-                            </li>
+                            
                             <hr class="my-3">
                             <li class="nav-item dropdown align-items-center gap-2 active">
                                 <button class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -292,14 +282,10 @@
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-white">
                                     <li>
-                                        <a class="d-flex dropdown-item align-items-center gap-2" aria-current="page" href="/assignment/entry">
+                                         <a class="d-flex dropdown-item align-items-center gap-2" aria-current="page" href="/assignment/entry">
                                             <i class="fa-solid fa-plus fa-lg"></i>
-                                            Assignment
-                                        </a>
-                                        <a class="d-flex dropdown-item align-items-center gap-2" aria-current="page" href="/assignment/list">
-                                            <i class="fa-solid fa-plus fa-lg"></i>
-                                            List
-                                        </a>
+                                             Assignment
+                                         </a>
                                     </li>
                                     
                                 </ul>
@@ -314,28 +300,12 @@
                                             <i class="fa-solid fa-plus fa-lg"></i>
                                             Attendance
                                         </a>
-                                        <a class="d-flex dropdown-item align-items-center gap-2" aria-current="page" href="/attendance/list">
-                                            <i class="fa-solid fa-plus fa-lg"></i>
-                                            List
-                                        </a>
                                     </li>
                                 </ul>
                             </li>
                         </ul>
 
 
-                        <hr class="my-3">
-
-                        <ul class="nav flex-column mx-auto mb-auto">
-                            <li class="nav-item">
-                                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                                    <button id="logout" type="submit" class="nav-link btn btn-link border-0">
-                                        <i class="fa-solid fa-right-from-bracket me-2"></i>
-                                        Sign out
-                                    </button>
-                                </form>
-                            </li>
-                        </ul>
                     </div>
                 </div>
             </div>

@@ -1,10 +1,4 @@
-﻿<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+﻿
 @model IList<BookViewModel>
 @if (TempData["info"] != null)
 {
@@ -23,13 +17,18 @@
 }
    
 <div class="container">
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/home/index">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">List</li>
+        </ol>
+    </nav>
     @if (User.IsInRole("Admin"))
     {
         <div class="row">
             <h1 class="h4 mb-5">Book List</h1>
-            <div class="col-md-12">
-                <div class="table-responsive">
-                    <table id="bookTable" class="table table-bordred table-striped">
+                <table id="bookTable" class="table table-bordred table-striped">
                         <thead>
                                 <th>Name</th>
                                 <th>Description</th>
@@ -39,6 +38,7 @@
                                     @if (User.IsInRole("Admin"))
                                     {
                                         <th>Action</th>
+
                                     }
                         </thead>
                         <tbody>
@@ -52,7 +52,7 @@
                                     <td>@list.Name</td>
                                     <td>@list.Description</td>
                                     <td>
-                                        <a href="/Book/DownloadFile?filePath=@list.URL">
+                                        <a asp-controller="Book" asp-action="DownloadFile" asp-route-id="@list.BookURL">
                                             <i class="fa-solid fa-download fa-xl"></i>
                                         </a>
                                     </td>
@@ -84,14 +84,13 @@
                                 </tr>
                                 index++;
                             }
+                          </tbody>
 
-                    </div>
+                </table>
 
-                </div>
-        
-            </div>
-        }
-    </div>
+        </div>
+    }   
+</div>
 
 
 <script>

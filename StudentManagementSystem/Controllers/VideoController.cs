@@ -211,6 +211,26 @@ namespace StudentManagementSystem.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    // Define the path to the uploads folder
+                    var uploadFolder = Path.Combine("wwwroot", "videos");
+
+                    // Ensure the directory exists
+                    if (!Directory.Exists(uploadFolder))
+                    {
+                        Directory.CreateDirectory(uploadFolder);
+                    }
+
+                    // Generate a unique file name
+                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + ui.VideoFile.FileName;
+
+                    // Define the full path to the file
+                    var filePath = Path.Combine(uploadFolder, uniqueFileName);
+
+                    // Save the uploaded file to the specified location
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await ui.VideoFile.CopyToAsync(fileStream);
+                    }
 
                     VideoEntity updateVideoData = new VideoEntity()
                     {
@@ -220,7 +240,7 @@ namespace StudentManagementSystem.Controllers
                         IsInActive = true,
                         Name = ui.Name,
                         Description = ui.Description,
-                        URL = ui.URL,
+                        URL = uniqueFileName,
                         CourseId = ui.CourseId,
                         BatchId = ui.BatchId,
                     };
@@ -256,6 +276,20 @@ namespace StudentManagementSystem.Controllers
                 TempData["info"] = "error while updating the record";
             }
             return RedirectToAction("list");
+        }
+
+        [Authorize]
+        public IActionResult Cancle(VideoViewModel ui)
+        {
+            VideoEntity video = new VideoEntity()
+            {
+                Name = "",
+                Description = "",
+                URL = "",
+                CourseId = "",
+                BatchId = "",
+            };
+            return RedirectToAction("entry");
         }
     }
 }

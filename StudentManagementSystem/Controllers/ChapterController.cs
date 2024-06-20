@@ -326,5 +326,19 @@ namespace StudentManagementSystem.Controllers
             }
             return RedirectToAction("List");
         }
+
+        [Authorize]
+        public IActionResult Cancle(ChapterViewModel ui)
+        {
+            ChapterEntity chapter = new ChapterEntity()
+            {
+                Name = "",
+                Description = "",
+                BatchId = "",
+                BookId = "",
+                VideoId = "",
+            };
+            return RedirectToAction("entry");
+        }
     }
 }

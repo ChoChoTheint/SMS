@@ -150,7 +150,7 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
 
                     StudentEntity updateStudentData = new StudentEntity()
@@ -158,6 +158,7 @@ namespace StudentManagementSystem.Controllers
                         Id = ui.Id,
                         CreatedAt = DateTime.UtcNow,
                         ModifiedAt = DateTime.UtcNow,
+                        IsInActive = true,
                         Name = ui.Name,
                         Email = ui.Email,
                         Phone = ui.Phone,
@@ -175,6 +176,7 @@ namespace StudentManagementSystem.Controllers
                 }
                 else
                 {
+
                     return View("Edit", model: ui);
                 }
             }
@@ -182,7 +184,48 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while updating data";
             }
-            return RedirectToAction("list");
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("List");
+            }
+            else
+            {
+                var studentList = _dbContext.Students.Select(s => new StudentViewModel
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    Email = s.Email,
+                    Phone = s.Phone,
+                    Address = s.Address,
+                    DOB = s.DOB,
+                    NRC = s.NRC,
+                    FatherName = s.FatherName,
+                    Gender = s.Gender,
+                }).ToList();
+
+                var compositeModel = new CompositeViewModel
+                {
+                    Students = studentList,
+                };
+                return View("~/Views/Home/StudentIndex.cshtml", model: compositeModel);
+            }
+        }
+
+        [Authorize]
+        public IActionResult Cancle(StudentViewModel ui)
+        {
+            StudentEntity student = new StudentEntity()
+            {
+                Name = "",
+                Email = "",
+                Phone = "",
+                Address = "",
+                NRC = "",
+                DOB = DateTime.Now,
+                FatherName = "",
+                Gender = "",
+            };
+            return RedirectToAction("entry");
         }
     }
 }

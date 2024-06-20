@@ -1,6 +1,11 @@
 ﻿@model IList<ChapterViewModel>
 <div class="container">
-
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/home/index">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Chapter</li>
+        </ol>
+    </nav>
     @if (User.IsInRole("Admin") || User.Identity.IsAuthenticated)
     {
         <h1 class="h4 mt-3">Chapters:</h1>
@@ -22,12 +27,12 @@
                                 <a asp-controller="Book" asp-action="DownloadFile" asp-route-id="@detail.BookId">
                                     <i class="fa-solid fa-download fa-xl"></i>
                                 </a>
-                                <a asp-controller="Book" asp-action="ReadPDF" asp-route-id="@detail.BatchId">
+                                @* <a asp-controller="Book" asp-action="ReadPDF" asp-route-id="@detail.BookId">
                                     <span class="text-uppercase fw-bold">Read</span>
-                                </a>
+                                </a> *@
                             </p>
                             <p class="card-text d-flex">
-                                <span class="fw-bold me-5">Video: </span>
+                                <span class="fw-bold me-3">Video: </span>
                                 <video width="220" height="80" controls>
                                     <source src="/videos/@detail.VideoId" type="video/mp4">
                                     Your browser does not support the video tag.

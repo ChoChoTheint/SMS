@@ -1,7 +1,13 @@
 ﻿@model IList<BatchViewModel>
 
 <div class="container">
-    <h1 class="h3">Batchs:</h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/home/index">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Batch</li>
+        </ol>
+    </nav>
+    <h1 class="h4 mt-3">Batches: </h1>
     <div class="row">
         @foreach(var detail in Model)
         {
