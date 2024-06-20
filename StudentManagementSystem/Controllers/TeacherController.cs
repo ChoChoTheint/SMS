@@ -94,7 +94,8 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while saving the record";
             }
-            return RedirectToAction("List");
+
+            return RedirectToAction("list");
         }
 
         
@@ -106,6 +107,7 @@ namespace StudentManagementSystem.Controllers
 
                                                    select new TeacherViewModel
                                                    {
+                                                       Id = t.Id,
                                                        Name = t.Name,
                                                        Email = t.Email,
                                                        Phone = t.Phone,
@@ -126,10 +128,10 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                var deleteTeacherData = _dbContext.Teachers.Where(w => w.Id == Id).FirstOrDefault();
-                if(deleteTeacherData is not null)
+                var deleteData = _dbContext.Teachers.Where(w => w.Id == Id).FirstOrDefault();
+                if (deleteData is not null)
                 {
-                    _dbContext.Teachers.Remove(deleteTeacherData);
+                    _dbContext.Teachers.Remove(deleteData);
                     _dbContext.SaveChanges();
                 }
                 TempData["info"] = "delete successfully the record";

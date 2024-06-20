@@ -42,9 +42,8 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
-
                     AttendanceEntity attendanceData = new AttendanceEntity()
                     {
                         Id = ui.Id,
@@ -201,7 +200,7 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
 
                     AttendanceEntity updateAttendanceData = new AttendanceEntity()

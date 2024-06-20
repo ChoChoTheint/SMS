@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using System;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Http.HttpResults;
+using StudentManagementSystem.Utilities;
 
 
 namespace StudentManagementSystem.Controllers
@@ -16,6 +17,7 @@ namespace StudentManagementSystem.Controllers
     {
         private readonly SMSDbContext _dbContext;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly PdfFileReader _pdfFileReader;
 
         public AssignmentController(SMSDbContext dbContext, IWebHostEnvironment webHostEnvironment)
         {
@@ -50,25 +52,27 @@ namespace StudentManagementSystem.Controllers
             return View();
         }
 
-        [Authorize]
+        
+        
+       // private string UploadedFile(AssignmentViewModel model)
+        //{
+          //  string uniqueFileName = null;
 
-        private string UploadedFile(AssignmentViewModel model)
-        {
-            string uniqueFileName = null;
+           // if (model.File != null)
+            //{
+              //  string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
+              //  uniqueFileName = Guid.NewGuid().ToString() + "_" + model.File.FileName;
+              //  string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+              //  using (var fileStream = new FileStream(filePath, FileMode.Create))
+              //  {
+                //    model.File.CopyTo(fileStream);
+              //  }
+          //  }
+          //  return uniqueFileName;
+      //  }
 
-            if (model.File != null)
-            {
-                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "files");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.File.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    model.File.CopyTo(fileStream);
-                }
-            }
-            return uniqueFileName;
-        }
-      
+
+
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Entry(AssignmentViewModel ui)
@@ -157,54 +161,56 @@ namespace StudentManagementSystem.Controllers
         }
 
         [Authorize]
-        public IActionResult DownloadFile()
+        public IActionResult ReadPDF(string Id)
         {
-            var memory = FilePath("d4ffd230-bd98-4d29-b446-f18e3bdaee64_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf", "wwwroot//assignments");
-            return File(memory.ToArray(), "application/pdf", "d4ffd230-bd98-4d29-b446-f18e3bdaee64_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf");
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot//books", Id);
+            var pdfText = _pdfFileReader.ReadPDF(path);
+
+            return Content(pdfText);
         }
 
+        [Authorize]
         private MemoryStream FilePath(string fileName, string uploadFolder)
         {
-            string path = Path.Combine("wwwroot", "assignments", "d4ffd230-bd98-4d29-b446-f18e3bdaee64_Andrew_Troelsen,_Phil_Japikse_Pro_C#_10_with_NET_6_Foundational.pdf");
+            string videoPath = Path.Combine(uploadFolder, fileName);
 
+            var path = Path.Combine(Directory.GetCurrentDirectory(), videoPath);
             var memeory = new MemoryStream();
 
             if (System.IO.File.Exists(path))
             {
                 var net = new System.Net.WebClient();
-                var data = net.DownloadData(fileName);
+                var data = net.DownloadData(path);
                 var content = new System.IO.MemoryStream(data);
                 memeory = content;
             }
             memeory.Position = 0;
             return memeory;
         }
-        
 
-        
 
-       // public class VideoService
+
+
+        // public class VideoService
         //{
-          //  private readonly IWebHostEnvironment _env;
+        //  private readonly IWebHostEnvironment _env;
 
-            //public VideoService(IWebHostEnvironment env)
-            //{
-               /// _env = env;
-           // }
+        //public VideoService(IWebHostEnvironment env)
+        //{
+        /// _env = env;
+        // }
 
-           // public string GetVideoPath()
-            //{
-            //    string webRootPath = _env.WebRootPath; // wwwroot folder
-            //    string videoPath = Path.Combine(webRootPath, "video");
-            //   return videoPath;
-           // }
-        //}
+        // public string GetVideoPath()
+        //{
+        //    string webRootPath = _env.WebRootPath; // wwwroot folder
+        //    string videoPath = Path.Combine(webRootPath, "video");
+        //   return videoPath;
+        // }
+
 
         [Authorize]
         public IActionResult List()
         {
-            
-
             IList<AssignmentViewModel> assignmentList = (from assignment in _dbContext.Assignments
                                                          join sb in _dbContext.StudentBatches
                                                          on assignment.BatchId equals sb.BatchId
