@@ -138,6 +138,7 @@ namespace StudentManagementSystem.Controllers
                 DOB = s.DOB,
                 FatherName = s.FatherName,
                 Gender = s.Gender,
+
             }).FirstOrDefault();
 
 
@@ -168,11 +169,12 @@ namespace StudentManagementSystem.Controllers
                         FatherName = ui.FatherName,
                         Gender = ui.Gender,
                         AspNetUsersId = ui.AspNetUsersId,
+
                     };
 
                     _dbContext.Students.Update(updateStudentData);
                     _dbContext.SaveChanges();
-                    TempData["info"] = "update successfully data";
+                    TempData["info"] = "update successfully";
                 }
                 else
                 {
@@ -225,7 +227,8 @@ namespace StudentManagementSystem.Controllers
                 FatherName = "",
                 Gender = "",
             };
-            return RedirectToAction("entry");
+                return RedirectToAction("entry");
+            
         }
     }
 }

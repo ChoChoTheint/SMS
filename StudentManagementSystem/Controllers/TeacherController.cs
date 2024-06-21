@@ -32,8 +32,6 @@ namespace StudentManagementSystem.Controllers
         [Authorize]
         public IActionResult Entry(TeacherViewModel ui)
         {
-           
-
             try
             {
                 if (ModelState.IsValid)
@@ -76,7 +74,6 @@ namespace StudentManagementSystem.Controllers
             {
                 TempData["info"] = "error while saving the record";
             }
-
             return RedirectToAction("list");
         }
 
@@ -85,8 +82,6 @@ namespace StudentManagementSystem.Controllers
         public IActionResult List()
         {
             IList<TeacherViewModel> teacherList = (from t in _dbContext.Teachers
-                                                  
-
                                                    select new TeacherViewModel
                                                    {
                                                        Id = t.Id,
@@ -108,10 +103,10 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                var deleteData = _dbContext.Teachers.Where(w => w.Id == Id).FirstOrDefault();
-                if (deleteData is not null)
+                var deleteTeacherData = _dbContext.Teachers.Where(w => w.Id == Id).FirstOrDefault();
+                if(deleteTeacherData is not null)
                 {
-                    _dbContext.Teachers.Remove(deleteData);
+                    _dbContext.Teachers.Remove(deleteTeacherData);
                     _dbContext.SaveChanges();
                 }
                 TempData["info"] = "delete successfully the record";
@@ -146,14 +141,14 @@ namespace StudentManagementSystem.Controllers
 
             return View(editTeacherData);
         }
-
+        [HttpPost]
         [Authorize]
         public IActionResult Update(TeacherViewModel ui)
         {
 
             try
             {
-                if (ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
 
                     TeacherEntity updateTeacherData = new TeacherEntity()
@@ -161,7 +156,6 @@ namespace StudentManagementSystem.Controllers
                         Id = ui.Id,
                         CreatedAt = DateTime.UtcNow,
                         ModifiedAt = DateTime.UtcNow,
-                        IsInActive = true,
                         Name = ui.Name,
                         Email = ui.Email,
                         Phone = ui.Phone,
@@ -171,7 +165,7 @@ namespace StudentManagementSystem.Controllers
                         FatherName = ui.FatherName,
                         Position = ui.Position,
                         Gender = ui.Gender,
-                        AspNetUsersId = ui.AspNetUsersId,
+                        AspNetUsersId = ui.AspNetUsersId
                     };
 
                     _dbContext.Teachers.Update(updateTeacherData);

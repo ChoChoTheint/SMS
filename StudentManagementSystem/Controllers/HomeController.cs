@@ -87,19 +87,16 @@ namespace StudentManagementSystem.Controllers
             else if (User.IsInRole("Teacher"))
             {
                 return View("TeacherIndex", model: compositeModel); // Assuming "TeacherIndex.cshtml" is your teacher view
-                                                                    // return View("Index", model: compositeModel);
             }
-            else if (User.Identity.IsAuthenticated)
-            {
-                return View("StudentIndex", model: compositeModel); // Assuming "TeacherIndex.cshtml" is your teacher view
-                                                                    // return View("Index", model: compositeModel);
+            
+            else if (User.Identity.IsAuthenticated) { 
+               return View("StudentIndex", model: compositeModel);
             }
             else
             {
                 return View(); // Handle other roles or anonymous users here
             }
         }
-
 
         public IActionResult Privacy()
         {

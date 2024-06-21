@@ -266,7 +266,7 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
 
                     AttendanceEntity updateAttendanceData = new AttendanceEntity()

@@ -26,7 +26,7 @@ else if(User.Identity.IsAuthenticated)
         <div class="col bg-white sticky-top">
             <div class="ps-4 pt-2 d-flex align-items-center border-primary border-bottom" style="height: 70px;">
                 <div>
-                    <h1 class="h5">Student:</h1>
+                    <h1 class="h5">Student</h1>
                     @if (SignInManager.IsSignedIn(User))
                     {
                         <span style="color: #999999;">@UserManager.GetUserName(User)!</span>
@@ -37,7 +37,6 @@ else if(User.Identity.IsAuthenticated)
                         <i class="fa-regular fa-circle-user fa-2xl"></i>
                     </button>
                     <ul class="dropdown-menu">
-                       
                             @foreach (var list in Model.Students)
                             {
                                 if (list.Email == UserManager.GetEmailAsync(UserManager.GetUserAsync(User).Result).Result)
@@ -79,7 +78,7 @@ else if(User.Identity.IsAuthenticated)
                 </div>
             }
         }
-        <div class="row mt-3 mb-5">
+        <div class="row my-5">
             <div class="col-lg-4">
                 <div class="card position-relative shadow">
                     <div class="card-body">
@@ -95,6 +94,7 @@ else if(User.Identity.IsAuthenticated)
                                 }
                             }
                     </div>
+                   
                 </div>
 
             </div>
@@ -114,6 +114,7 @@ else if(User.Identity.IsAuthenticated)
                                 }
                             }
                     </div>
+                    
                 </div>
 
             </div>
@@ -191,6 +192,7 @@ else if(User.Identity.IsAuthenticated)
                             }
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

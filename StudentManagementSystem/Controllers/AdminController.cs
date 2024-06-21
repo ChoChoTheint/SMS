@@ -36,7 +36,7 @@ namespace StudentManagementSystem.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
 
                     AdminEntity adminData = new AdminEntity()

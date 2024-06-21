@@ -16,35 +16,6 @@
     }
 }
 <div class="container">
-<<<<<<< HEAD
-<<<<<<< HEAD
-    @if (User.IsInRole("Admin") || User.IsInRole("Teacher") || User.Identity.IsAuthenticated)
-    {
-        <h1 class="h3 fw-bold">Exam: </h1>
-        <div class="row mt-5 border-bottom">
-            @foreach (var detail in Model)
-            {
-
-                <div class="col-lg-6 mb-5">
-                    <div class="card">
-                        <div class="card-body">
-                            <h1 class="h3 pb-2 border-bottom border-danger"><span class="fw-bold">Exam Name: </span>@detail.Name</h1>
-                            <div class=" gap-4 border-bottom border-danger pb-3">
-                                <p class="card-text"><span class="fw-bold">Exam Date: </span>@detail.ExamDate.ToString("dd-MM-yyyy")</p>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
-
-    }
-
-=======
-    
->>>>>>> yairyint
-=======
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/home/index">Home</a></li>
