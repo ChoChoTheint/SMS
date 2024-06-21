@@ -196,25 +196,8 @@ namespace StudentManagementSystem.Controllers
                 TempData["info"] = "error while updating the data";
             }
             
-            //Reload Admin again after updated Admin
-                var adminList = _dbContext.Admins.Select(s => new AdminViewModel
-                {
-                    Id = s.Id,
-                    Name = s.Name,
-                    Email = s.Email,
-                    Phone = s.Phone,
-                    Address = s.Address,
-                    DOB = s.DOB,
-                    NRC = s.NRC,
-                    FatherName = s.FatherName,
-                    Gender = s.Gender,
-                }).ToList();
-
-                var compositeModel = new CompositeViewModel
-                {
-                    Admins = adminList,
-                };
-                return View("~/Views/Home/Index.cshtml", model: compositeModel);
+            
+                return Redirect("/Home/Index");
             
         }
     }

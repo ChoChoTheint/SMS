@@ -17,7 +17,7 @@
     </div>
     <h1 class="h4 mb-3 text-center">Student Batch Entry Form</h1>
     <form asp-controller="StudentBatch" asp-action="Update" enctype="multipart/form-data">
-        <input asp-for="Id" value="@ViewBag.Id" type="hidden" />
+        <input asp-for="Id" value="@Model.Id" type="hidden" />
         <div class="mb-3">
             <label asp-for="StudentId" class="form-label">Student</label>
             <select asp-for="StudentId" class="form-select">

@@ -148,7 +148,7 @@ namespace StudentManagementSystem.Controllers
 
             try
             {
-                if (!ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
 
                     TeacherEntity updateTeacherData = new TeacherEntity()
@@ -205,7 +205,7 @@ namespace StudentManagementSystem.Controllers
                 {
                     Teachers = teacherList,
                 };
-                return View("~/Views/Home/TeacherIndex.cshtml", model: compositeModel);
+                return Redirect("/Home/Index");
             }
         }
 

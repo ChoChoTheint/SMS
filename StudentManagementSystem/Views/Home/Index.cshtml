@@ -41,7 +41,7 @@ else if (User.IsInRole("Admin"))
                                 </button>
                                 <ul class="dropdown-menu">
                                     @foreach (var list in Model.Admins)
-                                    {
+                                {
                                     if (list.Email == UserManager.GetEmailAsync(UserManager.GetUserAsync(User).Result).Result)
                                     {
 
@@ -52,7 +52,8 @@ else if (User.IsInRole("Admin"))
                                             </a>
                                         </li>
                                     }
-                                    <li class="dropdown-item d-flex align-items-center">
+                                }
+                                <li class="dropdown-item d-flex align-items-center">
 
                                         <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                                             <button id="logout" type="submit" class="nav-link btn btn-link border-0">
@@ -61,7 +62,7 @@ else if (User.IsInRole("Admin"))
                                             </button>
                                         </form>
                                     </li>
-                                    }
+                                    
                         </ul>
                             </div>
                         </div>

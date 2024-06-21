@@ -10,7 +10,5 @@ namespace StudentManagementSystem.Models.ViewModels
         public string TeacherId { get; set; }
         [Required(ErrorMessage = "Course is required")]
         public string CourseId { get; set; }
-
-        public string BatchInfo { get; set; }
     }
 }

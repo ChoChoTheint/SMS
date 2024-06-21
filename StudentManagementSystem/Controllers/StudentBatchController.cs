@@ -179,8 +179,6 @@ namespace StudentManagementSystem.Controllers
                 BatchId=s.BatchId,
             }).FirstOrDefault();
 
-            ViewBag.Id = Guid.NewGuid().ToString();
-
             ViewBag.Student = _dbContext.Students.Select(s => new StudentViewModel
             {
                 Id = s.Id,

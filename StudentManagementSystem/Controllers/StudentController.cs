@@ -192,24 +192,8 @@ namespace StudentManagementSystem.Controllers
             }
             else
             {
-                var studentList = _dbContext.Students.Select(s => new StudentViewModel
-                {
-                    Id = s.Id,
-                    Name = s.Name,
-                    Email = s.Email,
-                    Phone = s.Phone,
-                    Address = s.Address,
-                    DOB = s.DOB,
-                    NRC = s.NRC,
-                    FatherName = s.FatherName,
-                    Gender = s.Gender,
-                }).ToList();
-
-                var compositeModel = new CompositeViewModel
-                {
-                    Students = studentList,
-                };
-                return View("~/Views/Home/StudentIndex.cshtml", model: compositeModel);
+                
+                return Redirect("/Home/Index");
             }
         }
 

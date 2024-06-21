@@ -100,7 +100,7 @@ namespace StudentManagementSystem.Controllers
 
                                                          select new TeacherCourseViewModel
                                                          {
-                                                             Id = tc.CourseId,
+                                                             Id = tc.Id,
                                                              TeacherId = teacher.Name,
                                                              CourseId = course.Name,
                                                          }).ToList();
