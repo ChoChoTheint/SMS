@@ -38,7 +38,7 @@
                             @if (User.IsInRole("Admin"))
                             {
                                 <th>Action</th>
-                                <th>Detail</th>
+                                @* <th>Detail</th> *@
                             }
                         </tr>
                     </thead>
@@ -71,9 +71,9 @@
                                                 </ul>
                                         </div>
                                     </td>
-                                    <td>
-                                        <a asp-controller="Batch" asp-action="Detail" class="link-underline-primary link-underline-opacity-100-hover">Details>></a>
-                                    </td>
+                                    @* <td>
+                                        <a asp-controller="Batch" asp-action="TeacherDetail" asp-route-id="@list.CourseId" class="link-underline-primary link-underline-opacity-100-hover">Details>></a>
+                                    </td> *@
 
                                 }
                             </tr>
